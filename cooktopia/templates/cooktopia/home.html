@@ -1,6 +1,28 @@
-{% extends 'base.html' %}
-<!-- Configurar path nas setting -->
+{% extends 'base.html' %} <!-- Tem de ser a primeira linha -->
+{% load static %}
 
-{% block title %} Home {% endblock %} {% block content %}
-<h1>Home</h1>
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/home.css' %}" />
+{% endblock %}
+
+{% block title %} 
+    Home 
+{% endblock %} 
+
+{% block content %}
+    <section class="hero">
+        <h1 class="h1">The Easiest Way to Find Your Favorite Meal</h1>
+        <a class="btn-r" href="{% url 'recipes' %}"> Find Recipe</a>
+    </section>
+    <section class="top-recipes">
+        <header>
+            <aside>
+                <h2 class="h2">Receitas Populares</h2>
+                <h3 class="h3">Outro Texto</h3>
+            </aside>
+            <aside>
+                <a class="l1-b" href="{% url 'recipes' %}">See all</a>
+            </aside>
+        </header>
+    </section>
 {% endblock %}

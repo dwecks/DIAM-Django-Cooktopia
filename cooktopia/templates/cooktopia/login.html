@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 <!-- Configurar path nas setting -->
 
-{% block title %} Recipes {% endblock %} {% block content %}
+{% block title %} Recipes {% endblock %} ~
+
+
+{% block content %}
 <form method="post">
   {% csrf_token %} 
   {{ form }}
