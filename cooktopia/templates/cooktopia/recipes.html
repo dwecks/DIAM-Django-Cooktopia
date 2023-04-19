@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 <!-- Configurar path nas setting -->
-
+{% block css_styles %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
 {% block title %} Recipes {% endblock %} {% block content %}
 <h1>Recipes</h1>
+
 {% endblock %}
