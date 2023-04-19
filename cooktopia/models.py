@@ -17,13 +17,16 @@ class Comment(models.Model):
 class Ingridient(models.Model):
     title = models.CharField(max_length=200)
 
-
+class Category(models.Model):
+    title = models.CharField(max_length=200)
 class Recipe(models.Model):
     title = models.CharField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
     comments = models.ManyToManyField(Comment)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     chef = models.OneToOneField(Chef, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
+
 
 
 class RecipeIngridient(models.Model):
