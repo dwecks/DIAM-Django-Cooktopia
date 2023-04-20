@@ -1,23 +1,17 @@
+body {
+  display: flex;
+  height: 100vw;
+  flex-direction: column;
+}
 
-.main-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .main-nav {
-    display: flex;
-    gap: 30px;
-  }
-  
   .main-header{
     /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 32px 96px;
-  
-    width: 100vw;
+    padding: 24px 96px;
+    flex :1;
   
     /* Primary/P700 */
     background: var(--P700);
@@ -55,4 +49,8 @@
   
   .main-nav a:hover{
     color: var(--N300);
+  }
+
+  body main{
+    flex: 1;
   }

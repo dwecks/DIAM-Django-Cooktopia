@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
-<!-- Configurar path nas setting -->
+{% load static %}
 
-{% block title %} Recipes {% endblock %} {% block content %}
-<h1>Profile</h1>
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/profile.css' %}" />
+{% endblock %}
+
+{% block title %} Recipes {% endblock %} 
+
+{% block content %}
+    <img class="banner" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+    <section class="profile">
+        <div class="top">
+            <div class="profile-pic">
+                <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+            </div>
+            <div class="profile-title">
+                <h1 class="h2">Joao Oliveira</h1>
+                <span class="h3 N700-c">Master Chef</span>
+            </div>
+            <div class="add-btn-container">
+                <a class="btn-r add-btn l2-b" href="{% url 'recipes' %}">+ Add recipe</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="profile-nav l2-r">
+              <li><a href="{% url 'home' %}">Publication</a></li>
+              <li><a href="{% url 'recipes' %}">Account Info</a></li>
+              <li><a href="{% url 'reels' %}">Friends</a></li>
+            </ul>
+        </nav>
+    </section>
+    <section class="content">
+
+    </section>
 {% endblock %}

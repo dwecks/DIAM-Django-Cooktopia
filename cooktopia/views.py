@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login
 from django.views.generic.edit import CreateView, FormView
 from .forms import *
 
+# settings
+from django.conf import settings
 
 # Create your views here.
 
@@ -25,7 +27,10 @@ def reels(request):
 
 @login_required(login_url='login')
 def profile(request):
-    return render(request, 'cooktopia/profile.html')
+    context = {'MEDIA_URL': settings.MEDIA_URL, }
+    print(settings.MEDIA_URL)
+    print(settings.MEDIA_ROOT)
+    return render(request, 'cooktopia/profile.html', context)
 
 
 class Login(FormView):
