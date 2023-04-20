@@ -5,18 +5,26 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label='Username')
-    password = forms.CharField(label='Password')
+    username = forms.CharField(
+        label='Username', widget=forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    password = forms.CharField(
+        label='Password', widget=forms.PasswordInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
 
 
 class RegitracioForm(forms.ModelForm):
-    nome = forms.CharField(max_length=30)
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    nome = forms.CharField(max_length=30, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'example@exemple.com'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
 
     class Meta:
         model = Chef
         fields = ["name"]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Nome'}),
+        }
 
     def save(self, commit=True):
         user = User.objects.create_user(
