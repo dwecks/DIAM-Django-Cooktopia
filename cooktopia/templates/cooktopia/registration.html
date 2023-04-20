@@ -1,10 +1,35 @@
-{% extends 'base.html' %}
-<!-- Configurar path nas setting -->
 
-{% block title %} Recipes {% endblock %} {% block content %}
-<form method="post">
+{% extends 'aside.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/login.css' %}" />
+{% endblock %}
+
+{% block title %} Registracion {% endblock %} 
+
+
+{% block side-header %} Start your culinary journey{% endblock %}
+{% block side-text %} Sign up to unlock a world of culinary delights. Elevate your cooking game and impress your friends and family with delicious, homemade meals. {% endblock %}</p>
+{% block side-footer %} Footer {% endblock %}
+
+{% block right %}
+<section class="login-form">
+  <h1 class="h3">Sign up</h1>
+  <span class="p1-b N600-c">Start your epic culinary adventure</span>
+  <form  method="post">
     {% csrf_token %} 
     {{ form }}
-    <input type="submit"></input>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="terms-checkbox" name="terms" value="1">
+      <label class="checkbox-label l2-r N700-c" for="terms-checkbox">
+        I agree to the <a class="P500-c" href="" target="_blank">terms of service</a>
+      </label>
+    </div>
+    <div class="btn-container">
+      <input class="btn-r l2-r" type="submit" value="Create account"></input>
+    </div>
+    <span class="sign-up N600-c l2-r" >Already an user? <a class="P500-c l2-r" href="{% url 'login' %}">Sign in</a></span>
   </form>
+</section>
 {% endblock %}

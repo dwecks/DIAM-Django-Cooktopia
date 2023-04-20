@@ -1,0 +1,48 @@
+body {
+    background-color: white;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+body section{
+    flex :1;
+    display: flex;
+}
+
+.left{
+    flex: 6;
+    background-color: var(--P700);
+
+    padding: 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 128px;
+}
+
+.left header{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left article{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap : 32px;
+}
+
+.left article p{
+    color: var(--N300);
+}
+
+.rigth{
+    flex: 10;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+}
