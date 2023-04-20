@@ -46,7 +46,7 @@ header {
     height: 41px;
 }
 
-.user {
+.user, .receitas_header_container_icon, .star, .thumbs_up, .share_icon, .footer_container_left { /*icons*/
     width: 24px;
     height: 24px;
 }
@@ -75,15 +75,16 @@ topDivDiv {
     height: 180px;
 }
 
+.title, .h1, .chef_name, .share_text, .receitas_header_text_right, .receitas_header_text_left, .receita_name,  .number_thumbs_up, .footer_text, .chef_name, .share_text {
+    font-family: 'Helvetica';
+    font-style: normal;
+    line-height: 125%;
+}
+
 .title {
     width: 850px;
     height: 100px;
-
-    font-family: 'Helvetica';
-    font-style: normal;
-    font-weight: 700;
     font-size: 80px;
-    line-height: 125%;
 
     align-items: center;
     text-align: center;
@@ -138,15 +139,9 @@ filtersDiv, .filter_frame {
 }
 
 .h1 { /*filters_frame_title*/
-    idth: 98px;
+    width: 98px;
     height: 50px;
-
-    font-family: 'Helvetica';
-    font-style: normal;
-    font-weight: 700;
     font-size: 40px;
-    line-height: 125%;
-
     color: #000000;
 }
 
@@ -218,11 +213,6 @@ filtersDiv, .filter_frame {
     width: 148px;
 }
 
-.receitas_header_container_icon{
-    width: 24px;
-    height: 24px;
-}
-
 .receitas_header_left_container_vector{
     position: absolute;
     left: 8.33%;
@@ -241,12 +231,8 @@ filtersDiv, .filter_frame {
 
 .receitas_header_text_right, .receitas_header_text_left{
     height: 25px;
-
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
-    line-height: 125%;
 
     color: #000000;
 }
@@ -319,12 +305,8 @@ filtersDiv, .filter_frame {
     height: 52px;
 }
 .receita_name {
-
-    font-family: 'Helvetica';
-    font-style: normal;
     font-weight: 400;
     font-size: 24px;
-    line-height: 125%;
 
     align-items: flex-end;
     color: #EA8389;
@@ -332,12 +314,8 @@ filtersDiv, .filter_frame {
     height: 30px;
 }
 .chef_name, .share_text {
-
-    font-family: 'Helvetica';
-    font-style: normal;
     font-weight: 700;
     font-size: 16px;
-    line-height: 125%;
 
     height: 20px;
 
@@ -362,8 +340,6 @@ filtersDiv, .filter_frame {
 }
 
 .star {
-    width: 24px;
-    height: 24px;
     background: #FFFFFF;
 }
 
@@ -406,11 +382,6 @@ filtersDiv, .filter_frame {
     width: 50px;
 }
 
-.thumbs_up, .share_icon, .footer_container_left{
-    width: 24px;
-    height: 24px;
-}
-
 .thumbs_up_vector {
     position: absolute;
     left: 8.33%;
@@ -425,11 +396,8 @@ filtersDiv, .filter_frame {
     width: 18px;
     height: 20px;
 
-    font-family: 'Helvetica';
-    font-style: normal;
     font-weight: 700;
     font-size: 16px;
-    line-height: 125%;
 
     color: #0B9A61;
 
@@ -490,15 +458,12 @@ footer {
     border: 2px solid #F6F6F6;
 }
 
-.footer_text{
+.footer_text {
     width: 109px;
     height: 30px;
 
-    font-family: 'Helvetica';
-    font-style: normal;
     font-weight: 400;
     font-size: 24px;
-    line-height: 125%;
 
     color: #FFFFFF;
 
