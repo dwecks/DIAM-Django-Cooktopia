@@ -20,8 +20,10 @@ from django.conf import settings
 
 
 def home(request):
+    top_recipes = Recipe.objects.order_by("rating")[:6]
+    recent_recipes = Recipe.objects.order_by('-pub_date')[:3]
     context = {'MEDIA_URL': settings.MEDIA_URL,
-               "range6": range(1, 4), "range4": range(1, 5)}
+               "top_recipes": top_recipes, "recent_recipes ": recent_recipes}
     return render(request, 'cooktopia/home.html', context)
 
 
@@ -72,6 +74,7 @@ class AddRecipe(FormView):
         recipe.chef = self.request.user.chef
         recipe.pub_date = timezone.now()
         recipe.rating = 0
+        recipe.image = self.request.FILES['image']
         recipe.save()
         return HttpResponseRedirect(reverse('addIngredients', args=[recipe.id]))
         # return super().form_valid(form)

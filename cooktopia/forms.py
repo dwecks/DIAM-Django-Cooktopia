@@ -46,13 +46,14 @@ class AddRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ["title", "description",
-                  "preparationTime", "mealType", "difficulty"]
+                  "preparationTime", "mealType", "difficulty", "image"]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': "What's the title of this culinary creation?"},),
             'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Describe this dish to someone who's never tasted it before?"},),
             'preparationTime': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'How many minutes until this masterpiece is ready?'},),
             'mealType': forms.Select(attrs={'class': 'lbl-r l2-r'}),
-            'difficulty': forms.Select(attrs={'class': 'lbl-r l2-r'})
+            'difficulty': forms.Select(attrs={'class': 'lbl-r l2-r'}),
+            "image": forms.FileInput(attrs={'class': 'lbl-r l2-r '})
         }
 
 
