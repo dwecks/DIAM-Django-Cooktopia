@@ -1,6 +1,87 @@
 {% extends 'base.html' %}
 <!-- Configurar path nas setting -->
+<<<<<<< Updated upstream
 
 {% block title %} Recipes {% endblock %} {% block content %}
 <h1>Recipes</h1>
+=======
+{% block title %} Recipes {% endblock %} {% block content %}
+<h1>Recipes</h1>
+{% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
+
+{% block title %}Recipes{% endblock %}
+{% block content %}
+<head>
+	<title>Cooktopia</title>
+</head>
+<body>
+        <header>
+		<div class="header-left">
+			<h1>cooktopia</h1>
+		</div>
+		<div class="header-middle">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Recipes</a></li>
+				<li><a href="#">Reels</a></li>
+			</ul>
+		</div>
+	</header>
+	<section class="topDiv">
+		<h2>Find Your Recipes</h2>
+		<button class="find-recipe">Find Recipe</button>
+	</section>
+	<section class="mid-section">
+		<div class="filters">
+			<h2>Filters</h2>
+			<div class="filter-category">
+				<h3>Category</h3>
+				<label><input type="checkbox" name="category" value="vegetarian"> Vegetarian</label>
+				<label><input type="checkbox" name="category" value="vegan"> Vegan</label>
+				<label><input type="checkbox" name="category" value="meat"> Meat</label>
+			</div>
+			<div class="filter-cuisine">
+				<h3>Cuisine</h3>
+				<label><input type="checkbox" name="cuisine" value="italian"> Italian</label>
+				<label><input type="checkbox" name="cuisine" value="mexican"> Mexican</label>
+				<label><input type="checkbox" name="cuisine" value="chinese"> Chinese</label>
+			</div>
+			<button class="apply-button">Apply</button>
+		</div>
+		<div class="recipes">
+			<div class="hide-filters">
+				<img src="hide-filters-icon.png" alt="Hide Filters">
+				<span>Hide Filters</span>
+			</div>
+			<h2>Recipes by Page<span class="page-number">1</span></h2>
+			<div class="recipe-card">
+				<h3>Spaghetti Bolognese</h3>
+				<p class="chef-name">by John Smith</p>
+				<div class="rating">
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+				</div>
+				<img src="spaghetti-bolognese.jpg" alt="Spaghetti Bolognese">
+				<div class="recipe-card-footer">
+					<a href="#"><img src="like-icon.png" alt="Like"> <span>256</span></a>
+					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>
+				</div>
+			</div>
+			<div class="recipe-card">
+				<h3>Tacos al Pastor</h3>
+				<p class="chef-name">by Maria Garcia</p>
+				<div class="rating">
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+					<span class="star"></span>
+				</div>
+				<img src="tacos-al-pastor.jpg" alt="Tacos al Pastor">
+				<div class="recipe-card-footer">
+					<a href="#">
+</body>
 {% endblock %}
