@@ -1,6 +1,46 @@
-{% extends 'base.html' %}
-<!-- Configurar path nas setting -->
+{% extends 'base.html' %} <!-- Tem de ser a primeira linha -->
+{% load static %}
 
-{% block title %} Home {% endblock %} {% block content %}
-<h1>Home</h1>
+{% block css %}<link rel="stylesheet" href="{% static '/css/home.css' %}" />{% endblock %}
+
+{% block title %}Home{% endblock %} 
+
+{% block content %}
+    <!-- Hero  -->
+    <section class="hero">
+        <h1 class="h1">The Easiest Way to Find Your Favorite Meal</h1>
+        <a class="btn-r" href="{% url 'recipes' %}"> Find Recipe</a>
+    </section>
+
+    <!-- Top Recipes  -->
+    <section class="top-recipes">
+        <header>
+            <aside>
+                <h2 class="h2">Receitas Populares</h2>
+                <p class="h3">Outro Texto</p>
+            </aside>
+            <aside>
+                <a class="l1-b" href="{% url 'recipes' %}">See all</a>
+            </aside>
+        </header>
+        {% for recipe in top_recipes %}  
+            {% include 'cooktopia/snippets/minimalRecipeCard.html' %}
+        {% endfor %}
+    </section>
+
+    <!-- Stats Banner  -->
+    <section class="stats">
+
+
+    </section>
+
+    <!-- Stats Banner  -->
+    <section class="new-recipes">
+        <header>
+            <h2 class="h1">Fresh From Our Community</h2>
+        </header>
+        {% for i in recent_recipes %}  
+            {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+        {% endfor %}
+    </section>
 {% endblock %}

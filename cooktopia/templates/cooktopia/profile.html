@@ -1,6 +1,54 @@
 {% extends 'base.html' %}
-<!-- Configurar path nas setting -->
+{% load static %}
 
-{% block title %} Recipes {% endblock %} {% block content %}
-<h1>Profile</h1>
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/profile.css' %}" />
+{% endblock %}
+
+{% block title %} Recipes {% endblock %} 
+
+{% block content %}
+    <img class="banner" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+    <section class="profile">
+        <div class="top">
+            <picture class="profile-pic">
+                <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+            </picture>
+            <div class="profile-title">
+                <h1 class="h2">Joao Oliveira</h1>
+                <span class="h4 N700-c">Master Chef</span>
+            </div>
+            <div class="add-btn-container">
+                <a class="btn-r add-btn l2-b" href="{% url 'addRecipe' %}">+ Add recipe</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="profile-nav l2-r">
+              <li><a href="{% url 'home' %}">Publication</a></li>
+              <li><a href="{% url 'recipes' %}">Account Info</a></li>
+              <li><a href="{% url 'reels' %}">Friends</a></li>
+            </ul>
+        </nav>
+    </section>
+    <section class="publications">
+        {% for i in range %}
+            <article class="publication">
+                <div class="publication-title">
+                    <h3 class="h4 P700-c">Mouse de Chocolate</h3>
+                    <span class="p1-b N700-c">something somentig</span>
+                </div>
+                <div class="p1-r">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate rem laudantium, porro voluptatum magnam ex vero temporibus obcaecati molestiae dolorum eligendi sit dolor voluptas recusandae non dicta, natus reprehenderit! Molestias?
+                    </p>
+                </div>
+                <picture class="publication-img">
+                    <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+                </picture>
+                <footer>
+                    <span>Icon 17</span><span>Ic share</span>
+                </footer>
+            </article>
+        {% endfor %}
+    </section>
 {% endblock %}

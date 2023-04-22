@@ -1,0 +1,43 @@
+
+{% extends 'aside.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/createRecipe.css' %}" />
+{% endblock %}
+
+{% block title %} Registracion {% endblock %} 
+
+
+{% block side-header %}  You are what you eat, so choose quality ingredients!{% endblock %}
+{% block side-text %} {% endblock %}</p>
+{% block side-footer %} "Food is our common ground, a universal experience." <br> - James Beard  {% endblock %}
+
+{% block right %}
+<section class="recipe-form">
+
+  <h1 class="h3">New Culinary Masterpiece</h1>
+  <span class="p1-b N600-c">Create your new recipe in three simple steps!</span>
+  <div class="step-bar">
+    <div class="step h3 done N100-c"><span >1</span></div>
+    <div class="progress-line progress-done"></div>
+    <div class="step in-progress h3 N700-c"><span >2</span></div>
+    <div class="progress-line"></div>
+    <div class="step in-progress h3 N700-c"><span >3</span></div>
+  </div>
+  <span class="h3 P700-c">2. Add Ingredients</span>
+  <form class="Ingredient-form" method="post">
+    {% csrf_token %} 
+    {{ formset.management_form }}
+      {% for form in formset %}
+          <div class="form-row">
+                  {{ form.quantity }}
+                  {{ form.ingredient }}
+          </div>
+      {% endfor %}
+      <div class="btn-container">
+        <input class="btn-r l2-r" type="submit" value="Last Step"></input>
+      </div>
+  </form>
+</section>
+{% endblock %}
