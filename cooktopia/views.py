@@ -20,7 +20,9 @@ from django.conf import settings
 
 
 def home(request):
-    return render(request, 'cooktopia/home.html')
+    context = {'MEDIA_URL': settings.MEDIA_URL,
+               "range6": range(1, 4), "range4": range(1, 5)}
+    return render(request, 'cooktopia/home.html', context)
 
 
 def recipes(request):
@@ -33,9 +35,7 @@ def reels(request):
 
 @login_required(login_url='login')
 def profile(request):
-    context = {'MEDIA_URL': settings.MEDIA_URL, }
-    print(settings.MEDIA_URL)
-    print(settings.MEDIA_ROOT)
+    context = {'MEDIA_URL': settings.MEDIA_URL, "range": range(1, 10)}
     return render(request, 'cooktopia/profile.html', context)
 
 
@@ -73,7 +73,6 @@ class AddRecipe(FormView):
         recipe.pub_date = timezone.now()
         recipe.rating = 0
         recipe.save()
-        recipe.id = 2
         return HttpResponseRedirect(reverse('addIngredients', args=[recipe.id]))
         # return super().form_valid(form)
 

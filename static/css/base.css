@@ -54,3 +54,12 @@ body {
   body main{
     flex: 1;
   }
+
+  .base-footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 32px 96px;
+    height: 200px;
+    background-color: var(--P700);
+  }

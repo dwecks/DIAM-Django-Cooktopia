@@ -24,12 +24,48 @@
                 <a class="l1-b" href="{% url 'recipes' %}">See all</a>
             </aside>
         </header>
-        <article>
-            <div>
-                <img src="" alt="">
-                <h3>Super Dish</h3>
-                <p>By Mater Chef</p>
+        {% for i in range6 %}  
+            <article class="top-post">
+                <div>
+                    <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+                    <div class="top-post-description">
+                        <h3 class="h2">Super Dish</h3>
+                        <p class="h4 N700-c">By Mater Chef</p>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+    <section class="stats">
+
+    </section>
+    <section class="new-recipes">
+        <header>
+            <h2 class="h1">Fresh From Our Community</h2>
+        </header>
+        {% for i in range6 %}  
+        <article class="publication">
+            <header>          
+                <picture class="profile-pic">
+                <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+                </picture>
+                <div class="publication-title">
+                    <h3 class="h4 P700-c">Mouse de Chocolate</h3>
+                    <span class="p1-b N700-c">something somentig</span>
+                </div>
+            </header>
+            <div class="p1-r">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate rem laudantium, porro voluptatum magnam ex vero temporibus obcaecati molestiae dolorum eligendi sit dolor voluptas recusandae non dicta, natus reprehenderit! Molestias?
+                </p>
             </div>
+            <picture class="publication-img">
+                <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+            </picture>
+            <footer>
+                <span>Icon 17</span><span>Ic share</span>
+            </footer>
         </article>
+    {% endfor %}
     </section>
 {% endblock %}
