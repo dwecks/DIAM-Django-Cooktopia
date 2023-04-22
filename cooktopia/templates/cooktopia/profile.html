@@ -11,9 +11,9 @@
     <img class="banner" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
     <section class="profile">
         <div class="top">
-            <div class="profile-pic">
+            <picture class="profile-pic">
                 <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
-            </div>
+            </picture>
             <div class="profile-title">
                 <h1 class="h2">Joao Oliveira</h1>
                 <span class="h4 N700-c">Master Chef</span>
@@ -30,7 +30,25 @@
             </ul>
         </nav>
     </section>
-    <section class="content">
-
+    <section class="publications">
+        {% for i in range %}
+            <article class="publication">
+                <div class="publication-title">
+                    <h3 class="h4 P700-c">Mouse de Chocolate</h3>
+                    <span class="p1-b N700-c">something somentig</span>
+                </div>
+                <div class="p1-r">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate rem laudantium, porro voluptatum magnam ex vero temporibus obcaecati molestiae dolorum eligendi sit dolor voluptas recusandae non dicta, natus reprehenderit! Molestias?
+                    </p>
+                </div>
+                <picture class="publication-img">
+                    <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+                </picture>
+                <footer>
+                    <span>Icon 17</span><span>Ic share</span>
+                </footer>
+            </article>
+        {% endfor %}
     </section>
 {% endblock %}

@@ -28,12 +28,20 @@
   box-sizing: border-box;
 }
 
+html {
+  /* font-size: 10px; */
+
+  /* 10px / 16px = 0.625 = 62.5% */
+  /* Percentage of user's browser font-size setting */
+  font-size: 62.5%;
+}
+
   /* Text */
 .h1{
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 700;
-  font-size: 56px;
+  font-size: 5.6rem;
   line-height: 125%;
 }
 
@@ -41,7 +49,7 @@
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 4.0rem;
   line-height: 125%;
 }
 
@@ -49,7 +57,7 @@
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 3.2rem;
   line-height: 125%;
 }
 
@@ -57,7 +65,7 @@
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 2.4rem;
   line-height: 125%;
 }
 
@@ -65,7 +73,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 150%;
 }
 
@@ -73,7 +81,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 150%;
 }
 
@@ -81,7 +89,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 1.4rem;
   line-height: 150%;
 }
 
@@ -89,7 +97,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 1.4rem;
   line-height: 150%;
 }
 
@@ -97,7 +105,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 2.0rem;
   line-height: 125%;
 }
 
@@ -105,7 +113,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 2.0rem;
   line-height: 125%;
 }
 
@@ -113,7 +121,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 125%;
 }
 
@@ -121,7 +129,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 125%;
 }
 
@@ -167,6 +175,50 @@
     color: var(--P100);
   } 
 
+  .N900-b{
+    background-color: var(--N900);
+  } 
+  .N800-b{
+    background-color: var(--N800);
+  } 
+  .N700-b{
+    background-color: var(--N700);
+  } 
+  .N600-b{
+    background-color: var(--N600);
+  } 
+  .N500-b{
+    background-color: var(--N500);
+  } 
+  .N400-b{
+    background-color: var(--N400);
+  } 
+  .N300-b{
+    background-color: var(--N300);
+  } 
+  .N200-b{
+    background-color: var(--N200);
+  } 
+  .N100-b{
+    background-color: var(--N100);
+  } 
+  .N000-b{
+    background-color: #fff;
+  } 
+  .P700-b{
+    background-color: var(--P700);
+  } 
+  .P500-b{
+    background-color: var(--P500);
+  } 
+  .P300-b{
+    background-color: var(--P300);
+  } 
+  .P100-b{
+    background-color: var(--P100);
+  } 
+  
+
 /* Buttons */
 
 .btn-r{
@@ -175,15 +227,15 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px;
-  gap: 8px;
+  padding: 1.2rem;
+  gap: 0.8rem;
 
   /* Decorations */
   text-decoration: none;
   color: var(--N100);
   background: var(--P500);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.8px;
 }
 
 .btn-r:hover{
@@ -196,14 +248,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px;
-  gap: 8px;
+  padding: 1.2rem;
+  gap: 0.8rem;
 
   /* Decorations */
   text-decoration: none;
   color: var(--P500);
   border: 1px solid var(--P500);
-  border-radius: 8px;
+  border-radius: 0.8rem;
 }
 
 .btn-i:hover{
@@ -214,8 +266,8 @@
 /* labels */
 
 .lbl-r{
-  padding: 12px;
-  border-radius: 8px;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
   width: 100%;
 
   border: none;
