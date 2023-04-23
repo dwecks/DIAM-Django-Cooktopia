@@ -1,0 +1,379 @@
+:root{
+  /* Neutral */
+  --N900 : #1F2223;
+  --N800 : #363939;
+  --N700 : #57595A;
+  --N600 : #797A7B;
+  --N500 : #8E9090;
+  --N400 : #B1B2B2;
+  --N300 : #D2D3D3;
+  --N200 : #EAEAEA;
+  --N100 : #F6F6F6; 
+
+  /* Primary color */
+  --P700 : #2A5846;
+  --P500 : #0B9A61;
+  --P300 : #6A8B7E;
+  --P100 : #D4DEDA;
+
+  /* Font Family */
+  --headers-font : 'Inter', sans-serif;
+  --text-font : 'Inter', sans-serif;
+  --labels-font : 'Inter', sans-serif;
+}
+
+/**************************/
+/* General */
+/**************************/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* font-size: 10px; */
+
+  /* 10px / 16px = 0.625 = 62.5% */
+  /* Percentage of user's browser font-size setting */
+  font-size: 62.5%;
+}
+
+a, li{
+  text-decoration: none;
+}
+
+/**************************/
+/* Text */
+/**************************/
+.h0{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12.8rem;
+  line-height: 125%;
+}
+
+.h1{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 5.6rem;
+  line-height: 125%;
+}
+
+.h2{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 4.0rem;
+  line-height: 125%;
+}
+
+.h3{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 125%;
+}
+
+.h4{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 125%;
+}
+
+.p1-r{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.0rem;
+  line-height: 150%;
+}
+
+.p1-b{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.0rem;
+  line-height: 150%;
+}
+
+.p2-r{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 150%;
+}
+
+.p2-b{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 150%;
+}
+
+.l1-r{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.0rem;
+  line-height: 125%;
+}
+
+.l1-b{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.0rem;
+  line-height: 125%;
+}
+
+.l2-r{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 125%;
+}
+
+.l2-b{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 125%;
+}
+
+/**************************/
+/* Colors */
+/**************************/
+
+  .N900-c{
+    color: var(--N900);
+  } 
+  .N800-c{
+    color: var(--N800);
+  } 
+  .N700-c{
+    color: var(--N700);
+  } 
+  .N600-c{
+    color: var(--N600);
+  } 
+  .N500-c{
+    color: var(--N500);
+  } 
+  .N400-c{
+    color: var(--N400);
+  } 
+  .N300-c{
+    color: var(--N300);
+  } 
+  .N200-c{
+    color: var(--N200);
+  } 
+  .N100-c{
+    color: var(--N100);
+  } 
+  .P700-c{
+    color: var(--P700);
+  } 
+  .P500-c{
+    color: var(--P500);
+  } 
+  .P300-c{
+    color: var(--P300);
+  } 
+  .P100-c{
+    color: var(--P100);
+  } 
+
+  .N900-b{
+    background-color: var(--N900);
+  } 
+  .N800-b{
+    background-color: var(--N800);
+  } 
+  .N700-b{
+    background-color: var(--N700);
+  } 
+  .N600-b{
+    background-color: var(--N600);
+  } 
+  .N500-b{
+    background-color: var(--N500);
+  } 
+  .N400-b{
+    background-color: var(--N400);
+  } 
+  .N300-b{
+    background-color: var(--N300);
+  } 
+  .N200-b{
+    background-color: var(--N200);
+  } 
+  .N100-b{
+    background-color: var(--N100);
+  } 
+  .N000-b{
+    background-color: #fff;
+  } 
+  .P700-b{
+    background-color: var(--P700);
+  } 
+  .P500-b{
+    background-color: var(--P500);
+  } 
+  .P300-b{
+    background-color: var(--P300);
+  } 
+  .P100-b{
+    background-color: var(--P100);
+  } 
+  
+/**************************/
+/* Buttons */
+/**************************/
+
+.btn-r{
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  gap: 0.8rem;
+
+  /* Decorations */
+  color: var(--N100);
+  background: var(--P500);
+  border: none;
+  border-radius: 0.8px;
+}
+
+.btn-r:hover{
+  background: var(--P300);
+}
+
+.btn-i{
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  gap: 0.8rem;
+
+  /* Decorations */
+  color: var(--P500);
+  border: 1px solid var(--P500);
+  border-radius: 0.8rem;
+}
+
+.btn-i:hover{
+  color: white;
+  background: var(--P500);
+}
+
+/**************************/
+/* Labels */
+/**************************/
+
+.lbl-r{
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  width: 100%;
+
+  border: none;
+  background-color: var(--N200);
+}
+
+.lbl-r:focus{
+  border-color: var(--P500);
+}
+
+/**************************/
+/* Layouts */
+/**************************/
+  .flex-r{    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3.2rem
+  }
+
+  .flex-c{    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+      gap: 3.2rem
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.2rem;
+  }
+
+  .grid--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Header */
+.grid-header{
+  grid-column: 1 / -1;
+}
+
+/**************************/
+/* Spacing */
+/**************************/
+  .section{
+    flex :1;
+    padding: 3.2rem 9.6rem;
+  }
+
+  .grid-header{
+    padding-bottom: 6.4rem;
+  }
+
+.pad-xs{
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+.pad-m{
+  padding-top: 6.4rem;
+  padding-bottom: 6.4rem;
+}
+.pad-l{
+  padding-top: 9.6rem;
+  padding-bottom: 9.6rem;
+}
+
+  /**************************/
+/* Nav */
+/**************************/
+  .nav{
+    list-style: none;
+  }
+
+  .nav a:hover {
+    color: var(--N300);
+  }

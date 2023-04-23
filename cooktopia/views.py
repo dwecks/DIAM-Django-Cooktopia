@@ -23,7 +23,14 @@ from django.conf import settings
 
 
 def home(request):
-    return render(request, 'cooktopia/home.html')
+    context = {}
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
+    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
+    print(
+        f"************************************************ {context['top_recipes']}")
+    print(
+        f"************************************************ {context['new_recipes']}")
+    return render(request, 'cooktopia/home.html', context)
 
 
 def recipes(request):
@@ -72,9 +79,7 @@ def filter_by_preparation_time(request):
 
 @login_required(login_url='login')
 def profile(request):
-    context = {'MEDIA_URL': settings.MEDIA_URL, }
-    print(settings.MEDIA_URL)
-    print(settings.MEDIA_ROOT)
+    context = {'MEDIA_URL': settings.MEDIA_URL, "range": range(1, 10)}
     return render(request, 'cooktopia/profile.html', context)
 
 
@@ -111,8 +116,8 @@ class AddRecipe(FormView):
         recipe.chef = self.request.user.chef
         recipe.pub_date = timezone.now()
         recipe.rating = 0
+        recipe.image = self.request.FILES['image']
         recipe.save()
-        recipe.id = 2
         return HttpResponseRedirect(reverse('addIngredients', args=[recipe.id]))
         # return super().form_valid(form)
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Chef(models.Model):
     name = models.CharField(max_length=200)
+    photo = models.ImageField(upload_to="profile", null=True)
     followers = models.ManyToManyField("Chef")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -35,8 +36,13 @@ class Difficulty(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+
+
 class Recipe(models.Model):
     title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to="recipes", null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=200)
     difficulty = models.ForeignKey(Difficulty, on_delete=models.DO_NOTHING)
