@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views import View
 from .models import MealType
+from django.db.models import Q
+from .models import Recipe
 
 # forms
 from django.views.generic.edit import CreateView, FormView
@@ -38,6 +40,34 @@ def my_view(request):
 def my_view(request):
     difficulties = Difficulty.objects.all()
     return render(request, 'my_template.html', {'difficulties': difficulties})
+
+
+def filter_by_preparation_time(request):
+    # Retrieve the selected preparation time ranges from the request
+    time_ranges = request.GET.getlist('preparationTime')
+
+    # Create a list of Q objects to filter the recipes
+    filters = []
+    for time_range in time_ranges:
+        if time_range == '0,30':
+            filters.append(Q(preparationTime__lte=30))
+        elif time_range == '30,60':
+            filters.append(Q(preparationTime__gt=30) & Q(preparationTime__lte=60))
+        elif time_range == '60,':
+            filters.append(Q(preparationTime__gt=60))
+
+    # Apply the filters to the Recipe model
+    if filters:
+        recipes = Recipe.objects.filter(*filters)
+    else:
+        recipes = Recipe.objects.all()
+
+    # Pass the filtered recipes to the template
+    context = {
+        'recipes': recipes
+    }
+    return render(request, 'filter_by_preparation_time.html', context)
+
 
 
 @login_required(login_url='login')
