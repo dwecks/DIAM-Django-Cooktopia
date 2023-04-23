@@ -20,10 +20,13 @@ from django.conf import settings
 
 
 def home(request):
-    top_recipes = Recipe.objects.order_by("rating")[:6]
-    recent_recipes = Recipe.objects.order_by('-pub_date')[:3]
-    context = {'MEDIA_URL': settings.MEDIA_URL,
-               "top_recipes": top_recipes, "recent_recipes ": recent_recipes}
+    context = {}
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
+    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
+    print(
+        f"************************************************ {context['top_recipes']}")
+    print(
+        f"************************************************ {context['new_recipes']}")
     return render(request, 'cooktopia/home.html', context)
 
 

@@ -1,22 +1,13 @@
-<article class="publication">
-    <header>          
-        <picture class="profile-pic">
-        <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
-        </picture>
-        <div class="publication-title">
-            <h3 class="h4 P700-c">recipe.title</h3>
-            <span class="p1-b N700-c">something somentig</span>
-        </div>
-    </header>
-    <div class="p1-r">
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate rem laudantium, porro voluptatum magnam ex vero temporibus obcaecati molestiae dolorum eligendi sit dolor voluptas recusandae non dicta, natus reprehenderit! Molestias?
-        </p>
-    </div>
-    <picture class="publication-img">
-        <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+<div class="basic-card N000-b">
+    <picture class = "basic-card-imgbox">
+        <img  src="{{recipe.image.url}}" alt="Recipe Image">
     </picture>
-    <footer>
-        <span>Icon 17</span><span>Ic share</span>
-    </footer>
-</article>
+    <div class="basic-card-content flex-c">
+        <div>
+            <h3 class="h2">{{recipe.title}}</h3>
+            <h4 class="h4 N700-c">By Chef {{recipe.chef.name}}</h4>
+        </div>
+        <p class="p1-r basic-card-hiden">{{recipe.description}}</p>
+        <a class="btn-r l1-r basic-card-hiden" href="#">Explore Recipe</a>
+    </div>
+</div>

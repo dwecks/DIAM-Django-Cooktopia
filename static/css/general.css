@@ -22,6 +22,10 @@
   --labels-font : 'Inter', sans-serif;
 }
 
+/**************************/
+/* General */
+/**************************/
+
 *{
   margin: 0;
   padding: 0;
@@ -36,7 +40,21 @@ html {
   font-size: 62.5%;
 }
 
-  /* Text */
+a, li{
+  text-decoration: none;
+}
+
+/**************************/
+/* Text */
+/**************************/
+.h0{
+  font-family: var(--headers-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12.8rem;
+  line-height: 125%;
+}
+
 .h1{
   font-family: var(--headers-font);
   font-style: normal;
@@ -73,7 +91,7 @@ html {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: 2.0rem;
   line-height: 150%;
 }
 
@@ -81,7 +99,7 @@ html {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 2.0rem;
   line-height: 150%;
 }
 
@@ -89,7 +107,7 @@ html {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 150%;
 }
 
@@ -97,7 +115,7 @@ html {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 150%;
 }
 
@@ -133,7 +151,9 @@ html {
   line-height: 125%;
 }
 
-  /* Colors */
+/**************************/
+/* Colors */
+/**************************/
 
   .N900-c{
     color: var(--N900);
@@ -218,8 +238,9 @@ html {
     background-color: var(--P100);
   } 
   
-
+/**************************/
 /* Buttons */
+/**************************/
 
 .btn-r{
   /* Auto layout */
@@ -231,7 +252,6 @@ html {
   gap: 0.8rem;
 
   /* Decorations */
-  text-decoration: none;
   color: var(--N100);
   background: var(--P500);
   border: none;
@@ -252,7 +272,6 @@ html {
   gap: 0.8rem;
 
   /* Decorations */
-  text-decoration: none;
   color: var(--P500);
   border: 1px solid var(--P500);
   border-radius: 0.8rem;
@@ -263,7 +282,9 @@ html {
   background: var(--P500);
 }
 
-/* labels */
+/**************************/
+/* Labels */
+/**************************/
 
 .lbl-r{
   padding: 1.2rem;
@@ -277,3 +298,82 @@ html {
 .lbl-r:focus{
   border-color: var(--P500);
 }
+
+/**************************/
+/* Layouts */
+/**************************/
+  .flex-r{    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3.2rem
+  }
+
+  .flex-c{    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+      gap: 3.2rem
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.2rem;
+  }
+
+  .grid--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Header */
+.grid-header{
+  grid-column: 1 / -1;
+}
+
+/**************************/
+/* Spacing */
+/**************************/
+  .section{
+    flex :1;
+    padding: 3.2rem 9.6rem;
+  }
+
+  .grid-header{
+    padding-bottom: 6.4rem;
+  }
+
+.pad-xs{
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+.pad-m{
+  padding-top: 6.4rem;
+  padding-bottom: 6.4rem;
+}
+.pad-l{
+  padding-top: 9.6rem;
+  padding-bottom: 9.6rem;
+}
+
+  /**************************/
+/* Nav */
+/**************************/
+  .nav{
+    list-style: none;
+  }
+
+  .nav a:hover {
+    color: var(--N300);
+  }

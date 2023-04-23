@@ -15,20 +15,20 @@
     <title>{% block title %} Default Title {% endblock %}</title>
   </head>
   <body>
-    <header class="main-header">
+    <header class="section flex-r P700-b">
       <span>Logo</span>
       <nav>
-        <ul class="main-nav l2-r">
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'recipes' %}">Recipes</a></li>
-          <li><a href="{% url 'reels' %}">Reels</a></li>
+        <ul class="nav flex-r">
+          <li><a class="N100-c l1-r" href="{% url 'home' %}">Home</a></li>
+          <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li>
+          <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>
         </ul>
       </nav>
       <a href="{% url 'profile' %}">Icon</a>
     </header>
     <main>{% block content %} {% endblock %}</main>
   </body>
-  <footer class="base-footer">
+  <footer class="section flex-r P700-b">
     <h2 class="h3 N100-c">COOKTOPIA ...</h2>
   </footer>
 </html>
