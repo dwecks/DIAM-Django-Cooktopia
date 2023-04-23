@@ -1,69 +1,183 @@
-body {
-  display: flex;
-  height: 100vw;
-  flex-direction: column;
-}
-
 /**************************/
-/* HEADER */
+/* Buttons*/
 /**************************/
 
-  .main-header{
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 96px;
-    flex :1;
-  
-    /* Primary/P700 */
-    background: var(--P700);
-  
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-  }
-  
-  .main-nav{
-    list-style: none;
-  
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 32px;
-  
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-  }
-
-  .main-nav li{
+/* Btn Growing Border */
+.btn-gb {
+    padding: 3.2rem;
     text-decoration: none;
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    letter-spacing: 1rem;
+    overflow: hidden;
   }
   
-  .main-nav a{
-    color: var(--N100);
+  .btn-gb:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 0.4rem;
+    background-color: white;
+    transition: all 0.5s;
   }
   
-  .main-nav a:hover{
-    color: var(--N300);
+  .btn-gb:hover:before {
+    left: 0;
+  }
+  
+  .btn-gb:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 0.4rem;
+    background-color: white;
+    transition: all 0.5s;
+  }
+  
+  .btn-gb:hover:after {
+    right: 0;
+  }
+  
+  .btn-gb span:before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    right: 0;
+    width: 0.4rem;
+    height: 100%;
+    background-color: white;
+    transition: all 0.5s;
+  }
+  
+  .btn-gb:hover span:before {
+    top: 0;
+  }
+  
+  .btn-gb span:after {
+    content: "";
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 0.4rem;
+    height: 100%;
+    background-color: white;
+    transition: all 0.5s;
+  }
+  
+  .btn-gb:hover span:after {
+    bottom: 0;
   }
 
-  body main{
-    flex: 1;
+/**************************/
+/* Cards */
+/**************************/
+
+/* Basic Card */
+  .basic-card {
+    position: relative;
+    height: 40vh;
+    box-shadow: 0rem 1.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    background-color: black;
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+   
+  .basic-card-imgbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+  }
+  
+  .basic-card-imgbox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
   }
 
-  .base-footer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 32px 96px;
-    height: 200px;
-    background-color: var(--P700);
+  .basic-card-content{
+    box-shadow: 0rem 1.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    padding: 3.2rem 6.4rem;
+    padding-top: 2.0rem;
+    border-top-left-radius: 1.6rem;
+    border-top-right-radius: 1.6rem;
+    position: absolute;
+    bottom: 0%;
+    width: 80%;
+    height: 10rem;
+    text-align: center;
+    background-color :  white;
+    left: 10%;
+    overflow: hidden;
+    transition: 0.5s;
   }
+
+  .basic-card-hiden{
+    opacity: 0;
+  }
+
+  .basic-card:hover .basic-card-hiden{
+    opacity: 1;
+  }
+ 
+  .basic-card:hover .basic-card-content {
+    height: 100%;
+    width: 100%;
+    left: 0%;
+  }
+
+  .basic-card:hover img {
+    opacity: 0;
+  }
+
+  /* Recipe Card */
+  
+.recipe-card{
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  padding: 3.2rem;
+  border-radius: 1.6rem;
+ }
+ 
+ .recipe-card header{
+     display: flex;
+     gap: 3.2rem;
+ }
+ 
+ .profile-imgbox{
+ width: 9.6rem;
+ height: 9.6rem;
+ border-radius: 200px;
+ overflow: hidden;
+ }
+ 
+ .recipe-card-imgbox{
+     flex: 1;
+     border-radius: 1.6rem;
+     overflow: hidden;
+ }
+   
+   .recipe-card-imgbox img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     transition: 0.5s;
+   }
+ 
+   .recipe-card-imgbox img:hover {
+     transform: scale(1.1);
+   }
+ 
