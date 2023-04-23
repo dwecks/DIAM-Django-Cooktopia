@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views import View
+from .models import MealType
 
 # forms
 from django.views.generic.edit import CreateView, FormView
@@ -29,6 +30,14 @@ def recipes(request):
 
 def reels(request):
     return render(request, 'cooktopia/reels.html')
+
+def my_view(request):
+    meal_types = MealType.objects.all()
+    return render(request, 'my_template.html', {'meal_types': meal_types})
+
+def my_view(request):
+    difficulties = Difficulty.objects.all()
+    return render(request, 'my_template.html', {'difficulties': difficulties})
 
 
 @login_required(login_url='login')
