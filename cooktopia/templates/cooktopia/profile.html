@@ -2,53 +2,51 @@
 {% load static %}
 
 {% block css %} 
-    <link rel="stylesheet" href="{% static '/css/profile.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
 {% endblock %}
 
 {% block title %} Recipes {% endblock %} 
 
 {% block content %}
-    <img class="banner" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
-    <section class="profile">
-        <div class="top">
+    <img class="banner" src="{{publications.0.image.url}}" alt="">
+    <section class="profile section">
+        <header class="profile-info pad-xs">
             <picture class="profile-pic">
-                <img class="profile-img" src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
+                <img class="profile-img" src="{{chef.photo.url}}" alt="">
             </picture>
-            <div class="profile-title">
-                <h1 class="h2">Joao Oliveira</h1>
+            <div>
+                <h1 class="h2">{{chef.name}}</h1>
                 <span class="h4 N700-c">Master Chef</span>
             </div>
             <div class="add-btn-container">
-                <a class="btn-r add-btn l2-b" href="{% url 'addRecipe' %}">+ Add recipe</a>
+                {% if is_home %}
+                    <a class="btn-r add-btn l2-b" href="{% url 'addRecipe' %}">+ Add recipe</a>
+                {% else %}
+                    <a class="btn-r add-btn l2-b" href="{% url 'addRecipe' %}">follow ?? </a>
+                {% endif %}
             </div>
-        </div>
+        </header>
         <nav>
-            <ul class="profile-nav l2-r">
+            <ul class="nav flex-r-c l1-r">
               <li><a href="{% url 'home' %}">Publication</a></li>
               <li><a href="{% url 'recipes' %}">Account Info</a></li>
               <li><a href="{% url 'reels' %}">Friends</a></li>
             </ul>
         </nav>
     </section>
-    <section class="publications">
-        {% for i in range %}
-            <article class="publication">
-                <div class="publication-title">
-                    <h3 class="h4 P700-c">Mouse de Chocolate</h3>
-                    <span class="p1-b N700-c">something somentig</span>
-                </div>
-                <div class="p1-r">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate rem laudantium, porro voluptatum magnam ex vero temporibus obcaecati molestiae dolorum eligendi sit dolor voluptas recusandae non dicta, natus reprehenderit! Molestias?
-                    </p>
-                </div>
-                <picture class="publication-img">
-                    <img  src="{{MEDIA_URL}}recipes/food.jpeg" alt="">
-                </picture>
-                <footer>
-                    <span>Icon 17</span><span>Ic share</span>
-                </footer>
-            </article>
+    <section class="section grid grid--3-cols N100-b">
+        {% for recipe in publications %}  
+            {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+        {% endfor %}
+    </section>
+    <section class="section grid grid--3-cols N100-b">
+        {% for chef in followers %}  
+            <a href="{% url 'profile' chef.id %}"><h1>{{chef.name}}</h1></a>
+        {% endfor %}
+    </section>
+    <section class="section grid grid--3-cols N100-b">
+        {% for chef in followers %}  
+            <h1>{{chef.name}}</h1>
         {% endfor %}
     </section>
 {% endblock %}

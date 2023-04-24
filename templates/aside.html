@@ -9,30 +9,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/e411f8d5f5.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static '/css/general.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/aside.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/queries.css' %}" />
     {% block css %}{% endblock %}
     <title>{% block title %} Default Title {% endblock %}</title>
   </head>
   <body>
-    <section>
-      <aside class="left">
-        <header>
-        <p>Logo</p>
-        <a href="{% url 'home' %}">Home</a>
-      </header>
-      <article>
-        <h2 class="h2">{% block side-header %} title {% endblock %}</h2>
-        <p class="h4" >{% block side-text %} Lorem ipsum dolor sit amet consectetur adipisicing elit.  {% endblock %}</p>
-      </article>
-      <footer>
-        {% block side-footer %} Footer {% endblock %}
-      </footer>
-      </aside>
-      <aside class="rigth">
-        {% block right %}{% endblock %}
-      </aside>
-      <main>{% block content %} {% endblock %}</main>
-    </section>
+      <section class="flex-fill">
+        <aside class="left">
+          <header>
+            <span class="font-logo"><i class="fa-solid fa-fire-burner"></i> Cooktopia</span>
+          <a href="{% url 'home' %}"><i class="fa-solid fa-house icon-s N200-c"></i></a>
+        </header>
+        <article>
+          <h2 class="h2">{% block side-header %} title {% endblock %}</h2>
+          <p class="h4" >{% block side-text %} Lorem ipsum dolor sit amet consectetur adipisicing elit.  {% endblock %}</p>
+        </article>
+        <footer>
+          {% block side-footer %} Footer {% endblock %}
+        </footer>
+        </aside>
+        <aside class="rigth">
+          {% block right %}{% endblock %}
+        </aside>
+        <main>{% block content %} {% endblock %}</main>
+      </section>
   </body>
 </html>

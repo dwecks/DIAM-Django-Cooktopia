@@ -41,7 +41,7 @@ class Category(models.Model):
 
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=30)
     image = models.ImageField(upload_to="recipes", null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=200)

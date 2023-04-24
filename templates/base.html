@@ -9,22 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/e411f8d5f5.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static '/css/general.css' %}" />
     <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/queries.css' %}" />
     {% block css %}{% endblock %}
     <title>{% block title %} Default Title {% endblock %}</title>
   </head>
   <body>
-    <header class="section flex-r P700-b">
-      <span>Logo</span>
-      <nav>
-        <ul class="nav flex-r">
+    <header class="main-header section flex-r P700-b">
+      <span class="font-logo"><img class="header-icon" src="{{MEDIA_URL}}icons/chef-hat.png" alt=""> Cooktopia</span>
+      <nav class="header-center" >
+        <ul class="nav flex-r-c ">
           <li><a class="N100-c l1-r" href="{% url 'home' %}">Home</a></li>
           <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li>
           <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>
+      
+          {% if user.is_authenticated %}
+            <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Account</a></li>
+        {% else %}
+          <li><a class="N100-c l1-r" href="{% url 'login' %}">Login</a></li>
+      {% endif %}  
         </ul>
       </nav>
-      <a href="{% url 'profile' %}">Icon</a>
+      <div class="flex-r">
+      {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">
+            <i class="fa-solid fa-arrow-right-from-bracket icon-m N100-c"></i>
+          </a>
+      {% endif %}  
+      </div> 
     </header>
     <main>{% block content %} {% endblock %}</main>
   </body>

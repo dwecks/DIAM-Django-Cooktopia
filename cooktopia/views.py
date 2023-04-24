@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import View
 
 # forms
@@ -21,12 +21,9 @@ from django.conf import settings
 
 def home(request):
     context = {}
-    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
-    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
-    print(
-        f"************************************************ {context['top_recipes']}")
-    print(
-        f"************************************************ {context['new_recipes']}")
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:6]
+    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:6]
+    context['MEDIA_URL'] = settings.MEDIA_URL
     return render(request, 'cooktopia/home.html', context)
 
 
@@ -39,15 +36,25 @@ def reels(request):
 
 
 @login_required(login_url='login')
-def profile(request):
-    context = {'MEDIA_URL': settings.MEDIA_URL, "range": range(1, 10)}
+def profile(request, chef_id):
+    context = {}
+    context['chef'] = Chef.objects.get(id=chef_id)
+    context['publications'] = Recipe.objects.filter(chef=chef_id)
+    context["is_home"] = chef_id == request.user.chef.id
+    context["followers"] = Chef.objects.filter(followers=chef_id)
+    context["following"] = context['chef'].chef_set
+    context['MEDIA_URL'] = settings.MEDIA_URL
     return render(request, 'cooktopia/profile.html', context)
+
+
+def logoutview(request):
+    logout(request)
+    return redirect(reverse('home'))
 
 
 class Login(FormView):
     form_class = LoginForm
     template_name = "cooktopia/login.html"
-    success_url = "profile"
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
@@ -60,12 +67,15 @@ class Login(FormView):
 
         return self.form_invalid(form)
 
+    def get_success_url(self):
+        return reverse("profile", kwargs={"chef_id": self.request.user.chef.id})
+
 
 class Registration(CreateView):
     model = Chef
     template_name = "cooktopia/registration.html"
     form_class = RegitracioForm
-    success_url = "profile"
+    success_url = "login"
 
 
 class AddRecipe(FormView):
@@ -119,4 +129,4 @@ class AddSteps(View):
                 recipe_step = form.save(commit=False)
                 recipe_step.recipe = recipe
                 recipe_step.save()
-        return redirect(reverse('profile'))
+        return redirect(reverse("profile", kwargs={"chef_id": self.request.user.chef.id}))
