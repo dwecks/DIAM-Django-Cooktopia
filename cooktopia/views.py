@@ -40,11 +40,11 @@ def recipes(request):
 def reels(request):
     return render(request, 'cooktopia/reels.html')
 
-def my_view(request):
+def meal_types_view(request):
     meal_types = MealType.objects.all()
     return render(request, 'my_template.html', {'meal_types': meal_types})
 
-def my_view(request):
+def difficulties_view(request):
     difficulties = Difficulty.objects.all()
     return render(request, 'my_template.html', {'difficulties': difficulties})
 
@@ -74,6 +74,31 @@ def filter_by_preparation_time(request):
         'recipes': recipes
     }
     return render(request, 'filter_by_preparation_time.html', context)
+def filter_by_difficulty(request, difficulty_id):
+    difficulty = Difficulty.objects.get(pk=difficulty_id)
+    recipes = Recipe.objects.filter(difficulty=difficulty)
+    return render(request, 'my_template.html', {'recipes': recipes})
+
+def filter_by_meal_type(request, meal_type_id):
+    meal_type = MealType.objects.get(pk=meal_type_id)
+    recipes = Recipe.objects.filter(meal_type=meal_type)
+    return render(request, 'my_template.html', {'recipes': recipes}) #qeq eu ponho aqui
+
+def filter_by_bub_date(request):
+    today = timezone.now().date()
+    last_week = today - timedelta(days=7)
+    last_month = today - timedelta(days=30)
+    last_year = today - timedelta(days=365)
+    pub_date = request.GET.get('pub_date')
+    if pub_date == 'week':
+        recipes = Recipe.objects.filter(published_date__gte=last_week)
+    elif pub_date == 'month':
+        recipes = Recipe.objects.filter(published_date__gte=last_month)
+    elif pub_date == 'year':
+        recipes = Recipe.objects.filter(published_date__gte=last_year)
+    else:
+        recipes = Recipe.objects.all()
+    return render(request, 'recipe_list.html', {'recipes': recipes})
 
 
 

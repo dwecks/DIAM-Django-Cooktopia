@@ -64,7 +64,7 @@ header {
     background: #2A5846;
 }
 
-topDivDiv {
+.topDivDiv {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -121,7 +121,7 @@ topDivDiv {
     height: 1233px;
 }
 
-.filtersDiv, .filter_frame {
+.filtersDiv, .filters_frame {
     flex-direction: column;
     align-items: flex-start;
     gap: 32px;
@@ -138,7 +138,7 @@ topDivDiv {
     flex-grow: 1;
 }
 
-.h1 { /*filters_frame_title*/
+h2 { /*filters_frame_title*/
     width: 98px;
     height: 50px;
     font-size: 40px;
