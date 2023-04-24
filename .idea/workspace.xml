@@ -4,7 +4,6 @@
     <list default="true" id="893828ca-ee55-4510-a901-f357c82b068b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cooktopia/templates/cooktopia/recipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/templates/cooktopia/recipes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cooktopia/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/recipes.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/recipes.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
