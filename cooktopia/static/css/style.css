@@ -1,0 +1,87 @@
+/**************************/
+/* Home Page */
+/**************************/
+
+/* Hero */
+.hero{
+    text-align: center;
+}
+
+/* Hero */
+
+.info-card{
+    padding: 2.0rem;
+    text-align: center;
+    border-radius: 1.6rem;
+}
+.info-card i{
+opacity: 50%;
+}
+/* Stats */
+.stats{
+    /* Auto layout */
+
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+padding: 3.2rem 0rem;
+gap: 32px;
+
+flex: 1;
+
+/* Primary/P400 */
+
+background: var(--P700);
+}
+
+/**************************/
+/* Profile */
+/**************************/
+
+.banner{
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+}
+
+.profile-info{
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 1.6rem;
+    border-bottom: 1px solid var(--N300);
+}
+
+.profile-pic{
+    position: relative;
+}
+
+.profile-img{
+    width: 18rem;
+    height: 18rem;
+    border-radius: 200px;
+
+    border: 4px solid #F6F6F6;
+}
+
+.profile-title{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.add-btn-container{
+    height: 100%;
+    flex : 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.profile nav{
+  padding-top: 3.2rem;
+}

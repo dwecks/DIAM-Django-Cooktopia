@@ -1,4 +1,94 @@
 /**************************/
+/* Main Header*/
+/**************************/
+.main-header{
+  position: relative;
+}
+
+.header-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-open nav{
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.header-icon{
+  width: 4rem;
+  height: 4rem;
+  filter: invert(100%) ;
+}
+
+.fa-bars ,
+.fa-xmark{
+  display: none;
+  z-index: 20;
+}
+
+.font-logo{
+  font-family: var(--display-font);
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 125%;
+  gap: 1rem;
+}
+
+/**************************/
+/* Auto Forms Formating*/
+/**************************/
+
+.flex-fill{
+  flex :1;
+  display: flex;
+}
+
+
+.left{
+  flex: 6;
+  background-color: var(--P700);
+
+  padding: 9.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12.8rem;
+}
+
+.left header{
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left article{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap : 3.2rem;
+}
+
+.left article p{
+  color: var(--N300);
+}
+
+.rigth{
+  flex: 10;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6.4rem;
+}
+
+/**************************/
 /* Buttons*/
 /**************************/
 
@@ -84,7 +174,7 @@
 /* Basic Card */
   .basic-card {
     position: relative;
-    height: 40vh;
+    height: 40rem;
     box-shadow: 0rem 1.5rem 1.5rem rgba(0, 0, 0, 0.25);
     background-color: black;
     border-radius: 1.6rem;
@@ -109,7 +199,7 @@
 
   .basic-card-content{
     box-shadow: 0rem 1.5rem 1.5rem rgba(0, 0, 0, 0.25);
-    padding: 3.2rem 6.4rem;
+    padding: 3.2rem 1.6rem;
     padding-top: 2.0rem;
     border-top-left-radius: 1.6rem;
     border-top-right-radius: 1.6rem;
@@ -160,7 +250,7 @@
  .profile-imgbox{
  width: 9.6rem;
  height: 9.6rem;
- border-radius: 200px;
+ border-radius: 20rem;
  overflow: hidden;
  }
  

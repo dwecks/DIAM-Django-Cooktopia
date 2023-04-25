@@ -9,26 +9,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/e411f8d5f5.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static '/css/general.css' %}" />
     <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/queries.css' %}" />
     {% block css %}{% endblock %}
     <title>{% block title %} Default Title {% endblock %}</title>
   </head>
   <body>
-    <header class="section flex-r P700-b">
-      <span>Logo</span>
-      <nav>
-        <ul class="nav flex-r">
+    <header class="main-header nav-open section flex-r P700-b">
+      <span class="font-logo flex-r"><img class="header-icon" src="{{MEDIA_URL}}icons/chef-hat.png" alt=""> Cooktopia</span>
+      <nav class="header-center" >
+        <ul class="nav header-nav flex-r-c ">
           <li><a class="N100-c l1-r" href="{% url 'home' %}">Home</a></li>
           <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li>
-          <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>
+          <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>     
+          {% if user.is_authenticated %}
+            <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Account</a></li>
+            <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Logout</a></li>
+          {% else %}
+            <li><a class="N100-c l1-r" href="{% url 'login' %}">Login</a></li>
+          {% endif %}  
         </ul>
-      </nav>
-      <a href="{% url 'profile' %}">Icon</a>
+      </nav> 
+      <div>
+        <i class="fa-solid fa-bars N100-c icon-m "></i>
+        <i class="fa-solid fa-xmark N800-c icon-m nav-icon"></i>
+      </div>
     </header>
+
     <main>{% block content %} {% endblock %}</main>
+  
+    <footer class="section flex-r P700-b">
+      <h2 class="h3 N100-c">COOKTOPIA ...</h2>
+    </footer>
+
   </body>
-  <footer class="section flex-r P700-b">
-    <h2 class="h3 N100-c">COOKTOPIA ...</h2>
-  </footer>
 </html>

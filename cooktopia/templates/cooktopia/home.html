@@ -1,25 +1,50 @@
 {% extends 'base.html' %} <!-- Tem de ser a primeira linha -->
 {% load static %}
 
-{% block css %}<link rel="stylesheet" href="{% static '/css/home.css' %}" />{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static '/css/style.css' %}" />{% endblock %}
 
 {% block title %}Home{% endblock %} 
 
 {% block content %}
     <!-- Hero  -->
-    <section class="section hero P700-b">
-        <a class="btn-gb" href="{% url 'recipes' %}"> <div class="flex-c"><span class="h0">Find</span> <span class="h1">Your Favorite Meal</span></div></a>
+    <section class="section hero P700-b pad-b-m">
+        <a class="btn-gb" href="{% url 'recipes' %}"> 
+            <div class="flex-c">
+                <span class="h0">Find</span> 
+                <span class="h1">Your Favorite Meal</span>
+            </div>
+        </a>
     </section>
 
-    <!-- Top Recipes  -->
-    <section class="section grid pad-l N200-b">
-        <header class="grid-header flex-r">
+     <!-- Icons  -->
+    <section class="section grid grid--4-cols N200-b pad-t-m">
+        <div class="flex-c info-card">
+            <i class="fa-solid fa-book icon-g"></i>
+            <p class="p1-r" >Recipes for every occasion, right at your fingertips</p>
+        </div>
+        <div class="flex-c info-card">
+            <i class="fa-solid fa-utensils icon-g"></i>
+            <p class="p1-r" >Savor every bite with our endless recipe collection</p>
+        </div>
+        <div class="flex-c info-card">
+            <i class="fa-solid fa-kitchen-set icon-g"></i>
+            <p class="p1-r" >Get insider tips and techniques from the world's top chefs</p>
+        </div>
+        <div class="flex-c info-card">
+            <i class="fa-solid fa-diagram-project icon-g"></i>
+            <p class="p1-r" >Create a shared recipe collection with your friends and family</p>
+        </div>
+    </section>
+
+     <!-- Top Recipes  -->
+    <section class="section grid grid--3-cols N200-b pad-t-m pad-b-l">
+        <header class="grid-header flex-r pad-b-s">
             <aside>
-                <h2 class="h1">Receitas Populares</h2>
-                <p class="h3 N600-c">Outro Texto</p>
+                <h2 class="h2 pad-b-s">Most Popular Recipes</h2>
+                <p class="h3 N600-c">Taste-tested and approved</p>
             </aside>
             <aside>
-                <a class="h3 P700-c" href="{% url 'recipes' %}">See all</a>
+                <a class="h3 P500-c" href="{% url 'recipes' %}">See all</a>
             </aside>
         </header>
         {% for recipe in top_recipes %}  
@@ -28,18 +53,26 @@
     </section>
 
     <!-- Stats Banner  -->
-    <section class="stats">
-
-
-    </section>
+    <!-- <section class="section stats">
+        <div class="flex-c">
+            <i class="fa-regular fa-user icon-g N100-c"></i>
+            <h2 class="h2 N100-c">4000</h2>
+        </div>
+        <button class="btn-i">Join the Community
+        </button>
+        <div class="flex-c">
+            <i class="fa-regular fa-user icon-g N100-c"></i>
+            <h2 class="h2 N100-c">4000</h2>
+        </div>
+    </section> -->
 
     <!-- Stats Banner  -->
-    <section class="section pad-l grid grid--2-cols N200-b">
-        <header class="grid-header flex-r"> 
-            <h2 class="h1">Fresh From Our Community</h2>
+    <section class="section pad-l grid grid--3-cols N200-b pad-b-m">
+        <header class="grid-header flex-r pad-b-s"> 
+            <h2 class="center h1">Fresh From Our Community</h2>
         </header>
             {% for recipe in new_recipes %}  
-                {% include 'cooktopia/snippets/recipeCard.html' %}
+                {% include 'cooktopia/snippets/basicRecipeCard.html' %}
             {% endfor %}
     </section>
 {% endblock %}

@@ -14,12 +14,13 @@
   --P700 : #2A5846;
   --P500 : #0B9A61;
   --P300 : #6A8B7E;
-  --P100 : #D4DEDA;
+  --P100 : rgb(212, 222, 218);
 
   /* Font Family */
   --headers-font : 'Inter', sans-serif;
   --text-font : 'Inter', sans-serif;
   --labels-font : 'Inter', sans-serif;
+  --display-font : 'Lobster', cursive;
 }
 
 /**************************/
@@ -30,6 +31,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body{
+  overflow-x: hidden;
 }
 
 html {
@@ -59,7 +64,7 @@ a, li{
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 700;
-  font-size: 5.6rem;
+  font-size: 5.2rem;
   line-height: 125%;
 }
 
@@ -67,14 +72,14 @@ a, li{
   font-family: var(--headers-font);
   font-style: normal;
   font-weight: 700;
-  font-size: 4.0rem;
+  font-size: 4.4rem;
   line-height: 125%;
 }
 
 .h3{
   font-family: var(--headers-font);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 3.2rem;
   line-height: 125%;
 }
@@ -82,7 +87,7 @@ a, li{
 .h4{
   font-family: var(--headers-font);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 2.4rem;
   line-height: 125%;
 }
@@ -122,7 +127,7 @@ a, li{
 .l1-r{
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 2.0rem;
   line-height: 125%;
 }
@@ -149,6 +154,11 @@ a, li{
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 125%;
+}
+
+.center{
+  width: 100%;
+  text-align: center;
 }
 
 /**************************/
@@ -310,6 +320,14 @@ a, li{
     gap: 3.2rem
   }
 
+  .flex-r-c{    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3.2rem
+  }
+
   .flex-c{    
     display: flex;
     flex-direction: column;
@@ -324,6 +342,10 @@ a, li{
     gap: 3.2rem;
   }
 
+  .grid--1-cols {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   .grid--2-cols {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -336,44 +358,80 @@ a, li{
     grid-template-columns: repeat(4, 1fr);
   }
 
-  /* Header */
-.grid-header{
-  grid-column: 1 / -1;
-}
+/* Header */
+  .grid-header{
+    grid-column: 1 / -1;
+
+  }
 
 /**************************/
 /* Spacing */
 /**************************/
   .section{
     flex :1;
-    padding: 3.2rem 9.6rem;
+    padding: 2.0rem 9.6rem;
   }
 
-  .grid-header{
+  .pad-b-xs{
+    padding-bottom: 0.8rem;
+  }
+  .pad-b-s{
+    padding-bottom: 1.6rem;
+  }
+  .pad-b-m{
     padding-bottom: 6.4rem;
   }
+  .pad-b-l{
+    padding-bottom: 9.6rem;
+  }
 
-.pad-xs{
-  padding-top: 1.6rem;
-  padding-bottom: 1.6rem;
-}
-
-.pad-m{
-  padding-top: 6.4rem;
-  padding-bottom: 6.4rem;
-}
-.pad-l{
-  padding-top: 9.6rem;
-  padding-bottom: 9.6rem;
-}
+  .pad-t-xs{
+    padding-top: 0.8rem;
+  }
+  .pad-t-s{
+    padding-top: 1.6rem;
+  }
+  .pad-t-m{
+    padding-top: 3.2rem;
+  }
+  .pad-t-m{
+    padding-top: 6.4rem;
+  }
+  .pad-t-l{
+    padding-top: 9.6rem;
+  }
 
   /**************************/
 /* Nav */
 /**************************/
   .nav{
     list-style: none;
+    align-self: center;
   }
 
   .nav a:hover {
     color: var(--N300);
   }
+
+/**************************/
+/* Fonts Awesome icons */
+/**************************/
+
+  .icon-s {
+    font-size: 2.4rem;
+  }
+  
+
+  .icon-m {
+    font-size: 3.2rem;
+  }
+  
+
+  .icon-b {
+    font-size: 4.0rem;
+  }
+  
+  .icon-g {
+    font-size: 6.4rem;
+  }
+  
