@@ -29,8 +29,8 @@
         <nav>
             <ul class="nav flex-r-c l1-r">
               <li><a href="{% url 'home' %}">Publication</a></li>
-              <li><a href="{% url 'recipes' %}">Account Info</a></li>
-              <li><a href="{% url 'reels' %}">Friends</a></li>
+              <li><a href="{% url 'recipes' %}">Followers</a></li>
+              <li><a href="{% url 'reels' %}">Following</a></li>
             </ul>
         </nav>
     </section>
@@ -49,4 +49,7 @@
             <h1>{{chef.name}}</h1>
         {% endfor %}
     </section>
+{% endblock %}
+
+{% block profile-content %}
 {% endblock %}

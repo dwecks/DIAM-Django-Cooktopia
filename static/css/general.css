@@ -14,7 +14,7 @@
   --P700 : #2A5846;
   --P500 : #0B9A61;
   --P300 : #6A8B7E;
-  --P100 : #D4DEDA;
+  --P100 : rgb(212, 222, 218);
 
   /* Font Family */
   --headers-font : 'Inter', sans-serif;
@@ -31,6 +31,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body{
+  overflow-x: hidden;
 }
 
 html {
@@ -336,6 +340,10 @@ a, li{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3.2rem;
+  }
+
+  .grid--1-cols {
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .grid--2-cols {

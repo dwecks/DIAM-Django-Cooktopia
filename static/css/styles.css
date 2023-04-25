@@ -12,11 +12,23 @@
   transform: translate(-50%, -50%);
 }
 
+.nav-open nav{
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(0);
+}
 
 .header-icon{
   width: 4rem;
   height: 4rem;
   filter: invert(100%) ;
+}
+
+.fa-bars ,
+.fa-xmark{
+  display: none;
+  z-index: 20;
 }
 
 .font-logo{
@@ -26,6 +38,7 @@
   font-weight: 700;
   font-size: 3.2rem;
   line-height: 125%;
+  gap: 1rem;
 }
 
 /**************************/
@@ -37,14 +50,15 @@
   display: flex;
 }
 
+
 .left{
   flex: 6;
   background-color: var(--P700);
 
-  padding: 96px;
+  padding: 9.6rem;
   display: flex;
   flex-direction: column;
-  gap: 128px;
+  gap: 12.8rem;
 }
 
 .left header{
@@ -57,7 +71,7 @@
   display: flex;
   flex-direction: column;
   color: white;
-  gap : 32px;
+  gap : 3.2rem;
 }
 
 .left article p{
@@ -71,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 64px;
+  padding: 6.4rem;
 }
 
 /**************************/

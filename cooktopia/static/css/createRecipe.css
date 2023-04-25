@@ -1,6 +1,5 @@
 .recipe-form {
   display: flex;
-  padding: 0px 96px;
   flex-direction: column;
   gap : 16px;
 
