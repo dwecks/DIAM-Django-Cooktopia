@@ -1,0 +1,26 @@
+{% extends 'aside.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/forms.css' %}" />
+{% endblock %}
+
+{% block title %} Registracion {% endblock %} 
+
+
+{% block side-header %}  Choose a photo that's as awesome as you are!{% endblock %}
+{% block side-text %} {% endblock %}</p>
+{% block side-footer %}{% endblock %}
+
+{% block right %}
+<section class="recipe-form">
+  <h1 class="h3">Add Profile Photo</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="btn-container">
+      <input class="btn-r l2-r" type="submit" value="Submit"></input>
+    </div>
+  </form>
+</section>
+{% endblock %}

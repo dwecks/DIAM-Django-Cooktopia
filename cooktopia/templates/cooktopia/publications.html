@@ -1,0 +1,14 @@
+{% extends 'cooktopia/profile.html' %}
+{% load static %}
+
+
+{% block profile_content%} 
+
+    </section>
+    <section class="section grid grid--3-cols N100-b">
+        {% for recipe in publications %}  
+            {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+        {% endfor %}
+    </section>
+
+{% endblock %} 

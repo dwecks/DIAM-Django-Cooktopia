@@ -6,8 +6,14 @@ from django.contrib.auth.models import User
 class Chef(models.Model):
     name = models.CharField(max_length=200)
     photo = models.ImageField(upload_to="profile", null=True)
-    followers = models.ManyToManyField("Chef")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+class ChefFollower(models.Model):
+    followed = models.ForeignKey(
+        Chef, related_name='followers', on_delete=models.CASCADE)
+    follower = models.ForeignKey(
+        Chef, related_name='following', on_delete=models.CASCADE)
 
 
 class Comment(models.Model):

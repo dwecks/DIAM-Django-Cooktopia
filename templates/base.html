@@ -18,25 +18,24 @@
     <title>{% block title %} Default Title {% endblock %}</title>
   </head>
   <body>
-    <header class="main-header nav-open section flex-r P700-b">
+    <header class="main-header section flex-r P700-b">
       <span class="font-logo flex-r"><img class="header-icon" src="{{MEDIA_URL}}icons/chef-hat.png" alt=""> Cooktopia</span>
-      <nav class="header-center" >
+      <nav class="header-center nav-effect" >
         <ul class="nav header-nav flex-r-c ">
           <li><a class="N100-c l1-r" href="{% url 'home' %}">Home</a></li>
           <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li>
           <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>     
           {% if user.is_authenticated %}
             <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Account</a></li>
-            <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Logout</a></li>
+            <li><a class="N100-c l1-r" href="{% url 'logout' %}">Logout</a></li>
           {% else %}
             <li><a class="N100-c l1-r" href="{% url 'login' %}">Login</a></li>
           {% endif %}  
         </ul>
       </nav> 
-      <div>
-        <i class="fa-solid fa-bars N100-c icon-m "></i>
-        <i class="fa-solid fa-xmark N800-c icon-m nav-icon"></i>
-      </div>
+      <button class="btn-clear btn-nav">
+          <i class="fa-solid fa-bars N100-c icon-m "></i>
+      </button>
     </header>
 
     <main>{% block content %} {% endblock %}</main>
@@ -45,5 +44,6 @@
       <h2 class="h3 N100-c">COOKTOPIA ...</h2>
     </footer>
 
+    <script defer src="{% static '/js/menu.js' %}"></script>
   </body>
 </html>

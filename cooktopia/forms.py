@@ -1,3 +1,5 @@
+from .models import Chef
+from django.contrib.auth.forms import UserChangeForm
 from django.core.exceptions import ValidationError
 from django import forms
 from .models import *
@@ -39,6 +41,19 @@ class RegitracioForm(forms.ModelForm):
         if commit:
             chef.save()
         return chef
+
+
+class ChefUpdateForm(forms.Form):
+    name = forms.CharField(max_length=200, required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(
+        attrs={'class': 'lbl-r l2-r '}))
+    username = forms.CharField(max_length=150, required=False,  widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    email = forms.EmailField(required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'example@exemple.com'}))
+    password = forms.CharField(
+        max_length=128, required=False, widget=forms.PasswordInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
 
 
 class AddRecipeForm(forms.ModelForm):
@@ -88,3 +103,8 @@ class RecipeStepsForm(forms.ModelForm):
 
 RecipeStepsFormSet = modelformset_factory(
     RecipeSteps, form=RecipeStepsForm, extra=5)
+
+
+class ProfileImgForm(forms.Form):
+    user_image = forms.FileField(
+        label='Profile Image', widget=forms.FileInput(attrs={'class': 'lbl-r l2-r '}))

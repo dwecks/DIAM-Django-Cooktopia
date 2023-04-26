@@ -19,6 +19,10 @@
   transform: translateX(0);
 }
 
+.btn-nav{
+  z-index: 1000;
+}
+
 .header-icon{
   width: 4rem;
   height: 4rem;
@@ -41,12 +45,25 @@
   gap: 1rem;
 }
 
+.sticky-nav .main-header{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0,05);
+}
+
+.sticky-nav .sticty-marker{
+margin-top: 6rem;
+}
+
 /**************************/
-/* Auto Forms Formating*/
+/* Aside Layout*/
 /**************************/
 
 .flex-fill{
-  flex :1;
+   min-height: 100vh;
   display: flex;
 }
 
@@ -82,9 +99,6 @@
   flex: 10;
   height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 6.4rem;
 }
 
@@ -166,6 +180,98 @@
   .btn-gb:hover span:after {
     bottom: 0;
   }
+
+  /* Nav Effect */
+
+.nav-effect li {
+  transition: 0.5s;
+}
+
+.nav-effect a {
+  display: block;
+  padding: .8rem 0rem;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.nav-effect ul:hover a {
+  filter: blur(1px);
+  opacity: 0.8;
+}
+
+.nav-effect  ul a:hover {
+  opacity: 1;
+  filter: blur(0);
+  color: white;
+}
+
+.nav-effect a:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background-color: white;
+	transform: scaleX(0);
+	transition: all 0.5s;
+	transform-origin: left
+}
+
+.nav-effect a:hover:before, ul li a:hover:after {
+ 	transform: scaleX(1);
+ }
+
+ .nav-effect a:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background-color: white;
+	transform: scaleX(0);
+	transition: all 0.5s;
+	transform-origin: right
+}
+
+/* 2 colores boder*/
+.colors-effect a {
+  position: relative;
+}
+
+.colors-effect a:before {
+  content: "";
+  width: 0;
+  height: 5px;
+  background-color: var(--P300);
+  position: absolute;
+  top: 110%;
+  left: 0;
+  transition: all 0.5s;
+}
+
+.colors-effect a:after {
+  content: "";
+  width: 0;
+  height: 5px;
+  background-color: var(--P700);
+  position: absolute;
+  top: 110%;
+  right: 0;
+  transition: all 0.5s;
+}
+
+.colors-effect a:hover:before {
+  width: 50%;
+  transform: translateX(100%);
+}
+
+.colors-effect a:hover:after {
+  width: 50%;
+  transform: translateX(-100%);
+}
+
 
 /**************************/
 /* Cards */

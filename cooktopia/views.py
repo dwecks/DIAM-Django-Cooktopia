@@ -1,3 +1,7 @@
+from django.views.generic.edit import UpdateView
+from .models import Chef
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from .models import RecipeIngredient
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -32,7 +36,9 @@ def recipes(request):
 
 
 def reels(request):
-    return render(request, 'cooktopia/reels.html')
+    context = {}
+    context['MEDIA_URL'] = settings.MEDIA_URL
+    return render(request, 'cooktopia/reels.html', context)
 
 
 @login_required(login_url='login')
@@ -40,11 +46,48 @@ def profile(request, chef_id):
     context = {}
     context['chef'] = Chef.objects.get(id=chef_id)
     context['publications'] = Recipe.objects.filter(chef=chef_id)
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:6]
+    context["banner"] = context['chef'].recipe_set.order_by("-rating").first()
     context["is_home"] = chef_id == request.user.chef.id
-    context["followers"] = Chef.objects.filter(followers=chef_id)
-    context["following"] = context['chef'].chef_set
     context['MEDIA_URL'] = settings.MEDIA_URL
-    return render(request, 'cooktopia/profile.html', context)
+    return render(request, 'cooktopia/publications.html', context)
+
+
+@login_required(login_url='login')
+def followers(request, chef_id):
+    context = {}
+    context['chef'] = Chef.objects.get(id=chef_id)
+    context['followers'] = ChefFollower.objects.filter(followed=chef_id)
+    context["banner"] = context['chef'].recipe_set.order_by("-rating").first()
+    context["is_home"] = chef_id == request.user.chef.id
+    context['MEDIA_URL'] = settings.MEDIA_URL
+    return render(request, 'cooktopia/followers.html', context)
+
+
+@login_required(login_url='login')
+def following(request, chef_id):
+    context = {}
+    context['chef'] = Chef.objects.get(id=chef_id)
+    context['following'] = ChefFollower.objects.filter(follower=chef_id)
+    context["banner"] = context['chef'].recipe_set.order_by("-rating").first()
+    context["is_home"] = chef_id == request.user.chef.id
+    context['MEDIA_URL'] = settings.MEDIA_URL
+    return render(request, 'cooktopia/following.html', context)
+
+
+class addProfileImage(View):
+    def get(self, request):
+        form = ProfileImgForm()
+        return render(request, "cooktopia/addProfilePhoto.html", {"form": form})
+
+    def post(self, request):
+        recived_form = ProfileImgForm(request.POST, request.FILES)
+        if recived_form.is_valid():
+            chef = request.user.chef
+            chef.photo = request.FILES["user_image"]
+            chef.save()
+            return redirect(reverse("profile", kwargs={"chef_id": self.request.user.chef.id}))
+        return render(request, "tempalte path", {"form": recived_form})
 
 
 def logoutview(request):
@@ -76,6 +119,56 @@ class Registration(CreateView):
     template_name = "cooktopia/registration.html"
     form_class = RegitracioForm
     success_url = "login"
+
+
+class ChefUpdate(FormView):
+    form_class = ChefUpdateForm
+    template_name = 'cooktopia/info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['chef'] = self.request.user.chef
+        context["banner"] = context['chef'].recipe_set.order_by(
+            "-rating").first()
+        context["is_home"] = True
+        context['MEDIA_URL'] = settings.MEDIA_URL
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        chef = self.request.user.chef
+
+        # fill the form with values from the chef object
+        form.fields['name'].initial = chef.name
+        form.fields['username'].initial = chef.user.username
+        form.fields['email'].initial = chef.user.email
+
+        return form
+
+    def form_valid(self, form):
+        user = self.request.user
+        chef = user.chef
+
+        # Update user fields
+        if form.cleaned_data.get('username'):
+            user.username = form.cleaned_data['username']
+        if form.cleaned_data.get('email'):
+            user.email = form.cleaned_data['email']
+        if form.cleaned_data.get('password'):
+            user.set_password(form.cleaned_data['password'])
+        user.save()
+
+        # Update chef fields
+        if form.cleaned_data.get('name'):
+            chef.name = form.cleaned_data['name']
+        if form.cleaned_data.get('photo'):
+            chef.photo = form.cleaned_data['photo']
+        chef.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("profile", kwargs={"chef_id": self.request.user.chef.id})
 
 
 class AddRecipe(FormView):

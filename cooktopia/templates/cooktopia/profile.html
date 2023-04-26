@@ -3,16 +3,29 @@
 
 {% block css %} 
     <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/forms.css' %}" />
 {% endblock %}
 
 {% block title %} Recipes {% endblock %} 
 
 {% block content %}
-    <img class="banner" src="{{publications.0.image.url}}" alt="">
+
+    {% if banner %}
+        <img class="banner" src="{{banner.image.url}}" alt="">
+    {% else%}
+        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+    {% endif %}
+
     <section class="profile section">
-        <header class="profile-info pad-xs">
+        <header class="profile-info pad-xs sticty-marker">
             <picture class="profile-pic">
-                <img class="profile-img" src="{{chef.photo.url}}" alt="">
+                <a href="{% url 'profileImg' %}">
+                    {% if chef.photo %}
+                        <img class="profile-img" src="{{chef.photo.url}}" alt="">
+                    {% else%}
+                        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+                    {% endif %}
+                </a>
             </picture>
             <div>
                 <h1 class="h2">{{chef.name}}</h1>
@@ -28,28 +41,15 @@
         </header>
         <nav>
             <ul class="nav flex-r-c l1-r">
-              <li><a href="{% url 'home' %}">Publication</a></li>
-              <li><a href="{% url 'recipes' %}">Followers</a></li>
-              <li><a href="{% url 'reels' %}">Following</a></li>
+              <li><a href="{% url 'profile' chef.id %}">Publication</a></li>
+              <li><a href="{% url 'followers' chef.id %}">Followers</a></li>
+              <li><a href="{% url 'following' chef.id %}">Following</a></li>
+              {% if is_home %}
+                    <li><a href="{% url 'profileInfo' chef.id %}">Info</a></li>
+            {% endif %}
             </ul>
         </nav>
     </section>
-    <section class="section grid grid--3-cols N100-b">
-        {% for recipe in publications %}  
-            {% include 'cooktopia/snippets/basicRecipeCard.html' %}
-        {% endfor %}
-    </section>
-    <section class="section grid grid--3-cols N100-b">
-        {% for chef in followers %}  
-            <a href="{% url 'profile' chef.id %}"><h1>{{chef.name}}</h1></a>
-        {% endfor %}
-    </section>
-    <section class="section grid grid--3-cols N100-b">
-        {% for chef in followers %}  
-            <h1>{{chef.name}}</h1>
-        {% endfor %}
-    </section>
-{% endblock %}
+    {% block profile_content%} {% endblock %} 
 
-{% block profile-content %}
 {% endblock %}

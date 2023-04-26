@@ -13,7 +13,7 @@
   /* Primary color */
   --P700 : #2A5846;
   --P500 : #0B9A61;
-  --P300 : #6A8B7E;
+  --P300 : rgb(106, 139, 126);
   --P100 : rgb(212, 222, 218);
 
   /* Font Family */
@@ -272,6 +272,12 @@ a, li{
   background: var(--P300);
 }
 
+.btn-r:disabled {
+  background-color: #ddd;
+  color: #777;
+  border: 1px solid #aaa;
+}
+
 .btn-i{
   /* Auto layout */
   display: flex;
@@ -290,6 +296,13 @@ a, li{
 .btn-i:hover{
   color: white;
   background: var(--P500);
+}
+
+
+
+.btn-clear{
+  border: none;
+  background-color: transparent;
 }
 
 /**************************/

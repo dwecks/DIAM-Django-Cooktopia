@@ -1,0 +1,15 @@
+{% extends 'cooktopia/profile.html' %}
+{% load static %}
+
+
+{% block profile_content%} 
+
+    <section class="section grid grid--3-cols N100-b">
+        {% for connection in following %}  
+            <a href="{% url 'profile' connection.followed.id %}">
+                <h1>{{connection.followed.name}}</h1>
+            </a>    
+        {% endfor %}
+    </section>
+
+{% endblock %} 
