@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Chef(models.Model):
     name = models.CharField(max_length=200)
+    country = models.CharField(max_length=30)
     photo = models.ImageField(upload_to="profile", null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 

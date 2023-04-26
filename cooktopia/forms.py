@@ -8,6 +8,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms import modelformset_factory
 
 
+###############################################################################
+# Login and Registracion Forms
+###############################################################################
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         label='Username', widget=forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
@@ -25,9 +29,10 @@ class RegitracioForm(forms.ModelForm):
 
     class Meta:
         model = Chef
-        fields = ["name"]
+        fields = ["name", "country"]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Name'}),
+            'country': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Country'}),
         }
 
     def save(self, commit=True):
@@ -46,6 +51,8 @@ class RegitracioForm(forms.ModelForm):
 class ChefUpdateForm(forms.Form):
     name = forms.CharField(max_length=200, required=False, widget=forms.TextInput(
         attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    country = forms.CharField(max_length=30, required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Country'}))
     photo = forms.ImageField(required=False, widget=forms.FileInput(
         attrs={'class': 'lbl-r l2-r '}))
     username = forms.CharField(max_length=150, required=False,  widget=forms.TextInput(
@@ -54,6 +61,10 @@ class ChefUpdateForm(forms.Form):
         attrs={'class': 'lbl-r l2-r', 'placeholder': 'example@exemple.com'}))
     password = forms.CharField(
         max_length=128, required=False, widget=forms.PasswordInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
+
+###############################################################################
+# Recipe Forms
+###############################################################################
 
 
 class AddRecipeForm(forms.ModelForm):

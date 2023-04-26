@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+<!-- Configurar path nas setting -->
+
+{% block title %} Recipe {% endblock %} 
+
+{% block content %}
+    <h1>{{recipe.title}}</h1>
+    <h1>{{recipe.id}}</h1>
+    <h1>{{recipe.chef.name}}</h1>
+{% endblock %}

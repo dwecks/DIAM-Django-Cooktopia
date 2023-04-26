@@ -1,4 +1,4 @@
-console.log("helow world")
+'use stricks'
 
 // "mobile menu"
 const btnNav = document.querySelector(".btn-nav");
@@ -17,7 +17,6 @@ const marker = document.querySelector(".sticty-marker");
 
 const observer = new IntersectionObserver(function(entries){
     const ent = entries[0];
-    console.log(ent);
     if(ent.isIntersecting)
         document.body.classList.remove("sticky-nav")    
 

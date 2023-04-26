@@ -1,4 +1,4 @@
-{% extends 'aside.html' %}
+{% extends 'sideLayout.html' %}
 {% load static %}
 
 {% block css %} 
@@ -19,10 +19,10 @@
   <form  method="post">
     {% csrf_token %} 
     {{ form }}
-    <a class="forgot P500-c l2-r" href="{% url 'home' %}">Forgot password?</a>
+    <a class="forgot P500-c l2-b" href="{% url 'home' %}">Forgot password?</a>
       <div class="btn-container">
 
-        <input class="btn-r l2-r" type="submit" value="Login"></input>
+        <input class="btn-r l1-b" type="submit" value="Login"></input>
     </div>
     <span class="sign-up N600-c l2-r" >Dont have an account? <a class="P500-c l2-r" href="{% url 'registration' %}">Sign up</a></span>
     

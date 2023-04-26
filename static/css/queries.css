@@ -1,3 +1,10 @@
+@media(max-width : 95em){
+    .grid--5-cols {
+      grid-template-columns: repeat(4, 1fr);
+    } 
+
+}
+
 @media(max-width : 85em){
 
     /* header flex end
@@ -8,7 +15,10 @@
     .grid--4-cols {
       grid-template-columns: repeat(2, 1fr);
     } 
-    
+    .grid--5-cols {
+      grid-template-columns: repeat(3, 1fr);
+    } 
+
     .recipe-form{
       padding: 0;
     }
@@ -47,6 +57,10 @@
   .grid--3-cols {
       grid-template-columns: repeat(1, 1fr);
     }
+    .grid--5-cols {
+      grid-template-columns: repeat(2, 1fr);
+    } 
+
   /* .grid--4-cols {
     grid-template-columns: repeat(1, 1fr);
   }  */

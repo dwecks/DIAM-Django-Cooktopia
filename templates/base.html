@@ -23,8 +23,7 @@
       <nav class="header-center nav-effect" >
         <ul class="nav header-nav flex-r-c ">
           <li><a class="N100-c l1-r" href="{% url 'home' %}">Home</a></li>
-          <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li>
-          <li><a class="N100-c l1-r" href="{% url 'reels' %}">Reels</a></li>     
+          <li><a class="N100-c l1-r" href="{% url 'recipes' %}">Recipes</a></li> 
           {% if user.is_authenticated %}
             <li><a class="N100-c l1-r" href="{% url 'profile' user.chef.id %}">Account</a></li>
             <li><a class="N100-c l1-r" href="{% url 'logout' %}">Logout</a></li>

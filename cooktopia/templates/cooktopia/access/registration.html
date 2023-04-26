@@ -1,5 +1,4 @@
-
-{% extends 'aside.html' %}
+{% extends 'sideLayout.html' %}
 {% load static %}
 
 {% block css %} 
@@ -32,5 +31,5 @@
     <span class="sign-up N600-c l2-r" >Already an user? <a class="P500-c l2-r" href="{% url 'login' %}">Sign in</a></span>
   </form>
 </section>
-<script defer src="{% static '/js/termsOfService.js' %}"></script>
+<script defer src="{% static '/js/registracion.js' %}"></script>
 {% endblock %}

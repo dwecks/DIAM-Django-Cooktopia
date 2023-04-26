@@ -1,4 +1,4 @@
-console.log("hello");
+// Accept terms of service
 
 const checkbox = document.querySelector('#terms-checkbox');
 const button = document.querySelector('#create-btn');

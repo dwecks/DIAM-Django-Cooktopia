@@ -14,6 +14,7 @@
     text-align: center;
     border-radius: 1.6rem;
 }
+
 .info-card i{
 opacity: 50%;
 }
@@ -89,3 +90,4 @@ background: var(--P700);
 .profile nav{
   padding-top: 3.2rem;
 }
+
