@@ -1,9 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'sideLayout.html' %}
 <!-- Configurar path nas setting -->
-{% load static %}
-{{% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
 
-{% block title %} Recipes {% endblock %}
+{% block title %} Recipes {% endblock %} {% block content %}
+<h1>Recipes</h1>
+{% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
+
+{% block title %}Recipes{% endblock %}
 {% block content %}
 <section class="section flex-c P300-b">
 		<h1>Find Your Recipes</h1>

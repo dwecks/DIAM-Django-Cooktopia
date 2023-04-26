@@ -1,3 +1,5 @@
+from .models import Chef
+from django.contrib.auth.forms import UserChangeForm
 from django.core.exceptions import ValidationError
 from django import forms
 from .models import *
@@ -5,6 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import modelformset_factory
 
+
+###############################################################################
+# Login and Registracion Forms
+###############################################################################
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -23,9 +29,10 @@ class RegitracioForm(forms.ModelForm):
 
     class Meta:
         model = Chef
-        fields = ["name"]
+        fields = ["name", "country"]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Name'}),
+            'country': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Country'}),
         }
 
     def save(self, commit=True):
@@ -39,6 +46,25 @@ class RegitracioForm(forms.ModelForm):
         if commit:
             chef.save()
         return chef
+
+
+class ChefUpdateForm(forms.Form):
+    name = forms.CharField(max_length=200, required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    country = forms.CharField(max_length=30, required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Country'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(
+        attrs={'class': 'lbl-r l2-r '}))
+    username = forms.CharField(max_length=150, required=False,  widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'Username'}))
+    email = forms.EmailField(required=False, widget=forms.TextInput(
+        attrs={'class': 'lbl-r l2-r', 'placeholder': 'example@exemple.com'}))
+    password = forms.CharField(
+        max_length=128, required=False, widget=forms.PasswordInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
+
+###############################################################################
+# Recipe Forms
+###############################################################################
 
 
 class AddRecipeForm(forms.ModelForm):
@@ -88,3 +114,8 @@ class RecipeStepsForm(forms.ModelForm):
 
 RecipeStepsFormSet = modelformset_factory(
     RecipeSteps, form=RecipeStepsForm, extra=5)
+
+
+class ProfileImgForm(forms.Form):
+    user_image = forms.FileField(
+        label='Profile Image', widget=forms.FileInput(attrs={'class': 'lbl-r l2-r '}))

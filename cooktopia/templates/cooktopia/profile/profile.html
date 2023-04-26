@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/forms.css' %}" />
+{% endblock %}
+
+{% block title %} Recipes {% endblock %} 
+
+{% block content %}
+
+    {% if banner %}
+        <img class="banner" src="{{banner.image.url}}" alt="">
+    {% else%}
+        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+    {% endif %}
+
+    <section class="profile section">
+        <header class="profile-info pad-xs sticty-marker">
+            <picture class="profile-pic">
+                <a href="{% url 'profileImg' %}">
+                    {% if chef.photo %}
+                        <img class="profile-img" src="{{chef.photo.url}}" alt="">
+                    {% else%}
+                        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+                    {% endif %}
+                </a>
+            </picture>
+            <div>
+                <h1 class="h2">{{chef.name}}</h1>
+                <span class="h4 N700-c">Master Chef</span>
+            </div>
+            <div class="add-btn-container">
+                {% if is_home %}
+                    <a class="btn-swipe add-btn l2-b" href="{% url 'addRecipe' %}">+ Add recipe</a>
+                {% elif follow_status%}
+                    <a class="btn-swipe-i add-btn l2-b" href="{% url 'follow' follow_id=chef.id %}">Unfollow</a>
+                {% else%}
+                    <a class="btn-swipe add-btn l2-b" href="{% url 'follow' follow_id=chef.id %}">Follow</a>
+                {% endif %}
+            </div>
+        </header>
+        <nav class="colors-effect">
+            <ul class="nav flex-r-c l1-r ">
+            <li><a class="N800-c" href="{% url 'profile' chef.id %}">Publication</a></li>
+            <li><a class="N800-c" href="{% url 'followers' chef.id %}">Followers</a></li>
+            <li><a class="N800-c" href="{% url 'following' chef.id %}">Following</a></li>
+            {% if is_home %}
+                <li><a class="N800-c" href="{% url 'profileInfo' chef.id %}">Info</a></li>
+            {% endif %}
+            {% if is_home and user.is_staff %}
+                <li><a class="N800-c" href="{% url 'manage' chef.id %}">Admin Panel</a></li>
+            {% endif %}
+            </ul>
+        </nav>
+    </section>
+    {% block profile_content%} {% endblock %} 
+
+{% endblock %}

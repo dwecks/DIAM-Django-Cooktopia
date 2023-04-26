@@ -7,7 +7,7 @@
 
 {% block content %}
     <!-- Hero  -->
-    <section class="section hero P700-b pad-b-m">
+    <section class="section hero sticty-marker P700-b pad-b-m">
         <a class="btn-gb" href="{% url 'recipes' %}"> 
             <div class="flex-c">
                 <span class="h0">Find</span> 
@@ -43,8 +43,8 @@
                 <h2 class="h2 pad-b-s">Most Popular Recipes</h2>
                 <p class="h3 N600-c">Taste-tested and approved</p>
             </aside>
-            <aside>
-                <a class="h3 P500-c" href="{% url 'recipes' %}">See all</a>
+            <aside class="colors-effect">
+                <a class="h3 P500-c " href="{% url 'recipes' %}">See all</a>
             </aside>
         </header>
         {% for recipe in top_recipes %}  
@@ -75,4 +75,6 @@
                 {% include 'cooktopia/snippets/basicRecipeCard.html' %}
             {% endfor %}
     </section>
+
+
 {% endblock %}

@@ -10,5 +10,4 @@ admin.site.register(Difficulty)
 admin.site.register(Recipe)
 admin.site.register(RecipeIngredient)
 admin.site.register(RecipeSteps)
-
-# Can you walk me through the magic required to create this recipe?
+admin.site.register(ChefFollower)
