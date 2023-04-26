@@ -14,6 +14,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+from .models import MealType
+from django.db.models import Q
+from .models import Recipe
 
 # forms
 from django.views.generic.edit import CreateView, FormView
@@ -57,6 +60,67 @@ class RecipeView(View):
 
     def post(self, request, recipe_id):
         pass
+
+def meal_types_view(request):
+    meal_types = MealType.objects.all()
+    return render(request, 'my_template.html', {'meal_types': meal_types})
+
+def difficulties_view(request):
+    difficulties = Difficulty.objects.all()
+    return render(request, 'my_template.html', {'difficulties': difficulties})
+
+
+def filter_by_preparation_time(request):
+    # Retrieve the selected preparation time ranges from the request
+    time_ranges = request.GET.getlist('preparationTime')
+
+    # Create a list of Q objects to filter the recipes
+    filters = []
+    for time_range in time_ranges:
+        if time_range == '0,30':
+            filters.append(Q(preparationTime__lte=30))
+        elif time_range == '30,60':
+            filters.append(Q(preparationTime__gt=30) & Q(preparationTime__lte=60))
+        elif time_range == '60,':
+            filters.append(Q(preparationTime__gt=60))
+
+    # Apply the filters to the Recipe model
+    if filters:
+        recipes = Recipe.objects.filter(*filters)
+    else:
+        recipes = Recipe.objects.all()
+
+    # Pass the filtered recipes to the template
+    context = {
+        'recipes': recipes
+    }
+    return render(request, 'filter_by_preparation_time.html', context)
+def filter_by_difficulty(request, difficulty_id):
+    difficulty = Difficulty.objects.get(pk=difficulty_id)
+    recipes = Recipe.objects.filter(difficulty=difficulty)
+    return render(request, 'my_template.html', {'recipes': recipes})
+
+def filter_by_meal_type(request, meal_type_id):
+    meal_type = MealType.objects.get(pk=meal_type_id)
+    recipes = Recipe.objects.filter(meal_type=meal_type)
+    return render(request, 'my_template.html', {'recipes': recipes}) #qeq eu ponho aqui
+
+def filter_by_bub_date(request):
+    today = timezone.now().date()
+    last_week = today - timedelta(days=7)
+    last_month = today - timedelta(days=30)
+    last_year = today - timedelta(days=365)
+    pub_date = request.GET.get('pub_date')
+    if pub_date == 'week':
+        recipes = Recipe.objects.filter(published_date__gte=last_week)
+    elif pub_date == 'month':
+        recipes = Recipe.objects.filter(published_date__gte=last_month)
+    elif pub_date == 'year':
+        recipes = Recipe.objects.filter(published_date__gte=last_year)
+    else:
+        recipes = Recipe.objects.all()
+    return render(request, 'recipe_list.html', {'recipes': recipes})
+
 
 
 # New Recipes Views
