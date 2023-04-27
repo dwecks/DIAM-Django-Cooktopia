@@ -1,3 +1,10 @@
+@media(max-width : 95em){
+    .grid--5-cols {
+      grid-template-columns: repeat(4, 1fr);
+    } 
+
+}
+
 @media(max-width : 85em){
 
     /* header flex end
@@ -8,15 +15,30 @@
     .grid--4-cols {
       grid-template-columns: repeat(2, 1fr);
     } 
-    
+    .grid--5-cols {
+      grid-template-columns: repeat(3, 1fr);
+    } 
+
     .recipe-form{
       padding: 0;
     }
 
     .header-center{
-      position: block;
-      transform: none;
+      position: static;
+      align-self: flex-end;
+      justify-self: flex-end;
+      transform: translate(0,0);
     }   
+
+    .section{
+      padding: 1.6rem 6.4rem;
+    }
+  
+
+    .btn-nav{
+      position: absolute;
+      display: none;
+    }
 
     html{
       font-size: 55%;
@@ -35,9 +57,18 @@
   .grid--3-cols {
       grid-template-columns: repeat(1, 1fr);
     }
+    .grid--5-cols {
+      grid-template-columns: repeat(2, 1fr);
+    } 
+
   /* .grid--4-cols {
     grid-template-columns: repeat(1, 1fr);
   }  */
+
+  .section{
+    padding: 1.6rem 3.2rem;
+  }
+
 
   .profile-pic{
     display: none;
@@ -48,7 +79,7 @@
   }
 
   .header-center{
-    background-color: rgba(212,222,218,0.97);
+    background-color: rgba(106, 139, 126, 0.97);
     position: absolute;
 
     top :0;
@@ -80,9 +111,13 @@
     color: var(--N800);
   }
 
-  .fa-bars ,
-  .fa-xmark{
+  .fa-bars {
     display: block;
     z-index: 200;
+  }
+
+  .btn-nav{
+    position: static;
+    display: block;
   }
 }

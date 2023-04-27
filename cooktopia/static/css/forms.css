@@ -1,0 +1,135 @@
+.login-form {
+  display: flex;
+  padding: 3.2rem 9.6rem;
+  flex-direction: column;
+  gap : 1.6rem;
+
+}
+
+.login-form form{
+  min-width: 30rem;
+
+  display: flex;
+  flex-direction: column;
+  gap : 1.6rem;
+}
+
+.login-form label{
+  display: none;
+}
+
+.login-form input{
+  width: 100%;
+}
+
+.btn-container{
+  width: 100%;
+  display: grid;
+  gap: 1.6rem;
+}
+
+.sign-up{
+  align-self: center;
+}
+
+.forgot{
+  align-self:flex-end;
+}
+
+.form-check{
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-check input{
+  flex :1;
+}
+
+.checkbox-label {
+  flex : 10;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+
+.form-check-input {
+  height: 2rem;
+  border-radius: 0.2rem;
+  border: 1px solid #ccc;
+}
+
+
+
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap : 1.6rem;
+
+}
+
+.recipe-form form{
+  min-width: 30rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap : 1.6rem;
+}
+
+.recipe-form label{
+  display: none;
+}
+
+.step-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.step {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5.2rem;
+  height: 5.2rem;
+  border-radius: 100%;
+}
+
+.in-progress{
+  background-color: var(--N200);
+}
+
+
+.progress-done {
+  background-image: linear-gradient(to right, var(--P500), var(--N200));
+}
+
+.progress-line {
+  background-color: var(--N200);
+  flex: 1;
+  height: 0.6rem;
+}
+
+.done{
+  background-color: var(--P500);
+}
+
+.btn-container{
+  width: 100%;
+  display: grid;
+  gap: 1.6rem;
+}
+
+.form-row{
+  display: flex;
+  width: 100%;
+  gap: 1.6rem;
+}
+
+.ingredient{
+  flex: 5;
+}
+
+.q-ingredient{
+  flex: 1;
+}
