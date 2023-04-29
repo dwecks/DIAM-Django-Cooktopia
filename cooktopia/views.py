@@ -32,9 +32,17 @@ def home(request):
         f"************************************************ {context['new_recipes']}")
     return render(request, 'cooktopia/home.html', context)
 
-
 def recipes(request):
-    return render(request, 'cooktopia/recipes.html')
+    context = {}
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
+    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
+    print(
+        f"************************************************ {context['top_recipes']}")
+    print(
+        f"************************************************ {context['new_recipes']}")
+    return render(request, 'cooktopia/recipes.html', context)
+
+
 
 
 def reels(request):
