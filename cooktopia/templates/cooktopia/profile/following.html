@@ -4,7 +4,7 @@
 
 {% block profile_content%} 
 
-    <section class="section grid grid--5-cols N100-b">
+    <section class="section grid grid--5-cols N100-b pad-b-m pad-t-m">
         {% for connection in following %}  
             <a href="{% url 'profile' connection.followed.id %}">
                 {% include 'cooktopia/profile/snippets/followingCard.html' %}

@@ -1,28 +1,26 @@
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from django.views.generic import ListView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
-from django.http import HttpResponseForbidden
-from django.views.generic.edit import UpdateView
 from .models import Chef
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from .models import RecipeIngredient
 from django.shortcuts import render, redirect
-from django.utils import timezone
-from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+
 from .models import MealType
 from django.db.models import Q
 from .models import Recipe
 
-# forms
 from django.views.generic.edit import CreateView, FormView
 from .forms import *
-
-# settings
 from django.conf import settings
 
 # Create your views here.
@@ -55,7 +53,11 @@ class RecipeView(View):
     def get(self, request, recipe_id):
         context = {}
         context['MEDIA_URL'] = settings.MEDIA_URL
-        context["recipe"] = Recipe.objects.get(id=recipe_id)
+        context["recipe"] = get_object_or_404(Recipe, id=recipe_id)
+        context["steps"] = RecipeSteps.objects.filter(recipe=context["recipe"])
+        context["ingredients"] = RecipeIngredient.objects.filter(
+            recipe=context["recipe"])
+        context["types"] = MealType.objects.all()
         return render(request, self.template_name, context)
 
     def post(self, request, recipe_id):
@@ -189,7 +191,7 @@ class AddStepsView(View):
 
 def load_profile_variables(request, chef_id):
     context = {}
-    context['chef'] = Chef.objects.get(id=chef_id)
+    context['chef'] = get_object_or_404(Chef, id=chef_id)
     context["banner"] = context['chef'].recipe_set.order_by("-rating").first()
     context["is_home"] = chef_id == request.user.chef.id
     context["follow_status"] = ChefFollower.objects.filter(
@@ -289,10 +291,10 @@ class addProfileImageView(View):
         return render(request, "tempalte path", {"form": recived_form})
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+@login_required(login_url='login')
 def toggleFollowView(request, follow_id):
     follower = request.user.chef
-    followed = Chef.objects.get(id=follow_id)
+    followed = get_object_or_404(Chef, id=follow_id)
     connections = ChefFollower.objects.filter(
         followed=followed.id, follower=follower.id)
     if connections:
@@ -302,19 +304,6 @@ def toggleFollowView(request, follow_id):
         connections.save()
     return redirect(reverse("profile", kwargs={"chef_id": follow_id}))
 
-
-###############################################################################
-# Profile Manage Views
-###############################################################################
-
-
-@login_required(login_url='login')
-def manageView(request, chef_id):
-    if not request.user.is_staff:
-        return redirect(reverse("logout"))
-
-    context = load_profile_variables(request, chef_id)
-    return render(request, 'cooktopia/profile/admin.html', context)
 
 ###############################################################################
 # Login and Registracion Views
@@ -350,3 +339,101 @@ class RegistrationView(CreateView):
     template_name = "cooktopia/access/registration.html"
     form_class = RegitracioForm
     success_url = "login"
+
+###############################################################################
+# Help views
+###############################################################################
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class UserQuestionView(CreateView):
+    model = UserHelp
+    template_name = "cooktopia/help/userquestion.html"
+    form_class = HelpForm
+    success_url = "/"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
+# Profile Manage Views
+@login_required(login_url='login')
+def manageView(request, chef_id):
+    if not request.user.is_staff:
+        return redirect(reverse("logout"))
+
+    context = load_profile_variables(request, chef_id)
+    context["user_questions"] = UserHelp.objects.all()
+    return render(request, 'cooktopia/profile/admin.html', context)
+
+###############################################################################
+# React Views
+###############################################################################
+
+
+@api_view(['GET', 'POST'])
+def list_recipes(request):
+    if request.method == 'GET':
+        recipes = Recipe.objects.all()
+        serialized_recipes = RecipeSerializer(
+            recipes, context={'request': request}, many=True)
+        return Response(serialized_recipes.data)
+    elif request.method == 'POST':
+        serializer_recipe = RecipeSerializer(data=request.data)
+        if serializer_recipe.is_valid():
+            serializer_recipe.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer_recipe.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def edit_recipe(request, id):
+    try:
+        recipe = Recipe.objects.get(id=id)
+    except Recipe.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'PUT':
+        serializer_recipe = RecipeSerializer(
+            recipe, data=request.data, context={'request': request})
+        if serializer_recipe.is_valid():
+            serializer_recipe.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer_recipe.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        recipe.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def list_chef(request):
+    if request.method == 'GET':
+        chefs = Chef.objects.all()
+        serialized_chefs = ChefSerializer(
+            chefs, context={'request': request}, many=True)
+        return Response(serialized_chefs.data)
+    elif request.method == 'POST':
+        serializer_chef = ChefSerializer(data=request.data)
+        if serializer_chef.is_valid():
+            serializer_chef.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer_chef.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def edit_chef(request, id):
+    try:
+        chef = Chef.objects.get(id=id)
+    except Chef.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'PUT':
+        serializer_chef = ChefSerializer(
+            chef, data=request.data, context={'request': request})
+        if serializer_chef.is_valid():
+            serializer_chef.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer_chef.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        chef.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
