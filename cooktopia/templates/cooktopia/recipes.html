@@ -44,7 +44,8 @@
 			<div class="receitas_header section flex-r">
 				<div class="receitas_header_frame section flex-r">
 					<div class="receitas_header_left_container">
-						<img src="hide-filters-icon.png" alt="Hide Filters">
+						 	<img src="{{ MEDIA_URL }}Icons/hide-filters-icon.webp" alt="Hide Filters">
+
 						<span>Hide Filters</span>
 					</div>
 					<div class="receitas_header_right_container">
@@ -54,7 +55,7 @@
 			</div>
 			<div class="receitas_content section flex-r">
 				{% for recipe in new_recipes %}
-                	{% include 'cooktopia/snippets/completeRecipeCard.html' %}
+                	{% include 'cooktopia/snippets/completRecipeCard.html' %}
             	{% endfor %}
 				<!--<h3>Spaghetti Bolognese</h3>
 				<p class="chef-name">by John Smith</p>

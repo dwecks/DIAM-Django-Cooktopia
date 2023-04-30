@@ -50,11 +50,14 @@ def reels(request):
 
 def meal_types_view(request):
     meal_types = MealType.objects.all()
-    return render(request, 'my_template.html', {'meal_types': meal_types})
+    print(meal_types)
+    return render(request, 'recipes.html', {'meal_types': meal_types})
+
+
 
 def difficulties_view(request):
     difficulties = Difficulty.objects.all()
-    return render(request, 'my_template.html', {'difficulties': difficulties})
+    return render(request, 'recipes.html', {'difficulties': difficulties})
 
 
 def filter_by_preparation_time(request):
@@ -81,16 +84,16 @@ def filter_by_preparation_time(request):
     context = {
         'recipes': recipes
     }
-    return render(request, 'filter_by_preparation_time.html', context)
+    return render(request, 'recipes.html', context)
 def filter_by_difficulty(request, difficulty_id):
     difficulty = Difficulty.objects.get(pk=difficulty_id)
     recipes = Recipe.objects.filter(difficulty=difficulty)
-    return render(request, 'my_template.html', {'recipes': recipes})
+    return render(request, 'recipes.html', {'recipes': recipes})
 
 def filter_by_meal_type(request, meal_type_id):
     meal_type = MealType.objects.get(pk=meal_type_id)
     recipes = Recipe.objects.filter(meal_type=meal_type)
-    return render(request, 'my_template.html', {'recipes': recipes}) #qeq eu ponho aqui
+    return render(request, 'recipes.html', {'recipes': recipes}) #qeq eu ponho aqui
 
 def filter_by_bub_date(request):
     today = timezone.now().date()
@@ -106,7 +109,7 @@ def filter_by_bub_date(request):
         recipes = Recipe.objects.filter(published_date__gte=last_year)
     else:
         recipes = Recipe.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': recipes})
+    return render(request, 'recipes.html', {'recipes': recipes})
 
 
 
