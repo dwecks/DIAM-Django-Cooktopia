@@ -62,6 +62,12 @@ class ChefUpdateForm(forms.Form):
     password = forms.CharField(
         max_length=128, required=False, widget=forms.PasswordInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'Password'}))
 
+
+class ProfileImgForm(forms.Form):
+    user_image = forms.FileField(
+        label='Profile Image', widget=forms.FileInput(attrs={'class': 'lbl-r l2-r '}))
+
+
 ###############################################################################
 # Recipe Forms
 ###############################################################################
@@ -116,6 +122,28 @@ RecipeStepsFormSet = modelformset_factory(
     RecipeSteps, form=RecipeStepsForm, extra=5)
 
 
-class ProfileImgForm(forms.Form):
-    user_image = forms.FileField(
-        label='Profile Image', widget=forms.FileInput(attrs={'class': 'lbl-r l2-r '}))
+###############################################################################
+# Help Forms
+###############################################################################
+
+
+class HelpForm(forms.ModelForm):
+
+    class Meta:
+        model = UserHelp
+        fields = ["description"]
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Describe your question?"},),
+        }
+
+    # pass the request to the form
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        user_question = super().save(commit=False)
+        user_question.chef = self.request.user.chef
+        if commit:
+            user_question.save()
+        return user_question

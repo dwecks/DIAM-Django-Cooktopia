@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views
-from .views import LoginView, RegistrationView, AddRecipeView, AddIngredientsView, AddStepsView, logoutview, addProfileImageView, ChefUpdateView, RecipeView
+from .views import LoginView, RegistrationView, AddRecipeView, AddIngredientsView, AddStepsView, logoutview, addProfileImageView, ChefUpdateView, RecipeView, UserQuestionView
 
 # app_name = 'cooktopia'
+
 
 urlpatterns = [
     # Core
@@ -32,4 +33,11 @@ urlpatterns = [
     path("login", LoginView.as_view(), name="login"),
     path('logout/', logoutview, name='logout'),
     path("registration", RegistrationView.as_view(), name="registration"),
+    # User Help
+    path("help", UserQuestionView.as_view(), name="help"),
+    # React
+    path('api/recipes/', views.list_recipes),
+    path('api/recipes/<int:id>', views.edit_recipe),
+    path('api/chefs/', views.list_chef),
+    path('api/chefs/<int:id>', views.edit_chef),
 ]

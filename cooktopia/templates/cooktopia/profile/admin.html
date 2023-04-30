@@ -4,8 +4,27 @@
 
 {% block profile_content%} 
 
-    <section class="section flex-c  login-form pad-b-l pad-t-l N100-b">
-            <h1>ADMin Panel</h1>
+    <section class="section flex-c  pad-b-l pad-t-l N100-b">
+        <table>
+            <thead>
+                <tr>
+                    <th class="l1-r">Chef Name</th>
+                    <th class="l1-r">Question</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in user_questions %}
+                    <tr>
+                        <td class="l1-r">{{ question.chef.name }}</td>
+                        <td class="l1-r">{{ question.description }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td class="l1-r" colspan="2">No questions found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
 
 {% endblock %} 
