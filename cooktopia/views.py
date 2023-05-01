@@ -17,6 +17,7 @@ from django.views import View
 from .models import MealType
 from django.db.models import Q
 from .models import Recipe
+from django.shortcuts import render, get_object_or_404
 
 # forms
 from django.views.generic.edit import CreateView, FormView
@@ -55,15 +56,25 @@ class RecipeView(View):
     def get(self, request, recipe_id):
         context = {}
         context['MEDIA_URL'] = settings.MEDIA_URL
-        context["recipe"] = Recipe.objects.get(id=recipe_id)
+        context["recipe"] = get_object_or_404(Recipe, id=recipe_id)
+        context["steps"] = RecipeSteps.objects.filter(recipe=context["recipe"])
+        context["comments"] = Comment.objects.filter(recipe=context["recipe"])
+        context["ingredients"] = RecipeIngredient.objects.filter(recipe=context["recipe"])
+        context['related_recipes'] = Recipe.objects.filter(mealType= context["recipe"].mealType)[:3]
+        context["commentForm"] = AddCommentForm(request=request)
         return render(request, self.template_name, context)
 
     def post(self, request, recipe_id):
-        pass
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        form = AddCommentForm(request.POST, request = request, recipe=recipe)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
 
 def meal_types_view(request):
     meal_types = MealType.objects.all()
     return render(request, 'my_template.html', {'meal_types': meal_types})
+
 
 def difficulties_view(request):
     difficulties = Difficulty.objects.all()
@@ -95,6 +106,7 @@ def filter_by_preparation_time(request):
         'recipes': recipes
     }
     return render(request, 'filter_by_preparation_time.html', context)
+
 def filter_by_difficulty(request, difficulty_id):
     difficulty = Difficulty.objects.get(pk=difficulty_id)
     recipes = Recipe.objects.filter(difficulty=difficulty)

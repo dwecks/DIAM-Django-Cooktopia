@@ -236,11 +236,11 @@ margin-top: 6rem;
 }
 
 /* 2 colores boder*/
-.colors-effect a {
+.colors-effect a, .btn-border {
   position: relative;
 }
 
-.colors-effect a:before {
+.colors-effect a:before, .btn-border:before {
   content: "";
   width: 0;
   height: 5px;
@@ -251,7 +251,7 @@ margin-top: 6rem;
   transition: all 0.5s;
 }
 
-.colors-effect a:after {
+.colors-effect a:after, .btn-border:after {
   content: "";
   width: 0;
   height: 5px;
@@ -262,12 +262,12 @@ margin-top: 6rem;
   transition: all 0.5s;
 }
 
-.colors-effect a:hover:before {
+.colors-effect a:hover:before, .btn-border:hover:before {
   width: 50%;
   transform: translateX(100%);
 }
 
-.colors-effect a:hover:after {
+.colors-effect a:hover:after, .btn-border:hover:after {
   width: 50%;
   transform: translateX(-100%);
 }
@@ -562,4 +562,8 @@ margin-top: 6rem;
 
 .country-img{
   height: 100%;
+}
+
+.hide{
+  display: none;
 }

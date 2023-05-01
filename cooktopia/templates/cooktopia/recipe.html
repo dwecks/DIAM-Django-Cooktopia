@@ -1,10 +1,121 @@
 {% extends 'base.html' %}
 <!-- Configurar path nas setting -->
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/forms.css' %}" />
+{% endblock %}
 
 {% block title %} Recipe {% endblock %} 
 
 {% block content %}
-    <h1>{{recipe.title}}</h1>
-    <h1>{{recipe.id}}</h1>
-    <h1>{{recipe.chef.name}}</h1>
+
+<img class="banner" src="{{recipe.image.url}}" alt="Recipe Banner">
+
+    <section class="section">
+        <header class="pad-xs sticty-marker">
+            <div class="flex-r recipe-border pad-b-s">
+            <div>
+                <h1 class="h2">Receita: {{recipe.title}}</h1>
+                <h4 class="h4 N700-c">By: {{recipe.chef.name}}</h4>
+                <h4 class="h4">Rating: {{recipe.rating}}</h4>
+            </div>
+                <button class="btn-r add-btn l2-b" id="btn-addcom">+ Add Comment</button>
+            </div>
+        </header>
+            <ul class="flex-r-c l1-r pad-t-s">
+                <button class="btn-swipe" id="btn-dir">Directions </button>
+                <button class="btn-swipe" id="btn-com">Comments</button>
+            </ul>
+    </section>
+
+    <section class="section flex-r N200-b" id="tbl-com">
+
+        <div class="recipe-step N100-b">
+            <div class="section flex-c">
+
+                <h1 class="h1">Method:</h1>
+                <div>
+                    {% for step in steps%}
+                        <h1 class="p1-b"> -> {{step.step}}</h1>
+                    {% endfor %}
+                </div>
+                <button class="btn-swipe-i" id="btn-com">Next Step</button>
+
+            </div>
+        </div>
+
+        <aside class="recipe-ingredients P500-b" id="tbl-dir">
+            <div class="section flex-c">
+            <h2 class="h2 N100-c">Ingredients:</h2>
+            <div>
+                {% for i in ingredients%}
+                    <h4 class="p1-b N100-c">{{i.quantity}} -> {{i.ingredient.name}}</h4>
+                {% endfor %}
+            </div>
+            </div>
+            <div class="N400-b flex-r-c">
+                <button class="btn-r" id="btn-com">-</button>
+                <h2 class="h2">Potions</h2>
+                <button class="btn-r" id="btn-com">+</button>
+            </div>
+        </aside>
+
+        <!-- 
+
+        <aside class="recipe-ingredients P500-b" id="tbl-dir">
+            <div class="section flex-c">
+                <h2 class="h2 N100-c">Ingredients:</h2>
+                <div id="ingredient-list">
+
+                </div>
+            </div>
+            <div class="N400-b flex-r-c">
+                <button class="btn-r" id="btn-com-minus">-</button>
+                <h2 class="h2">Potions</h2>
+                <button class="btn-r" id="btn-com-plus">+</button>
+            </div>
+        </aside>
+
+        -->
+
+    </section>
+
+    <section class="section N200-b pad-b-s hide" id="tbl-com">
+
+        <h1 class="h1">Comments:</h1>
+
+        {% for comment in comments %}
+            <div class="N100-b recipe-border pad-b-s ">
+            <h1 class="h4">{{comment.chef.name}}</h1>
+            <h1 class="p1-b">{{comment.description}}</h1>
+            </div>
+        {% endfor %}
+
+    </section>
+
+    <section class="section N200-b pad-b-m hide" id="tbl-addcom">
+        <form method="post">
+            {% csrf_token %}
+            {{ commentForm }}
+            <button class="btn-swipe-i" type="submit">Enviar</button>
+        </form>
+    </section>
+
+
+
+    <section class="section pad-l grid grid--3-cols P700-b pad-b-m">
+        <header class="grid-header flex-c pad-b-s"> 
+            <h3 class="h3 N100-c">Related Recipes:</h3>
+            <p class="p1-b N100-c">If you liked this recipe and want to expand your culinary knowledge, we have selected some recipes that we think you will enjoy!!</p>
+        </header>
+            {% for recipe in related_recipes %}
+                {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+            {% endfor %}
+    </section>
+
+
+<script defer src="{% static '/js/recipe.js' %}"></script>
+
 {% endblock %}
