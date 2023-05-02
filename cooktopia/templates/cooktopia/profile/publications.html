@@ -1,0 +1,19 @@
+{% extends 'cooktopia/profile/profile.html' %}
+{% load static %}
+
+
+{% block profile_content%} 
+
+
+        {% if publications %}
+            <section class="section grid grid--3-cols N100-b pad-b-m pad-t-m">
+                {% for recipe in publications %}  
+                    {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+                {% endfor %}
+        {% else %}
+            <section class="section center flex-r N100-b pad-b-xl pad-t-xl">
+                <h2 class="h0 N500-c ">New Recipes Publications Comming Soon</h2>
+        {% endif %}
+            </section>
+
+{% endblock %} 

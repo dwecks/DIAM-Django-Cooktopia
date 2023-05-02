@@ -70,3 +70,8 @@ class RecipeIngredient(models.Model):
 
     class Meta:
         unique_together = ('recipe', 'ingredient')
+
+
+class UserHelp(models.Model):
+    chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)

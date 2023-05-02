@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+<!-- Configurar path nas setting -->
+
+{% block title %} Recipe {% endblock %} 
+
+{% block content %}
+    <h1>{{recipe.title}}</h1>
+    <h1>{{recipe.id}}</h1>
+    <h1>{{recipe.chef.name}}</h1>
+    {% for step in steps%}
+        <h1>{{step.step}}</h1>
+    {% endfor %}
+    {% for step in types%}
+        <h1>{{step.name}}</h1>
+    {% endfor %}
+    {% for i in ingredients%}
+        <h1>{{i.ingredient.name}} {{i.quantity}}</h1>
+    {% endfor %}
+{% endblock %}

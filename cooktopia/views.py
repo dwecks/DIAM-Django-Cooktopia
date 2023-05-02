@@ -1,63 +1,75 @@
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from django.views.generic import ListView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.utils.decorators import method_decorator
+from .models import Chef
 from .models import RecipeIngredient
 from django.shortcuts import render, redirect
-from django.utils import timezone
-from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import View
+
 from .models import MealType
 from django.db.models import Q
 from .models import Recipe
 
-# forms
 from django.views.generic.edit import CreateView, FormView
 from .forms import *
-
-# settings
 from django.conf import settings
 
 # Create your views here.
 
 
-def home(request):
+###############################################################################
+# Home Page
+###############################################################################
+
+def homeView(request):
     context = {}
-    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
-    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
-    print(
-        f"************************************************ {context['top_recipes']}")
-    print(
-        f"************************************************ {context['new_recipes']}")
+    context['top_recipes'] = Recipe.objects.order_by("-rating")[:6]
+    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:6]
+    context['MEDIA_URL'] = settings.MEDIA_URL
     return render(request, 'cooktopia/home.html', context)
 
+###############################################################################
+# Recipes
+###############################################################################
+
+
 def recipes(request):
-    context = {}
-    context['top_recipes'] = Recipe.objects.order_by("-rating")[:3]
-    context['new_recipes'] = Recipe.objects.order_by('-pub_date')[:4]
-    print(
-        f"************************************************ {context['top_recipes']}")
-    print(
-        f"************************************************ {context['new_recipes']}")
-    return render(request, 'cooktopia/recipes.html', context)
+    return render(request, 'cooktopia/recipes.html')
 
 
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class RecipeView(View):
+    template_name = "cooktopia/recipe.html"
 
+    def get(self, request, recipe_id):
+        context = {}
+        context['MEDIA_URL'] = settings.MEDIA_URL
+        context["recipe"] = get_object_or_404(Recipe, id=recipe_id)
+        context["steps"] = RecipeSteps.objects.filter(recipe=context["recipe"])
+        context["ingredients"] = RecipeIngredient.objects.filter(
+            recipe=context["recipe"])
+        context["types"] = MealType.objects.all()
+        return render(request, self.template_name, context)
 
-def reels(request):
-    return render(request, 'cooktopia/reels.html')
+    def post(self, request, recipe_id):
+        pass
 
 def meal_types_view(request):
     meal_types = MealType.objects.all()
-    print(meal_types)
-    return render(request, 'recipes.html', {'meal_types': meal_types})
-
-
+    return render(request, 'my_template.html', {'meal_types': meal_types})
 
 def difficulties_view(request):
     difficulties = Difficulty.objects.all()
-    return render(request, 'recipes.html', {'difficulties': difficulties})
+    return render(request, 'my_template.html', {'difficulties': difficulties})
 
 
 def filter_by_preparation_time(request):
@@ -84,16 +96,16 @@ def filter_by_preparation_time(request):
     context = {
         'recipes': recipes
     }
-    return render(request, 'recipes.html', context)
+    return render(request, 'filter_by_preparation_time.html', context)
 def filter_by_difficulty(request, difficulty_id):
     difficulty = Difficulty.objects.get(pk=difficulty_id)
     recipes = Recipe.objects.filter(difficulty=difficulty)
-    return render(request, 'recipes.html', {'recipes': recipes})
+    return render(request, 'my_template.html', {'recipes': recipes})
 
 def filter_by_meal_type(request, meal_type_id):
     meal_type = MealType.objects.get(pk=meal_type_id)
     recipes = Recipe.objects.filter(meal_type=meal_type)
-    return render(request, 'recipes.html', {'recipes': recipes}) #qeq eu ponho aqui
+    return render(request, 'my_template.html', {'recipes': recipes}) #qeq eu ponho aqui
 
 def filter_by_bub_date(request):
     today = timezone.now().date()
@@ -109,42 +121,16 @@ def filter_by_bub_date(request):
         recipes = Recipe.objects.filter(published_date__gte=last_year)
     else:
         recipes = Recipe.objects.all()
-    return render(request, 'recipes.html', {'recipes': recipes})
+    return render(request, 'recipe_list.html', {'recipes': recipes})
 
 
 
-@login_required(login_url='login')
-def profile(request):
-    context = {'MEDIA_URL': settings.MEDIA_URL, "range": range(1, 10)}
-    return render(request, 'cooktopia/profile.html', context)
+# New Recipes Views
 
 
-class Login(FormView):
-    form_class = LoginForm
-    template_name = "cooktopia/login.html"
-    success_url = "profile"
-
-    def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user = authenticate(self.request, username=username, password=password)
-
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
-
-        return self.form_invalid(form)
-
-
-class Registration(CreateView):
-    model = Chef
-    template_name = "cooktopia/registration.html"
-    form_class = RegitracioForm
-    success_url = "profile"
-
-
-class AddRecipe(FormView):
-    template_name = "cooktopia/addRecipe.html"
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class AddRecipeView(FormView):
+    template_name = "cooktopia/recipeForms/addRecipe.html"
     form_class = AddRecipeForm
 
     def form_valid(self, form):
@@ -158,8 +144,9 @@ class AddRecipe(FormView):
         # return super().form_valid(form)
 
 
-class AddIngredients(View):
-    template_name = "cooktopia/addIngredients.html"
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class AddIngredientsView(View):
+    template_name = "cooktopia/recipeForms/addIngredients.html"
 
     def get(self, request, recipe_id):
         formset = RecipeIngredientFormSet(
@@ -178,8 +165,9 @@ class AddIngredients(View):
         return redirect(reverse('addSteps', kwargs={'recipe_id': recipe_id}))
 
 
-class AddSteps(View):
-    template_name = "cooktopia/addRecipeSteps.html"
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class AddStepsView(View):
+    template_name = "cooktopia/recipeForms/addRecipeSteps.html"
 
     def get(self, request, recipe_id):
         formset = RecipeStepsFormSet(
@@ -194,4 +182,258 @@ class AddSteps(View):
                 recipe_step = form.save(commit=False)
                 recipe_step.recipe = recipe
                 recipe_step.save()
-        return redirect(reverse('profile'))
+        return redirect(reverse("profile", kwargs={"chef_id": self.request.user.chef.id}))
+
+###############################################################################
+# Profile Views
+###############################################################################
+
+
+def load_profile_variables(request, chef_id):
+    context = {}
+    context['chef'] = get_object_or_404(Chef, id=chef_id)
+    context["banner"] = context['chef'].recipe_set.order_by("-rating").first()
+    context["is_home"] = chef_id == request.user.chef.id
+    context["follow_status"] = ChefFollower.objects.filter(
+        followed=chef_id, follower=request.user.chef.id).first
+    context['MEDIA_URL'] = settings.MEDIA_URL
+    return context
+
+
+@login_required(login_url='login')
+def profileView(request, chef_id):
+    context = load_profile_variables(request, chef_id)
+    context['publications'] = Recipe.objects.filter(chef=chef_id)
+    return render(request, 'cooktopia/profile/publications.html', context)
+
+
+@login_required(login_url='login')
+def followersView(request, chef_id):
+    context = load_profile_variables(request, chef_id)
+    context['followers'] = ChefFollower.objects.filter(followed=chef_id)
+    return render(request, 'cooktopia/profile/followers.html', context)
+
+
+@login_required(login_url='login')
+def followingView(request, chef_id):
+    context = load_profile_variables(request, chef_id)
+    context['following'] = ChefFollower.objects.filter(follower=chef_id)
+    return render(request, 'cooktopia/profile/following.html', context)
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class ChefUpdateView(FormView):
+    form_class = ChefUpdateForm
+    template_name = 'cooktopia/profile/info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['chef'] = self.request.user.chef
+        context["banner"] = context['chef'].recipe_set.order_by(
+            "-rating").first()
+        context["is_home"] = True
+        context['MEDIA_URL'] = settings.MEDIA_URL
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        chef = self.request.user.chef
+
+        # fill the form with values from the chef object
+        form.fields['name'].initial = chef.name
+        form.fields['country'].initial = chef.country
+        form.fields['username'].initial = chef.user.username
+        form.fields['email'].initial = chef.user.email
+
+        return form
+
+    def form_valid(self, form):
+        user = self.request.user
+        chef = user.chef
+
+        # Update user fields
+        if form.cleaned_data.get('username'):
+            user.username = form.cleaned_data['username']
+        if form.cleaned_data.get('email'):
+            user.email = form.cleaned_data['email']
+        if form.cleaned_data.get('password'):
+            user.set_password(form.cleaned_data['password'])
+        user.save()
+
+        # Update chef fields
+        if form.cleaned_data.get('name'):
+            chef.name = form.cleaned_data['name']
+        if form.cleaned_data.get('country'):
+            chef.country = form.cleaned_data['country']
+        if form.cleaned_data.get('photo'):
+            chef.photo = form.cleaned_data['photo']
+        chef.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("profile", kwargs={"chef_id": self.request.user.chef.id})
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class addProfileImageView(View):
+    def get(self, request):
+        form = ProfileImgForm()
+        return render(request, "cooktopia/profile/addProfilePhoto.html", {"form": form})
+
+    def post(self, request):
+        recived_form = ProfileImgForm(request.POST, request.FILES)
+        if recived_form.is_valid():
+            chef = request.user.chef
+            chef.photo = request.FILES["user_image"]
+            chef.save()
+            return redirect(reverse("profile", kwargs={"chef_id": self.request.user.chef.id}))
+        return render(request, "tempalte path", {"form": recived_form})
+
+
+@login_required(login_url='login')
+def toggleFollowView(request, follow_id):
+    follower = request.user.chef
+    followed = get_object_or_404(Chef, id=follow_id)
+    connections = ChefFollower.objects.filter(
+        followed=followed.id, follower=follower.id)
+    if connections:
+        connections.delete()
+    else:
+        connections = ChefFollower(followed=followed, follower=follower)
+        connections.save()
+    return redirect(reverse("profile", kwargs={"chef_id": follow_id}))
+
+
+###############################################################################
+# Login and Registracion Views
+###############################################################################
+
+
+def logoutview(request):
+    logout(request)
+    return redirect(reverse('home'))
+
+
+class LoginView(FormView):
+    form_class = LoginForm
+    template_name = "cooktopia/access/login.html"
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+
+        return self.form_invalid(form)
+
+    def get_success_url(self):
+        return reverse("profile", kwargs={"chef_id": self.request.user.chef.id})
+
+
+class RegistrationView(CreateView):
+    model = Chef
+    template_name = "cooktopia/access/registration.html"
+    form_class = RegitracioForm
+    success_url = "login"
+
+###############################################################################
+# Help views
+###############################################################################
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class UserQuestionView(CreateView):
+    model = UserHelp
+    template_name = "cooktopia/help/userquestion.html"
+    form_class = HelpForm
+    success_url = "/"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
+# Profile Manage Views
+@login_required(login_url='login')
+def manageView(request, chef_id):
+    if not request.user.is_staff:
+        return redirect(reverse("logout"))
+
+    context = load_profile_variables(request, chef_id)
+    context["user_questions"] = UserHelp.objects.all()
+    return render(request, 'cooktopia/profile/admin.html', context)
+
+###############################################################################
+# React Views
+###############################################################################
+
+
+@api_view(['GET', 'POST'])
+def list_recipes(request):
+    if request.method == 'GET':
+        recipes = Recipe.objects.all()
+        serialized_recipes = RecipeSerializer(
+            recipes, context={'request': request}, many=True)
+        return Response(serialized_recipes.data)
+    elif request.method == 'POST':
+        serializer_recipe = RecipeSerializer(data=request.data)
+        if serializer_recipe.is_valid():
+            serializer_recipe.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer_recipe.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def edit_recipe(request, id):
+    try:
+        recipe = Recipe.objects.get(id=id)
+    except Recipe.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'PUT':
+        serializer_recipe = RecipeSerializer(
+            recipe, data=request.data, context={'request': request})
+        if serializer_recipe.is_valid():
+            serializer_recipe.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer_recipe.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        recipe.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def list_chef(request):
+    if request.method == 'GET':
+        chefs = Chef.objects.all()
+        serialized_chefs = ChefSerializer(
+            chefs, context={'request': request}, many=True)
+        return Response(serialized_chefs.data)
+    elif request.method == 'POST':
+        serializer_chef = ChefSerializer(data=request.data)
+        if serializer_chef.is_valid():
+            serializer_chef.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer_chef.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def edit_chef(request, id):
+    try:
+        chef = Chef.objects.get(id=id)
+    except Chef.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'PUT':
+        serializer_chef = ChefSerializer(
+            chef, data=request.data, context={'request': request})
+        if serializer_chef.is_valid():
+            serializer_chef.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer_chef.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        chef.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

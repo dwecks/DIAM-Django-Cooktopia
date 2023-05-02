@@ -1,0 +1,26 @@
+{% extends 'sideLayout.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/forms.css' %}" />
+{% endblock %}
+
+{% block title %} Help {% endblock %} 
+
+
+{% block side-header %}  Thank you for your question!{% endblock %}
+{% block side-text %} {% endblock %}</p>
+{% block side-footer %}{% endblock %}
+
+{% block right %}
+<section class="recipe-form">
+  <h1 class="h2">How can we help you?</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <div class="btn-container">
+      <input class="btn-r l2-r" type="submit" value="Submit"></input>
+    </div>
+  </form>
+</section>
+{% endblock %}
