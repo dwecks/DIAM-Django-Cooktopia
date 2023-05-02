@@ -121,6 +121,31 @@ class RecipeStepsForm(forms.ModelForm):
 RecipeStepsFormSet = modelformset_factory(
     RecipeSteps, form=RecipeStepsForm, extra=5)
 
+# Add Recipe Comment Forms
+
+
+class CommentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        self.recipe = kwargs.pop('recipe', None)
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Comment
+        fields = ["description"]
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Describe this dish to someone who's never tasted it before?"},),
+        }
+
+    def save(self, commit=True):
+        comment = super().save(commit=False)
+        comment.chef = self.request.user.chef
+        comment.recipe = self.recipe
+        if commit:
+            comment.save()
+        return comment
+
 
 ###############################################################################
 # Help Forms

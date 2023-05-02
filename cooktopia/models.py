@@ -17,11 +17,6 @@ class ChefFollower(models.Model):
         Chef, related_name='following', on_delete=models.CASCADE)
 
 
-class Comment(models.Model):
-    description = models.CharField(max_length=200)
-    chef = models.OneToOneField(Chef, on_delete=models.CASCADE)
-
-
 class Ingridient(models.Model):
     name = models.CharField(max_length=200)
 
@@ -56,8 +51,14 @@ class Recipe(models.Model):
     preparationTime = models.DecimalField(max_digits=3, decimal_places=0)
     mealType = models.ForeignKey(MealType, on_delete=models.DO_NOTHING)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    comments = models.ForeignKey(Comment, null=True, on_delete=models.CASCADE)
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    description = models.CharField(max_length=200)
+    chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(
+        Recipe, null=True, on_delete=models.CASCADE, related_name="comments")
 
 
 class RecipeSteps(models.Model):

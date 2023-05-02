@@ -1,55 +1,61 @@
-{% extends 'sideLayout.html' %}
-<!-- Configurar path nas setting -->
-{% block title %} Recipes {% endblock %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Recipes {% endblock %}
 <h1>Recipes</h1>
 {% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
 
-{% block title %}Recipes{% endblock %}
 {% block content %}
-<head>
-	<title>Cooktopia</title>
-</head>
-<body>
-        <header>
-		<div class="header-left">
-			<h1>cooktopia</h1>
-		</div>
-		<div class="header-middle">
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Recipes</a></li>
-				<li><a href="#">Reels</a></li>
-			</ul>
-		</div>
-	</header>
-	<section class="topDiv">
-		<h2>Find Your Recipes</h2>
-		<button class="find-recipe">Find Recipe</button>
-	</section>
-	<section class="mid-section">
-		<div class="filters">
-			<h2>Filters</h2>
-			<div class="filter-category">
-				<h3>Category</h3>
-				<label><input type="checkbox" name="category" value="vegetarian"> Vegetarian</label>
-				<label><input type="checkbox" name="category" value="vegan"> Vegan</label>
-				<label><input type="checkbox" name="category" value="meat"> Meat</label>
+<section class="section flex-c P300-b">
+		<h1>Find Your Recipes</h1>
+		<button class="searchBarButton">Find Recipe</button>
+</section>
+<section class="mainDiv">
+		<div class="filtersDiv">
+			<div class="filters_frame">
+				<h2>Filters</h2>
+				<div class="filter">
+					<h3>Difficulty</h3>
+						{% for difficulty in difficulties %}
+							<label><input type="checkbox" name="difficulty" value="{{ difficulty.id }}"> {{ difficulty.name }}</label>
+						{% endfor %}
+				</div>
+				<div class="filter">
+				<h3>Time</h3>
+					<label><input type="checkbox" name="preparationTime" value="0,30"> Up to 30 min</label>
+					<label><input type="checkbox" name="preparationTime" value="30,60"> 30min-1h</label>
+					<label><input type="checkbox" name="preparationTime" value="60,"> 1h+</label>
 			</div>
-			<div class="filter-cuisine">
-				<h3>Cuisine</h3>
-				<label><input type="checkbox" name="cuisine" value="italian"> Italian</label>
-				<label><input type="checkbox" name="cuisine" value="mexican"> Mexican</label>
-				<label><input type="checkbox" name="cuisine" value="chinese"> Chinese</label>
+			<div class="filter">
+				<h3>Meal Type</h3>
+				{% for meal_type in meal_types %}
+        			<label><input type="checkbox" name="mealType" value="{{ meal_type.id }}"> {{ meal_type.name }}</label>
+				{% endfor %}
 			</div>
-			<button class="apply-button">Apply</button>
+			<div class="filter">
+				<h3>Publication Date</h3>
+				{% for meal_type in meal_types %}
+        			<label><input type="checkbox" name="pub_date" value="week"> Last week</label>
+					<label><input type="checkbox" name="pub_date" value="month"> Last Month</label>
+					<label><input type="checkbox" name="pub_date" value="year"> Last Year</label>
+				{% endfor %}
+			</div>
+			<button class="applyFiltersButton">Apply</button>
+			</div>
 		</div>
-		<div class="recipes">
-			<div class="hide-filters">
-				<img src="hide-filters-icon.png" alt="Hide Filters">
-				<span>Hide Filters</span>
+		<div class="receitas">
+			<div class="receitas_header">
+				<div class="receitas_header_frame">
+					<div class="receitas_header_left_container">
+						<img src="hide-filters-icon.png" alt="Hide Filters">
+						<span>Hide Filters</span>
+					</div>
+					<div class="receitas_header_right_container">
+						<h4>Recipes by Page <span class="page-number">1</span></h4>
+					</div>
+				</div>
 			</div>
-			<h2>Recipes by Page<span class="page-number">1</span></h2>
-			<div class="recipe-card">
+			<div class="receitas_content">
 				<h3>Spaghetti Bolognese</h3>
 				<p class="chef-name">by John Smith</p>
 				<div class="rating">
@@ -59,24 +65,15 @@
 					<span class="star"></span>
 					<span class="star"></span>
 				</div>
-				<img src="spaghetti-bolognese.jpg" alt="Spaghetti Bolognese">
-				<div class="recipe-card-footer">
-					<a href="#"><img src="like-icon.png" alt="Like"> <span>256</span></a>
-					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>
+				<img src="/uploads/recipes/food.jpeg" alt="Spaghetti Bolognese">
+<!--				<div class="recipe_footer">-->
+<!--					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>-->
+<!--					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>-->
 				</div>
 			</div>
-			<div class="recipe-card">
-				<h3>Tacos al Pastor</h3>
-				<p class="chef-name">by Maria Garcia</p>
-				<div class="rating">
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-				</div>
-				<img src="tacos-al-pastor.jpg" alt="Tacos al Pastor">
-				<div class="recipe-card-footer">
-					<a href="#">
-</body>
+		</div>
+	<footer>
+   		<p style="text-align:left;">Cooktopia</p> <!-- adicionar na base (?) -->
+	</footer>
+</section>
 {% endblock %}
