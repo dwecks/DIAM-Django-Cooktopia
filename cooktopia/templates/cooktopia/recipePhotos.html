@@ -1,0 +1,15 @@
+{% extends 'cooktopia/profile/profile.html' %}
+{% load static %}
+
+
+{% block recipe_photos%} 
+
+    <section class="section grid grid--5-cols N100-b">
+        {% for photo in recipe %}  
+                <picture class = "recipe-pic">
+                    <img  src="{{photo.image.url}}" alt="Recipe Image">
+                </picture>
+        {% endfor %}
+    </section>
+
+{% endblock %} 

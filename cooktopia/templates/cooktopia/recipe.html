@@ -10,17 +10,25 @@
 {% block title %} Recipe {% endblock %} 
 
 {% block content %}
+<<<<<<< Updated upstream
 
 <img class="banner" src="{{recipe.image.url}}" alt="Recipe Banner">
 
     <section class="section">
         <header class="pad-xs sticty-marker">
             <div class="flex-r recipe-border pad-b-s">
+=======
+    <section class="recipe section">
+        <header class="recipe-info pad-xs sticty-marker">
+                <img class="banner" src="{{recipe.image.url}}" alt="">
+            <div class="add-btn-container flex-r">
+>>>>>>> Stashed changes
             <div>
                 <h1 class="h2">Receita: {{recipe.title}}</h1>
                 <h4 class="h4 N700-c">By: {{recipe.chef.name}}</h4>
                 <h4 class="h4">Rating: {{recipe.rating}}</h4>
             </div>
+<<<<<<< Updated upstream
                 <button class="btn-r add-btn l2-b" id="btn-addcom">+ Add Comment</button>
             </div>
         </header>
@@ -100,4 +108,34 @@
 
 <script defer src="{% static '/js/recipe.js' %}"></script>
 
+=======
+                <a class="btn-r add-btn l2-b" href="{% url 'addRecipe' %}">+ Add Comment</a>
+            </div>
+        </header>
+        <nav class="colors-effect">
+            <ul class="nav flex-r-c l1-r ">
+            <li><a class="N800-c" href="{% url 'recipe' recipe.id %}">Directions</a></li>
+            <li><a class="N800-c" href="{% url 'addRecipe' %}">Photos</a></li>
+            <li><a class="N800-c" href="{% url 'addRecipe' %}">Comments</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    {% block recipe_content%} {% endblock %}
+
+        {% comment %}
+        <section class="section pad-l grid grid--3-cols P700-b pad-b-m">
+            <header class="grid-header flex-c pad-b-s"> 
+                <h3 class="h3 N100-c">Related Recipes:</h3>
+                <p class="p1-b N100-c">If you liked this recipe and want to expand your culinary knowledge, we have selected some recipes that we think you will enjoy!!</p>
+            </header>
+                {% for recipe in related_recipes %}  
+                    {% include 'cooktopia/snippets/basicRecipeCard.html' %}
+                {% endfor %}
+        </section>
+        {% endcomment %}
+
+
+
+>>>>>>> Stashed changes
 {% endblock %}

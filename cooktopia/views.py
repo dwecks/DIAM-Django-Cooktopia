@@ -56,12 +56,19 @@ class RecipeView(View):
     def get(self, request, recipe_id):
         context = {}
         context['MEDIA_URL'] = settings.MEDIA_URL
+<<<<<<< Updated upstream
         context["recipe"] = get_object_or_404(Recipe, id=recipe_id)
         context["steps"] = RecipeSteps.objects.filter(recipe=context["recipe"])
         context["comments"] = Comment.objects.filter(recipe=context["recipe"])
         context["ingredients"] = RecipeIngredient.objects.filter(recipe=context["recipe"])
         context['related_recipes'] = Recipe.objects.filter(mealType= context["recipe"].mealType)[:3]
         context["commentForm"] = AddCommentForm(request=request)
+=======
+        context["recipe"] = Recipe.objects.get(id=recipe_id)
+        #context['related_recipes'] = Recipe.objects.filter_by_meal_type(recipe.mealType)[:6]
+        #context["recipeSteps"] = RecipeSteps.objects.get(id=recipe_id)
+        #context["recipeIngredient"] = RecipeIngredient.objects.get(id=recipe_id)
+>>>>>>> Stashed changes
         return render(request, self.template_name, context)
 
     def post(self, request, recipe_id):

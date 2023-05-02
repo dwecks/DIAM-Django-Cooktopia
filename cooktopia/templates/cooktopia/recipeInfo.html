@@ -1,0 +1,25 @@
+{% extends 'cooktopia/recipe.html' %}
+{% load static %}
+
+
+{% block recipe_content%} 
+
+    {% comment %} <section class="section flex-r N100-b">
+        <div class="N200-b flex-c">
+            <h1 class="h1">Method:</h1>
+                {% for step in recipeSteps %}  
+                    <h1>{{recipeSteps.step}}</h1>
+                {% endfor %}
+        </div> 
+        <div class="P500-b flex-c">
+            <h1 class="h2">Ingredients{{recipe.name}}</h1>
+                {% for recipe in publications %}  
+                    <div class="flex-r-c">
+                        <p class="N100-c pi-r">{{RecipeIngredient.ingredient}}</p>
+                        <p class="N100-c pi-r">{{RecipeIngredient.quantity}}</p>
+                    </div>
+                {% endfor %}
+        </div>   
+    </section> {% endcomment %}
+
+{% endblock %} 
