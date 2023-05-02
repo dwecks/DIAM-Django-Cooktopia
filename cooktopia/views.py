@@ -37,6 +37,8 @@ def homeView(request):
 # Recipes
 ###############################################################################
 
+#
+
 
 def recipes(request):
     return render(request, 'cooktopia/recipes.html')
@@ -47,21 +49,13 @@ class RecipeView(View):
     template_name = "cooktopia/recipe.html"
 
     def get(self, request, recipe_id):
-        context = {}
-        context['MEDIA_URL'] = settings.MEDIA_URL
-        context["recipe"] = get_object_or_404(Recipe, id=recipe_id)
-        context["steps"] = RecipeSteps.objects.filter(recipe=context["recipe"])
-        context["ingredients"] = RecipeIngredient.objects.filter(
-            recipe=context["recipe"])
-        context["types"] = MealType.objects.all()
-        return render(request, self.template_name, context)
+        pass
 
     def post(self, request, recipe_id):
         pass
 
 
 # New Recipes Views
-
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class AddRecipeView(FormView):
