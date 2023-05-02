@@ -44,16 +44,6 @@ def recipes(request):
     return render(request, 'cooktopia/recipes.html')
 
 
-def meal_types_view(request):
-    meal_types = MealType.objects.all()
-    return render(request, 'my_template.html', {'meal_types': meal_types})
-
-
-def difficulties_view(request):
-    difficulties = Difficulty.objects.all()
-    return render(request, 'my_template.html', {'difficulties': difficulties})
-
-
 def filter_by_preparation_time(request):
     # Retrieve the selected preparation time ranges from the request
     time_ranges = request.GET.getlist('preparationTime')

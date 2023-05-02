@@ -1,62 +1,64 @@
 {% extends 'base.html' %}
+<!-- Configurar path nas setting -->
 {% load static %}
-
-{% block title %} Recipes {% endblock %}
-<h1>Recipes</h1>
 {% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
 
+{% block title %} Recipes {% endblock %}
 {% block content %}
 <section class="section flex-c P300-b">
-		<h1>Find Your Recipes</h1>
+		<h1 class="h1 headers-font">Find Your Recipes</h1>
 		<button class="searchBarButton">Find Recipe</button>
 </section>
-<section class="mainDiv">
-		<div class="filtersDiv">
+<section class="mainDiv section flex-r">
+		<div class="filtersDiv section">
 			<div class="filters_frame">
-				<h2>Filters</h2>
+				<h2 class="h2 text-font">Filters</h2>
 				<div class="filter">
-					<h3>Difficulty</h3>
+					<h3 class="h4 text-font">Difficulty</h3>
 						{% for difficulty in difficulties %}
-							<label><input type="checkbox" name="difficulty" value="{{ difficulty.id }}"> {{ difficulty.name }}</label>
+							<label style="display:block"><input type="checkbox" name="difficulty" value="{{ difficulty.id }}"><span class="p2-r text-font"> {{ difficulty.name }}</span></label>
 						{% endfor %}
 				</div>
 				<div class="filter">
-				<h3>Time</h3>
-					<label><input type="checkbox" name="preparationTime" value="0,30"> Up to 30 min</label>
-					<label><input type="checkbox" name="preparationTime" value="30,60"> 30min-1h</label>
-					<label><input type="checkbox" name="preparationTime" value="60,"> 1h+</label>
+				<h3 class = "h4 text-font">Time</h3>
+					<label style="display:block"><input type="checkbox" name="preparationTime" value="0,30" ><span class="p2-r text-font"> Up to 30 min</span></label>
+					<label style="display:block"><input type="checkbox" name="preparationTime" value="30,60"><span class="p2-r text-font">30min-1h</span></label>
+					<label style="display:block"><input type="checkbox" name="preparationTime" value="60,"><span class="p2-r text-font"> 1h+</span></label>
 			</div>
 			<div class="filter">
-				<h3>Meal Type</h3>
+				<h3 class="h4 text-font">Meal Type</h3>
 				{% for meal_type in meal_types %}
-        			<label><input type="checkbox" name="mealType" value="{{ meal_type.id }}"> {{ meal_type.name }}</label>
+        			<label style="display:block"><input type="checkbox" name="mealType" value="{{ meal_type.id }}"><span class="p2-r text-font">{{ meal_type.name }}</span></label>
 				{% endfor %}
 			</div>
 			<div class="filter">
-				<h3>Publication Date</h3>
-				{% for meal_type in meal_types %}
-        			<label><input type="checkbox" name="pub_date" value="week"> Last week</label>
-					<label><input type="checkbox" name="pub_date" value="month"> Last Month</label>
-					<label><input type="checkbox" name="pub_date" value="year"> Last Year</label>
-				{% endfor %}
+				<h3 class="h4 text-font">Publication Date</h3>
+        			<label style="display:block"><input type="checkbox" name="pub_date" value="week"><span class="p2-r text-font">Last week</span></label>
+					<label style="display:block"><input type="checkbox" name="pub_date" value="month"><span class="p2-r text-font"> Last Month </span></label>
+					<label style="display:block"><input type="checkbox" name="pub_date" value="year"><span class="p2-r text-font"> Last Year </span></label>
 			</div>
 			<button class="applyFiltersButton">Apply</button>
 			</div>
 		</div>
-		<div class="receitas">
+		<div class="receitas section flex-c">
 			<div class="receitas_header">
-				<div class="receitas_header_frame">
-					<div class="receitas_header_left_container">
-						<img src="hide-filters-icon.png" alt="Hide Filters">
-						<span>Hide Filters</span>
+				<div class="receitas_header_frame section flex-r">
+					<div class="receitas_header_left_container section">
+						<div class="vector_left">
+								<img src="media/Icons/hide-filters-icon.png" alt="Hide Filters">
+						</div>
+						<span class="receitas_header_text_left">Hide Filters</span>
 					</div>
 					<div class="receitas_header_right_container">
-						<h4>Recipes by Page <span class="page-number">1</span></h4>
+						<h4 class="receitas_header_text_right">Recipes by Page <span class="page-number">1</span></h4>
 					</div>
 				</div>
 			</div>
-			<div class="receitas_content">
-				<h3>Spaghetti Bolognese</h3>
+			<div class="receitas_content section flex-r">
+				{% for recipe in new_recipes %}
+                	{% include 'cooktopia/snippets/completRecipeCard.html' %}
+            	{% endfor %}
+				<!--<h3>Spaghetti Bolognese</h3>
 				<p class="chef-name">by John Smith</p>
 				<div class="rating">
 					<span class="star"></span>
@@ -66,14 +68,11 @@
 					<span class="star"></span>
 				</div>
 				<img src="/uploads/recipes/food.jpeg" alt="Spaghetti Bolognese">
-<!--				<div class="recipe_footer">-->
-<!--					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>-->
-<!--					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>-->
-				</div>
+&lt;!&ndash;				<div class="recipe_footer">&ndash;&gt;
+&lt;!&ndash;					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>&ndash;&gt;
+&lt;!&ndash;					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>&ndash;&gt;
+				</div>-->
 			</div>
 		</div>
-	<footer>
-   		<p style="text-align:left;">Cooktopia</p> <!-- adicionar na base (?) -->
-	</footer>
 </section>
 {% endblock %}
