@@ -63,6 +63,7 @@
     order: 1;
 }
 
+
 .searchBarButton, .applyFiltersButton{
     padding: 0px 16px;
     flex-direction: row;
@@ -129,7 +130,7 @@ h2 { /*filters_frame_title*/
 
 .applyFiltersButton {
     width: 247px;
-
+    background: #FFFFFF;
     order: 5;
 }
 
@@ -242,7 +243,16 @@ h2 { /*filters_frame_title*/
     order: 1;
 }
 .receitas_content_frame { /*2 frames*/
-    height: 476px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px;
+    gap: 16px;
+    background: #FFFFFF;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.05), -8px -8px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+
+    flex-grow: 1;
 }
 .receita { /*2 por cada frame*/
     padding: 24px;
