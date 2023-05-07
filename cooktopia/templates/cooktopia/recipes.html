@@ -39,7 +39,7 @@
 					<label style="display:block"><input type="checkbox" name="pub_date" value="month"><span class="p2-r text-font"> Last Month </span></label>
 					<label style="display:block"><input type="checkbox" name="pub_date" value="year"><span class="p2-r text-font"> Last Year </span></label>
 			</div>
-			<button class="applyFiltersButton btn-swipe l1-r">Apply</button>
+			<button class="applyFiltersButton btn-swipe l1-r" onclick="applyFilters()">Apply</button>
 			</div>
 		</div>
 		<div class="receitas section flex-c">
@@ -56,7 +56,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="receitas_content section flex-r">
+			<div id="recipeContainer" class="receitas_content section flex-r">
 				<div class="receitas_content_frame section pad-l grid grid--3-cols N200-b pad-b-m">
 				{% for recipe in new_recipes %}
                 	{% include 'cooktopia/snippets/basicRecipeCard.html' %}

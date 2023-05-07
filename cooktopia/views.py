@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
@@ -18,6 +20,9 @@ from .serializers import *
 from django.views.generic.edit import CreateView, FormView
 from .forms import *
 from django.conf import settings
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -41,7 +46,8 @@ def homeView(request):
 
 
 def recipes(request):
-    return render(request, 'cooktopia/recipes.html')
+    new_recipes = Recipe.objects.all()
+    return render(request, 'cooktopia/recipes.html', {'new_recipes': new_recipes})
 
 
 def filter_by_preparation_time(request):
@@ -65,24 +71,24 @@ def filter_by_preparation_time(request):
     else:
         recipes = Recipe.objects.all()
 
-    # Pass the filtered recipes to the template
-    context = {
-        'recipes': recipes
-    }
-    return render(request, 'filter_by_preparation_time.html', context)
+    # Render the filtered recipes as HTML
+    html_recipes = render_to_string('cooktopia/snippets/recipeCards.html', {'recipes': recipes})
+
+        # Return the HTML response
+    return HttpResponse(html_recipes)
+
 
 
 def filter_by_difficulty(request, difficulty_id):
     difficulty = Difficulty.objects.get(pk=difficulty_id)
     recipes = Recipe.objects.filter(difficulty=difficulty)
-    return render(request, 'my_template.html', {'recipes': recipes})
+    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
 
 
 def filter_by_meal_type(request, meal_type_id):
     meal_type = MealType.objects.get(pk=meal_type_id)
     recipes = Recipe.objects.filter(meal_type=meal_type)
-    # qeq eu ponho aqui
-    return render(request, 'my_template.html', {'recipes': recipes})
+    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
 
 
 def filter_by_bub_date(request):
@@ -99,7 +105,7 @@ def filter_by_bub_date(request):
         recipes = Recipe.objects.filter(published_date__gte=last_year)
     else:
         recipes = Recipe.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': recipes})
+    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
 
 
 # 1 Recipe

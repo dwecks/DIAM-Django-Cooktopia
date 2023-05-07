@@ -11,6 +11,7 @@ urlpatterns = [
     # Recipes
     path('recipes', views.recipes, name='recipes'),
     path('recipes/<int:recipe_id>/', RecipeView.as_view(), name='recipe'),
+    path('recipes/filter', views.filter_recipes, name='filter_recipes'),
     # new Recipes
     path("createrecipe", AddRecipeView.as_view(), name="addRecipe"),
     path("createrecipe/ingredients/<int:recipe_id>/",
@@ -29,6 +30,7 @@ urlpatterns = [
     path('profile/follow/<int:follow_id>',
          views.toggleFollowView, name='follow'),
     path('profile/admin/<int:chef_id>/', views.manageView, name='manage'),
+
     # Access and Registracion
     path("login", LoginView.as_view(), name="login"),
     path('logout/', logoutview, name='logout'),
