@@ -100,6 +100,13 @@ def filter_recipes(request):
     # Return the HTML response
     return HttpResponse(html_recipes)
 
+def mealtype_list(request):
+    meal_types = MealType.objects.all()
+    return render(request, 'cooktopia/recipes.html', {'meal_type': meal_types})
+def difficulty_list(request):
+    difficulties = Difficulty.objects.all()
+    return render(request, 'cooktopia/recipes.html', {'difficulties': difficulties})
+
 
 # 1 Recipe
 
