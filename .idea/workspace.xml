@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ec3e9a2-e224-4fa9-9c02-7b4ab0aac3df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cooktopia/static/js/filters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktopia/static/css/recipes.css" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/static/css/recipes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cooktopia/static/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/static/js/filters.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cooktopia/templates/cooktopia/recipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/templates/cooktopia/recipes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cooktopia/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cooktopia/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cooktopia/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/general.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/general.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

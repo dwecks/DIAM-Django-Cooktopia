@@ -1,3 +1,5 @@
+
+
 function applyFilters() {
   // Get the selected filter values
   const difficultyValues = getSelectedCheckboxValues('difficulty');
@@ -7,11 +9,13 @@ function applyFilters() {
 
   // Build the query string for the filter values
   const queryString = `difficulty=${difficultyValues.join(',')}&preparationTime=${preparationTimeValues.join(',')}&mealType=${mealTypeValues.join(',')}&pub_date=${pubDateValue}`;
+// Load the filtered recipes into the "receitas_content" <div>
+  $('#recipeContainer').load('/filter_recipes?' + queryString);
 
   // Perform the filtering logic here
 
   // Hide all recipe cards
-  $('.receitas_content .recipeCard').hide();
+  /*$('.receitas_content .recipeCard').hide();
 
   // Filter and display the recipe cards based on the selected filter values
   $('.receitas_content .recipeCard').each(function() {
@@ -28,7 +32,7 @@ function applyFilters() {
     ) {
       $(this).show(); // Display the recipe card
     }
-  });
+  });*/
 }
 
 function getSelectedCheckboxValues(name) {
@@ -39,4 +43,3 @@ function getSelectedCheckboxValues(name) {
   });
   return values;
 }
-

@@ -1,16 +1,11 @@
-from datetime import timedelta
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
-from django.views.generic import ListView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
-from .models import Chef
-from .models import RecipeIngredient
 from django.shortcuts import render, redirect
-from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -20,6 +15,10 @@ from .serializers import *
 from django.views.generic.edit import CreateView, FormView
 from .forms import *
 from django.conf import settings
+from django.shortcuts import render
+from datetime import timedelta
+from django.utils import timezone
+from .models import Recipe
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.db.models import Q
@@ -47,25 +46,49 @@ def homeView(request):
 
 def recipes(request):
     new_recipes = Recipe.objects.all()
-    return render(request, 'cooktopia/recipes.html', {'new_recipes': new_recipes})
+    paginator = Paginator(new_recipes, 4)  # Limit to 6 recipes per page
+    page_number = request.GET.get('page')  # Get the current page number from the query parameters
+    page_obj = paginator.get_page(page_number)  # Get the page object for the current page
 
+    return render(request, 'cooktopia/recipes.html', {'page_obj': page_obj})
 
-def filter_by_preparation_time(request):
-    # Retrieve the selected preparation time ranges from the request
+def filter_recipes(request):
+    # Retrieve the selected filter values from the request
+    difficulty_id = request.GET.get('difficulty')
+    meal_type_id = request.GET.get('mealType')
+    pub_date = request.GET.get('pub_date')
     time_ranges = request.GET.getlist('preparationTime')
 
-    # Create a list of Q objects to filter the recipes
+    # Apply the filters to the Recipe model
     filters = []
+
+    if difficulty_id:
+        filters.append(Q(difficulty_id=difficulty_id))
+
+    if meal_type_id:
+        filters.append(Q(meal_type_id=meal_type_id))
+
+    if pub_date:
+        today = timezone.now().date()
+        last_week = today - timedelta(days=7)
+        last_month = today - timedelta(days=30)
+        last_year = today - timedelta(days=365)
+
+        if pub_date == 'week':
+            filters.append(Q(published_date__gte=last_week))
+        elif pub_date == 'month':
+            filters.append(Q(published_date__gte=last_month))
+        elif pub_date == 'year':
+            filters.append(Q(published_date__gte=last_year))
+
     for time_range in time_ranges:
         if time_range == '0,30':
             filters.append(Q(preparationTime__lte=30))
         elif time_range == '30,60':
-            filters.append(Q(preparationTime__gt=30) &
-                           Q(preparationTime__lte=60))
+            filters.append(Q(preparationTime__gt=30) & Q(preparationTime__lte=60))
         elif time_range == '60,':
             filters.append(Q(preparationTime__gt=60))
 
-    # Apply the filters to the Recipe model
     if filters:
         recipes = Recipe.objects.filter(*filters)
     else:
@@ -74,38 +97,8 @@ def filter_by_preparation_time(request):
     # Render the filtered recipes as HTML
     html_recipes = render_to_string('cooktopia/snippets/recipeCards.html', {'recipes': recipes})
 
-        # Return the HTML response
+    # Return the HTML response
     return HttpResponse(html_recipes)
-
-
-
-def filter_by_difficulty(request, difficulty_id):
-    difficulty = Difficulty.objects.get(pk=difficulty_id)
-    recipes = Recipe.objects.filter(difficulty=difficulty)
-    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
-
-
-def filter_by_meal_type(request, meal_type_id):
-    meal_type = MealType.objects.get(pk=meal_type_id)
-    recipes = Recipe.objects.filter(meal_type=meal_type)
-    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
-
-
-def filter_by_bub_date(request):
-    today = timezone.now().date()
-    last_week = today - timedelta(days=7)
-    last_month = today - timedelta(days=30)
-    last_year = today - timedelta(days=365)
-    pub_date = request.GET.get('pub_date')
-    if pub_date == 'week':
-        recipes = Recipe.objects.filter(published_date__gte=last_week)
-    elif pub_date == 'month':
-        recipes = Recipe.objects.filter(published_date__gte=last_month)
-    elif pub_date == 'year':
-        recipes = Recipe.objects.filter(published_date__gte=last_year)
-    else:
-        recipes = Recipe.objects.all()
-    return render(request, 'cooktopia/recipes.html', {'new_recipes': recipes})
 
 
 # 1 Recipe

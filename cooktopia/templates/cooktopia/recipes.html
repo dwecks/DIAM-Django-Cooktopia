@@ -12,8 +12,8 @@
 		</form>
 </section>
 <section class="mainDiv section flex-r">
-		<div class="filtersDiv section">
-			<div class="filters_frame">
+		<div class="filtersDiv  ">
+			<div class="filters_frame section flex-c">
 				<h2 class="h2 text-font">Filters</h2>
 				<div class="filter">
 					<h3 class="h4 text-font">Difficulty</h3>
@@ -43,40 +43,40 @@
 			</div>
 		</div>
 		<div class="receitas section flex-c">
-			<div class="receitas_header">
-				<div class="receitas_header_frame section flex-r">
-					<div class="receitas_header_left_container section">
-						<div class="vector_left">
-								<img src="media/Icons/hide-filters-icon.png" alt="Hide Filters">
+				<div class="receitas_header">
+					<div class="receitas_header_frame section flex-r">
+						<div class="receitas_header_left_container section">
+							<div class="vector_left">
+									<img src="media/Icons/hide-filters-icon.png" alt="Hide Filters">
+							</div>
+							<span class="receitas_header_text_left">Hide Filters</span>
 						</div>
-						<span class="receitas_header_text_left">Hide Filters</span>
+						<div class="receitas_header_right_container">
+							<h4 class="receitas_header_text_right">Recipes by Page <span class="page-number">1</span></h4>
+						</div>
 					</div>
-					<div class="receitas_header_right_container">
-						<h4 class="receitas_header_text_right">Recipes by Page <span class="page-number">1</span></h4>
+				</div>
+				<div id="recipeContainer" class="receitas_content section flex-r">
+					<div class="receitas_content_frame section pad-l grid grid--2-cols N200-b pad-b-xl">
+					{% for recipe in page_obj %}
+      					{% include 'cooktopia/snippets/BasicrecipeCard.html' %}
+   					 {% endfor %}
+					<!--<h3>Spaghetti Bolognese</h3>
+					<p class="chef-name">by John Smith</p>
+					<div class="rating">
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+					</div>
+					<img src="/uploads/recipes/food.jpeg" alt="Spaghetti Bolognese">
+	&lt;!&ndash;				<div class="recipe_footer">&ndash;&gt;
+	&lt;!&ndash;					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>&ndash;&gt;
+	&lt;!&ndash;					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>&ndash;&gt;
+					</div>-->
 					</div>
 				</div>
-			</div>
-			<div id="recipeContainer" class="receitas_content section flex-r">
-				<div class="receitas_content_frame section pad-l grid grid--3-cols N200-b pad-b-m">
-				{% for recipe in new_recipes %}
-                	{% include 'cooktopia/snippets/basicRecipeCard.html' %}
-            	{% endfor %}
-				<!--<h3>Spaghetti Bolognese</h3>
-				<p class="chef-name">by John Smith</p>
-				<div class="rating">
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-					<span class="star"></span>
-				</div>
-				<img src="/uploads/recipes/food.jpeg" alt="Spaghetti Bolognese">
-&lt;!&ndash;				<div class="recipe_footer">&ndash;&gt;
-&lt;!&ndash;					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>&ndash;&gt;
-&lt;!&ndash;					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>&ndash;&gt;
-				</div>-->
-				</div>
-			</div>
 		</div>
 </section>
 {% endblock %}
