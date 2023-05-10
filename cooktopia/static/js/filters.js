@@ -1,3 +1,58 @@
+console.log("Clara")
+
+let recipes;
+
+fetch('http://127.0.0.1:8000/api/recipes/')
+  .then(response => response.json())
+  .then(data => {;
+    recipes = data;
+
+  })
+  .catch(error => console.error('Error:', error));
+
+
+  const btn = document.querySelector(".applyFiltersButton");
+
+  btn.addEventListener("click", () => {
+    console.log(recipes);
+    const difficultyValues = getSelectedCheckboxValues('difficulty');
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFF");
+    console.log(filterRecipes(recipes, difficultyValues));
+  });
+
+
+
+  function getSelectedCheckboxValues(name) {
+    const checkboxes = $('input[name="' + name + '"]:checked');
+    const values = [];
+    checkboxes.each(function() {
+      values.push($(this).val());
+    });
+    console.log('Selected ' + name + ' values:', values);
+    return values;
+  }
+
+  
+  function filterRecipes(recipes, filters) {
+    //console.log(filters);
+    return recipes.filter(recipe => {
+      // Check if the chef matches the difficulty filter
+      for (const value of filters)
+        if(recipe.difficulty == value)
+          return recipe;
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 function applyFilters() {
     console.log("applyFilters() function called");
@@ -35,12 +90,5 @@ function applyFilters() {
   });
 }
 
-function getSelectedCheckboxValues(name) {
-  const checkboxes = $('input[name="' + name + '"]:checked');
-  const values = [];
-  checkboxes.each(function() {
-    values.push($(this).val());
-  });
-  console.log('Selected ' + name + ' values:', values);
-  return values;
-}
+
+
