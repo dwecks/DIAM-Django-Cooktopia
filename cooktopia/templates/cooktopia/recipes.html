@@ -35,7 +35,7 @@
 			</div>
 			<div class="filter">
 				<h3 class="h4 text-font">Publication Date</h3>
-        			<label style="display:block"><input type="checkbox" name="pub_date" value="week"><span class="p2-r text-font">Last week</span></label>
+        			<label style="display:block"><input type="checkbox" name="pub_date" value="week"><span class="p2-r text-font"> Last week </span></label>
 					<label style="display:block"><input type="checkbox" name="pub_date" value="month"><span class="p2-r text-font"> Last Month </span></label>
 					<label style="display:block"><input type="checkbox" name="pub_date" value="year"><span class="p2-r text-font"> Last Year </span></label>
 			</div>
@@ -54,8 +54,10 @@
 						<div class="receitas_header_right_container">
 							<h4 class="receitas_header_text_right">Recipes by Page <span class="page-number">1</span></h4>
 							<div class="vector_right">
-									<img src="media/Icons/down-arrow.png" alt="Hide Filters">
-							</div>
+								<button id="load-more-button" onclick="loadMoreRecipes()">
+									<img src="media/Icons/down-arrow.png" alt="Load More">
+								</button>
+	<						</div>
 						</div>
 					</div>
 				</div>
@@ -82,4 +84,6 @@
 				</div>
 		</div>
 </section>
+<script src="{% static '/js/filters.js' %}" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}

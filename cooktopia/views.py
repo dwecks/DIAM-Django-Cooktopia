@@ -45,12 +45,15 @@ def homeView(request):
 
 
 def recipes(request):
+    context = {}
     new_recipes = Recipe.objects.all()
     paginator = Paginator(new_recipes, 4)  # Limit to 6 recipes per page
     page_number = request.GET.get('page')  # Get the current page number from the query parameters
-    page_obj = paginator.get_page(page_number)  # Get the page object for the current page
-
-    return render(request, 'cooktopia/recipes.html', {'page_obj': page_obj})
+    context["page_obj"] = paginator.get_page(page_number)  # Get the page object for the current page
+    context['meal_types'] = MealType.objects.all()
+    context["difficulties"] = Difficulty.objects.all()
+    mealtype_list(request)
+    return render(request, 'cooktopia/recipes.html', context )
 
 def filter_recipes(request):
     # Retrieve the selected filter values from the request
