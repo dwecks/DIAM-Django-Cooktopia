@@ -6,11 +6,12 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import modelformset_factory
-
+from decimal import Decimal
 
 ###############################################################################
 # Login and Registracion Forms
 ###############################################################################
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -78,13 +79,14 @@ class AddRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ["title", "description",
-                  "preparationTime", "mealType", "difficulty", "image"]
+                  "preparationTime", "mealType", "difficulty", "image", "url"]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': "What's the title of this culinary creation?"},),
             'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Describe this dish to someone who's never tasted it before?"},),
             'preparationTime': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': 'How many minutes until this masterpiece is ready?'},),
             'mealType': forms.Select(attrs={'class': 'lbl-r l2-r'}),
             'difficulty': forms.Select(attrs={'class': 'lbl-r l2-r'}),
+            'url': forms.TextInput(attrs={'class': 'lbl-r l2-r', 'placeholder': "Chance to become a streamer, help your followers whit a video."},),
             "image": forms.FileInput(attrs={'class': 'lbl-r l2-r '})
         }
 
@@ -119,7 +121,7 @@ class RecipeStepsForm(forms.ModelForm):
 
 
 RecipeStepsFormSet = modelformset_factory(
-    RecipeSteps, form=RecipeStepsForm, extra=5)
+    RecipeSteps, form=RecipeStepsForm, extra=10)
 
 # Add Recipe Comment Forms
 
@@ -146,6 +148,27 @@ class CommentForm(forms.ModelForm):
             comment.save()
         return comment
 
+
+class RatingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.recipe = kwargs.pop('recipe', None)
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Recipe
+        fields = ["rating"]
+        widgets = {
+            'rating': forms.NumberInput(attrs={'class': 'lbl-r l2-r q-ingredient', 'placeholder': 'Rating'}),
+        }
+
+    def save(self, commit=True):
+        recipe = self.recipe
+        rating = self.cleaned_data.get('rating')
+        recipe.rating = recipe.rating * \
+            Decimal('0.95') + rating * Decimal('0.05')
+        if commit:
+            recipe.save()
+        return recipe
 
 ###############################################################################
 # Help Forms

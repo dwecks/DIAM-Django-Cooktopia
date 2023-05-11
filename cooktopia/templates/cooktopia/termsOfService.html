@@ -1,0 +1,30 @@
+{% extends 'base.html' %} <!-- Tem de ser a primeira linha -->
+{% load static %}
+
+{% block css %}<link rel="stylesheet" href="{% static '/css/style.css' %}" />{% endblock %}
+
+{% block title %}Terms Of Service{% endblock %} 
+
+{% block content %}
+    <section class="section terms-of-service">
+        <header>
+            <h1 class="h1 pad-b-s">Terms of service</h1>
+        </header>
+        <article >
+            <p>Welcome to the "Cooking Chaos" website! We're here to bring you some hilariously amusing terms of service that will leave you giggling while whipping up culinary masterpieces. Remember, these terms are meant for entertainment purposes only and should not be taken seriously.</p>
+            <ol>
+                <li><strong>You agree to never blame our recipes</strong> for any kitchen mishaps, including but not limited to burnt food, smoke-filled kitchens, or accidentally setting off the fire alarm. You're on your own, buddy!</li>
+                <li><strong>By accessing this website</strong>, you confirm that you have read and understood the secret ingredient that we will never share with you. You're welcome to guess, but don't hold your breath. Hint: It's not unicorn tears.</li>
+                <li><strong>We take no responsibility</strong> for the sudden and unexplained disappearance of ingredients while you're in the middle of cooking. It's probably just the fridge gremlins having a snack. Sorry!</li>
+                <li><strong>In the unlikely event</strong> that you manage to create a dish so incredible that it gains sentience and demands a seat at your dinner table, please remember to treat it with respect and offer it a comfortable chair. We're not responsible for any arguments that may arise.</li>
+                <li><strong>Our recipes may contain occasional cryptic instructions</strong> that require you to dance the Macarena or sing your favorite boy band's greatest hits. It's all part of our secret culinary initiation ritual. Good luck!</li>
+                <li><strong>We encourage you to experiment with our recipes</strong>, but we accept no responsibility for the results. If your roasted chicken turns out tasting like old socks, we suggest ordering takeout instead.</li>
+                <li><strong>Our website may occasionally be haunted by a mischievous ghost chef</strong>. While he won't harm you, be prepared for your kitchen utensils to mysteriously relocate or your pots and pans to start tap-dancing when you're not looking. Don't say we didn't warn you!</li>
+                <li><strong>We reserve the right to randomly replace ingredients</strong> in our recipes with glitter, confetti, or edible googly eyes. It's all in the name of making your culinary adventures more fabulous.</li>
+                <li><strong>By using this website</strong>, you agree to provide a weekly offering of freshly baked cookies to our team. We accept chocolate chip, oatmeal raisin, or anything involving copious amounts of sprinkles. Failure to comply may result in an invasion of sassy sous-chefs to your kitchen.</li>
+                <li><strong>Finally, if you find yourself in a cooking-related emergency</strong>, don't bother calling us. We'll be too busy enjoying a delicious pizza on a tropical island with a cocktail in hand. Good luck, brave chef!</li>
+            </ol>
+            <p>Please remember that these terms are purely for entertainment purposes and should not be taken seriously. Cooking should always be fun, so embrace the chaos and enjoy your culinary adventures!</p>
+        </article>
+    </section>
+{% endblock %} 

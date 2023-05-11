@@ -257,7 +257,7 @@ function populateRecipes(recipes) {
   // Get the selected recipes as a sub-array
   const pageRecipes = recipes.slice(startIndex, endIndex);
   //generate page selctor
-  createPageSelector(recipes.length/pageSize);
+  createPageSelector(Math.ceil(recipes.length/pageSize));
   // Create a recipe card for each recipe and append it to the container
   pageRecipes.forEach(function(recipe) {
     const $recipeCard = createRecipeCard(recipe);

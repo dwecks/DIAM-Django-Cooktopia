@@ -1,3 +1,4 @@
+from embed_video.fields import EmbedVideoField
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -52,6 +53,7 @@ class Recipe(models.Model):
     mealType = models.ForeignKey(MealType, on_delete=models.DO_NOTHING)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    url = EmbedVideoField()
 
 
 class Comment(models.Model):

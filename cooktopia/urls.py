@@ -29,11 +29,11 @@ urlpatterns = [
     path('profile/follow/<int:follow_id>',
          views.toggleFollowView, name='follow'),
     path('profile/admin/<int:chef_id>/', views.manageView, name='manage'),
-
     # Access and Registracion
     path("login", LoginView.as_view(), name="login"),
     path('logout/', logoutview, name='logout'),
     path("registration", RegistrationView.as_view(), name="registration"),
+    path("registration/termsofservice", views.terms_of_service, name="terms"),
     # User Help
     path("help", UserQuestionView.as_view(), name="help"),
     # React

@@ -1,7 +1,11 @@
 <div class="profile-card">
     <div class="profile-card-banner">
         <picture class="profile-card-imgbox">
-            <img class="profile-card-img" src="{{ connection.follower.photo.url }}" alt="{{ connection.follower.name }}" class="card-img-top">
+            {% if connection.followed.photo %}
+                <img class="profile-card-img" src="{{ connection.followed.photo.url }}" alt="{{ connection.followed.name }}" class="card-img-top">
+            {% else%}
+                <img class="profile-card-img" src="{{MEDIA_URL}}chefs/profile.png" alt="{{ connection.followed.name }}" class="card-img-top">
+            {% endif %}
         </picture>
         <div class="profile-card-flag hide">{{connection.follower.country}}</div>
     </div>

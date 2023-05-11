@@ -4,13 +4,14 @@
 
 {% block profile_content%} 
 
-    <section class="section grid grid--5-cols N100-b pad-b-m pad-t-m">
+    <section id="profile-content" class="section grid grid--5-cols N100-b pad-b-m pad-t-m">
         {% for connection in following %}  
-            <a href="{% url 'profile' connection.followed.id %}">
+            <a class="friend-tag" href="{% url 'profile' connection.followed.id %}">
                 {% include 'cooktopia/profile/snippets/followingCard.html' %}
             </a>    
         {% endfor %}
     </section>
-
+    <section section class="section page-selector"></section>
     <script defer src="{% static '/js/contries.js' %}"></script>
+    <script src="{% static '/js/profileFriends.js' %}" defer></script>
 {% endblock %} 

@@ -238,6 +238,7 @@ margin-top: 6rem;
 
 /* 2 colores boder*/
 .colors-effect a {
+  cursor: pointer;
   position: relative;
 }
 
@@ -596,5 +597,24 @@ tr:hover {
 
 
 /**************************/
-/* Prety Dropdown */
+/* Terms of service */
 /**************************/
+.terms-of-service{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.terms-of-service p, .terms-of-service ol{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 150%;
+}
+
+.terms-of-service ol{
+  padding: 3.2rem 6.4rem ;
+}

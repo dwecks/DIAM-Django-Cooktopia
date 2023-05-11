@@ -54,7 +54,6 @@ background: var(--P700);
 }
 
 .profile-pic{
-    overflow: hidden;
     position: relative;
 }
 
@@ -67,7 +66,7 @@ background: var(--P700);
 }
 
 .profile-img:hover{
-    transform: scale(1.1);
+    transform: scale(1.02);
 }
 
 
@@ -208,3 +207,111 @@ background: var(--P700);
     background-color:  var(--P300);
     color: white;
   }
+
+/**/
+/* Recipe /
+/**/
+
+.recipe-step {
+    flex-basis: 66%;
+    justify-content: flex-start;
+    border-radius: 16px;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.05), -8px -8px 8px rgba(0, 0, 0, 0.05);
+    padding: 3.2rem 6.4rem;
+    gap: 6.4rem;
+  }
+  
+  .recipe-step h2{
+    justify-self: center;
+    align-self:center ;
+  }
+  .aline{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3.2rem;
+  }
+
+  .recipe-ingredients{
+    flex-basis: 33%;
+    border-radius: 16px;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.05), -8px -8px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    align-self: flex-start;
+  }
+
+  .circle {
+    display: inline-block;
+    width: 1.5rem; 
+    height: 1.5rem; 
+    border-radius: 50%;
+    background-color: gray;
+    margin-right: 0.3125rem; 
+  }
+
+  .circle.green {
+    background-color: green;
+    position: relative;
+  }
+
+  .circle.green::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1rem;
+  }
+
+  .recipe-border{
+    padding: 3.2rem;
+    border-radius: 16px;
+    border-bottom: 1px var(--N400) solid;
+  }
+
+  .hero-recipe {
+    position: relative;
+}
+
+.hero-recipe i {
+    position: absolute;
+    left: 2%;
+    top: -1200%;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.hero-recipe i:hover {
+  transform: scale(1.02);
+}
+
+.counter{
+  padding: 2.4rem 3.2rem;
+}
+
+#recipe-rating {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.btn-subtract, .btn-add{
+  color: var(--P500);
+  transition: 0.5s;
+}
+
+.btn-subtract:hover, .btn-add:hover{
+  color: var(--P700);
+  transition: 0.5s;
+}
+
+.commentForm textarea{
+  display: none;
+}
+
+
+.commentForm input{
+  background-color: var(--P100);
+}

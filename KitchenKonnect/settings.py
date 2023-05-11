@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "cooktopia",
     'rest_framework',
     'corsheaders',
+    'embed_video',
 ]
 
 MIDDLEWARE = [

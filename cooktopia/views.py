@@ -68,16 +68,23 @@ class RecipeView(View):
             recipe=context["recipe"])
         context['related_recipes'] = Recipe.objects.filter(
             mealType=context["recipe"].mealType)[:3]
-        context["commentForm"] = CommentForm(
-            request=request)
+        context["commentForm"] = CommentForm()
+        context["ratingForm"] = RatingForm()
         context["recipe"] = Recipe.objects.get(id=recipe_id)
         return render(request, self.template_name, context)
 
     def post(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        form = CommentForm(request.POST, request=request, recipe=recipe)
-        if form.is_valid():
-            form.save()
+        comment_form = CommentForm(
+            request.POST, request=request, recipe=recipe)
+        rating_form = RatingForm(request.POST, recipe=recipe)
+
+        if comment_form.is_valid():
+            comment_form.save()
+
+        if rating_form.is_valid():
+            rating_form.save()
+
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
 
 
@@ -294,6 +301,12 @@ class RegistrationView(CreateView):
     template_name = "cooktopia/access/registration.html"
     form_class = RegitracioForm
     success_url = "login"
+
+
+def terms_of_service(request):
+    context = {}
+    context['MEDIA_URL'] = settings.MEDIA_URL
+    return render(request, 'cooktopia/termsOfService.html', context)
 
 ###############################################################################
 # Help views

@@ -13,7 +13,7 @@
     {% if banner %}
         <img class="banner" src="{{banner.image.url}}" alt="">
     {% else%}
-        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+        <img class="profile-img" src="{{MEDIA_URL}}recipes/intro.jpg" alt="">
     {% endif %}
 
     <section class="profile section">
@@ -23,7 +23,7 @@
                     {% if chef.photo %}
                         <img class="profile-img" src="{{chef.photo.url}}" alt="">
                     {% else%}
-                        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.jpg" alt="">
+                        <img class="profile-img" src="{{MEDIA_URL}}chefs/profile.png" alt="">
                     {% endif %}
                 </a>
             </picture>
@@ -56,5 +56,5 @@
         </nav>
     </section>
     {% block profile_content%} {% endblock %} 
-
+   
 {% endblock %}
