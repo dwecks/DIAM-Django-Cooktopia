@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from .views import LoginView, RegistrationView, AddRecipeView, AddIngredientsView, AddStepsView, logoutview, \
-    addProfileImageView, ChefUpdateView, RecipeView, UserQuestionView, mealtype_list, difficulty_list
+from .views import LoginView, RegistrationView, AddRecipeView, AddIngredientsView, AddStepsView, logoutview, addProfileImageView, ChefUpdateView, RecipeView, UserQuestionView
 
 # app_name = 'cooktopia'
 
@@ -12,9 +11,6 @@ urlpatterns = [
     # Recipes
     path('recipes', views.recipes, name='recipes'),
     path('recipes/<int:recipe_id>/', RecipeView.as_view(), name='recipe'),
-    path('recipes/filter', views.filter_recipes, name='filter_recipes'),
-    path('recipes/', views.mealtype_list, name='mealtype_list'),
-    path('recipes/', views.difficulty_list, name='difficulty_list'),
     # new Recipes
     path("createrecipe", AddRecipeView.as_view(), name="addRecipe"),
     path("createrecipe/ingredients/<int:recipe_id>/",
