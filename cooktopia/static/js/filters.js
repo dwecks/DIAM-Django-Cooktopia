@@ -6,18 +6,22 @@ fetch('http://127.0.0.1:8000/api/recipes/')
   .then(response => response.json())
   .then(data => {;
     recipes = data;
-
+    console.log(data);
+    console.log("GGGGGGGGGGGGGGGGF");
+    populateRecipes(data)
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFF");
   })
   .catch(error => console.error('Error:', error));
-
 
   const btn = document.querySelector(".applyFiltersButton");
 
   btn.addEventListener("click", () => {
     console.log(recipes);
+
     const difficultyValues = getSelectedCheckboxValues('difficulty');
     console.log("FFFFFFFFFFFFFFFFFFFFFFFFFF");
     console.log(filterRecipes(recipes, difficultyValues));
+    
   });
 
 
@@ -60,8 +64,8 @@ fetch('http://127.0.0.1:8000/api/recipes/')
         const $labels = $(`#labels-${id}`);
         
         // Log the filter element and icon element to the console
-        console.log($filter);
-        console.log($icon);
+        //console.log($filter);
+        //console.log($icon);
         
         // Define a function to toggle the classes on the icon and labels elements
         const openFilter = function() {
@@ -92,6 +96,67 @@ fetch('http://127.0.0.1:8000/api/recipes/')
     $filterBtn.off("click").on("click", toggleFilters);
   });
 
+
+////////////////////////////////////////////////////////////////////////
+function createRecipeCard(recipe) {
+  console.log("Olsssssssssssssssssssss");
+  const card = document.createElement("div");
+  card.classList.add("basic-card", "N000-b");
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  const imgBox = document.createElement("picture");
+  imgBox.classList.add("basic-card-imgbox");
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  const img = document.createElement("img");
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  img.setAttribute("src", recipe.image.url);
+  console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+  img.setAttribute("alt", "Recipe Image");
+  imgBox.appendChild(img);
+  card.appendChild(imgBox);
+  console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  const content = document.createElement("div");
+  content.classList.add("basic-card-content", "flex-c");
+  const titleBox = document.createElement("div");
+  const title = document.createElement("h3");
+  title.classList.add("h4");
+  title.textContent = recipe.title;
+  const chef = document.createElement("h4");
+  chef.classList.add("p1-b", "N700-c");
+  chef.textContent = "By Chef";
+  titleBox.appendChild(title);
+  titleBox.appendChild(chef);
+  content.appendChild(titleBox);
+  console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+  const desc = document.createElement("p");
+  desc.classList.add("p1-r", "basic-card-hiden");
+  desc.textContent = recipe.description;
+  const exploreBtn = document.createElement("a");
+  exploreBtn.classList.add("btn-swipe", "l1-r", "basic-card-hiden");
+  exploreBtn.textContent = "Explore Recipe";
+  exploreBtn.addEventListener("click", function() {
+    // Handle click event for Explore Recipe button
+    // You can use recipe.id to get the ID of the selected recipe
+  });
+  content.appendChild(desc);
+  content.appendChild(exploreBtn);
+  card.appendChild(content);
+  console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+  return card;
+}
+
+function populateRecipes(recipes) {
+  const $recipesContainer = $('#recipes');
+console.log("Olaaaaaaaaaaaaaas");
+  // Clear the existing content
+  $recipesContainer.empty();
+
+  // Create a recipe card for each recipe and append it to the container
+  recipes.forEach(function(recipe) {
+    const $recipeCard = createRecipeCard(recipe);
+    console.log($recipeCard);
+    $recipesContainer.append($recipeCard);
+  });
+}
 
 function applyFilters() {
     console.log("applyFilters() function called");
