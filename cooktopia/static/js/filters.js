@@ -192,8 +192,7 @@ function createRecipeCard(recipe) {
   const exploreBtn = document.createElement("a");
   exploreBtn.classList.add("btn-swipe", "l1-r", "basic-card-hiden");
   exploreBtn.textContent = "Explore Recipe";
-  exploreBtn.addEventListener("click", function() {
-  });
+  exploreBtn.setAttribute("href", `http://127.0.0.1:8000/recipes/${recipe.id}/`);
   content.appendChild(desc);
   content.appendChild(exploreBtn);
   card.appendChild(content);
