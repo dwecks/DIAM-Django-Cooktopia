@@ -137,7 +137,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ["description"]
         widgets = {
-            'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Describe this dish to someone who's never tasted it before?"},),
+            'description': forms.Textarea(attrs={'class': 'lbl-r l2-r', 'placeholder': "Did our recipe blow your taste buds away? \n \nShare your thoughts in the comments below and let us know if you've achieved the elusive state of food nirvana or if you accidentally created a taste catastrophe. \n \nDon't hold back – we promise our comment section is a judgment-free zone for culinary adventures gone wild!"},),
         }
 
     def save(self, commit=True):
@@ -147,6 +147,8 @@ class CommentForm(forms.ModelForm):
         if commit:
             comment.save()
         return comment
+
+# Add Recipe rating Forms
 
 
 class RatingForm(forms.ModelForm):
@@ -158,14 +160,15 @@ class RatingForm(forms.ModelForm):
         model = Recipe
         fields = ["rating"]
         widgets = {
-            'rating': forms.NumberInput(attrs={'class': 'lbl-r l2-r q-ingredient', 'placeholder': 'Rating'}),
+            'rating': forms.NumberInput(attrs={'class': 'lbl-r l2-r q-ingredient', 'placeholder': 'Let your rating sparkle between 0 and 10'}),
         }
 
     def save(self, commit=True):
         recipe = self.recipe
         rating = self.cleaned_data.get('rating')
-        recipe.rating = recipe.rating * \
-            Decimal('0.95') + rating * Decimal('0.05')
+        if (rating <= 10 and rating >= 0):
+            recipe.rating = recipe.rating * \
+                Decimal('0.95') + rating * Decimal('0.05')
         if commit:
             recipe.save()
         return recipe

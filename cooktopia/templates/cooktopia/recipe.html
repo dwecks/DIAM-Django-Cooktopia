@@ -20,7 +20,7 @@
 </picture>
     <section class="section">
         <header class="pad-xs sticty-marker">
-            <div class="flex-r recipe-border pad-b-s">
+            <div class="flex-r nav-line pad-b-s">
                 <div>
                     <h1 class="h2 pad-b-xs">{{recipe.title}}</h1>
                     <a href="{% url 'profile' recipe.chef.id %}"><h3 class="h3 N700-c pad-b-s">Chef {{recipe.chef.name}}</h3></a> 
@@ -45,7 +45,7 @@
             </nav>
     </section>
 
-    <section class="section flex-r N200-b pad-t-m" id="tbl-dir">
+    <section class="section flex-r N100-b pad-t-m" id="tbl-dir">
         <div class="recipe-step flex-c P100-b">
             <h2 class="h2">Method</h2>
             <div class="aline">
@@ -78,13 +78,13 @@
           
     </section>
 
-    <section class="section N200-b pad-b-s hide" id="tbl-com">
+    <section class="section N100-b pad-b-s hide" id="tbl-com">
 
         <h2 class="h2">Comments</h2>
         <h3 class="h4 P300-c pad-b-s">Share your thoughts, leave a comment and let your voice be heard!</h3>
 
         {% for comment in comments %}
-            <div class="N100-b recipe-border pad-b-s ">
+            <div class="N200-b recipe-border pad-b-s ">
                 <h4 class="h4">{{comment.chef.name}}</h4>
                 <p class="p1-b">{{comment.description}}</p>
             </div>
@@ -92,28 +92,31 @@
 
     </section>
 
-    <section class="section N200-b pad-b-m hide" id="tbl-addcom">
-        <form method="post">
+    <section class="commentForm section N100-b pad-b-m hide" id="tbl-addcom">
+        <form class="flex-c" method="post">
             {% csrf_token %}
             {{ commentForm }}
-            <button class="btn-swipe-i" type="submit">Enviar</button>
+            <button class="btn-swipe-i p1-r" type="submit">Enviar</button>
         </form>
     </section>
 
-    <section class="section N200-b pad-b-m hide" id="tbl-addrat">
-        <form method="post">
+    <section class="commentForm section N100-b pad-b-m hide" id="tbl-addrat">
+        <div>
+            <h2 class="h3 N800-c">Recipe Rating</h2>
+            <h3 class="h4 P300-c pad-b-s">Ready to unleash your inner food critic?</h3>
+        </div>
+        <form class="flex-c"method="post">
             {% csrf_token %}
             {{ ratingForm }}
-            <button class="btn-swipe-i" type="submit">Enviar</button>
+            <button class="btn-swipe-i p2-r" type="submit">Enviar</button>
         </form>
     </section>
 
-    <section class="section N200-b pad-b-m hide" id="tbl-vid">
+    <section class="section N100-b pad-b-m hide" id="tbl-vid">
         <div class="flex-c">
             {% video recipe.url 'medium' %}
         </div>
     </section>
-
 
 
     <section class="section pad-l grid grid--3-cols P700-b pad-b-m">

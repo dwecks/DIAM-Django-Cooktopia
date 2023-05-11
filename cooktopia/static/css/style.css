@@ -267,6 +267,12 @@ background: var(--P700);
   .recipe-border{
     padding: 3.2rem;
     border-radius: 16px;
+    border: 1px var(--P300) solid;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.05), -8px -8px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-line{
+    padding: 3.2rem 0rem;
     border-bottom: 1px var(--N400) solid;
   }
 
@@ -307,11 +313,10 @@ background: var(--P700);
   transition: 0.5s;
 }
 
-.commentForm textarea{
-  display: none;
+.commentForm textarea, .commentForm input{
+  background-color: var(--P100);
 }
 
-
-.commentForm input{
-  background-color: var(--P100);
+.commentForm label{
+  display: none;
 }
