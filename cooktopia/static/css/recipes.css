@@ -122,9 +122,6 @@ button[type="submit"]:focus {
     align-items: flex-start;
     padding: 64px 96px;
     gap: 32px;
-
-    width: 1440px;
-    height: 1233px;
 }
 
 .filtersDiv, .filters_frame {
@@ -152,17 +149,6 @@ h2 { /*filters_frame_title*/
     color: #000000;
 }
 
-.filter {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 16px;
-
-    width: 336px;
-    height: 183px;
-
-    order: 1;
-}
 
 .applyFiltersButton {
     width: 247px;

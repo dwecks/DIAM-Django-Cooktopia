@@ -1,89 +1,112 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}<link rel="stylesheet" href="{% static '/css/recipes.css' %}" />{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static '/css/style.css' %}" />{% endblock %}
 
 {% block title %} Recipes {% endblock %}
 {% block content %}
-<section class="section flex-c P700-b">
-		<h1 class="h1 headers-font">Find Your Recipes</h1>
-		<form class="form" onsubmit="event.preventDefault();" role="search" style="display: flex; justify-content: flex-start; align-items: center; gap: 8px;">
-  			<input id="search" type="search" placeholder="Search..." autofocus required style="padding: 8px; border: 1px solid #ccc; border-radius: 6px; width: 300px;">
- 		 <button type="submit" class="l1-r" style="padding: 8px 16px; background: #0B9A61; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Go</button>
-		a</form>
-</section>
-<section class="mainDiv section flex-r">
-		<div class="filtersDiv  ">
-			<div class="filters_frame section flex-c">
-				<h2 class="h2 text-font">Filters</h2>
-				<div class="filter">
-					<h3 class="h4 text-font">Difficulty</h3>
-						{% for difficulty in difficulties %}
-							<label style="display:block"><input type="checkbox" name="difficulty" value="{{ difficulty.id }}"><span class="p2-r text-font"> {{ difficulty.name }}</span></label>
-						{% endfor %}
-				</div>
-				<div class="filter">
-				<h3 class = "h4 text-font">Time</h3>
-					<label style="display:block"><input type="checkbox" name="preparationTime" value="0,30" ><span class="p2-r text-font"> Up to 30 min</span></label>
-					<label style="display:block"><input type="checkbox" name="preparationTime" value="30,60"><span class="p2-r text-font">30min-1h</span></label>
-					<label style="display:block"><input type="checkbox" name="preparationTime" value="60,"><span class="p2-r text-font"> 1h+</span></label>
-			</div>
-			<div class="filter">
-				<h3 class="h4 text-font">Meal Type</h3>
-				{% for meal_type in meal_types %}
-        			<label style="display:block"><input type="checkbox" name="mealType" value="{{ meal_type.id }}"><span class="p2-r text-font">{{ meal_type.name}}</span></label>
-				{% endfor %}
-			</div>
-			<div class="filter">
-				<h3 class="h4 text-font">Publication Date</h3>
-        			<label style="display:block"><input type="checkbox" name="pub_date" value="week"><span class="p2-r text-font"> Last week </span></label>
-					<label style="display:block"><input type="checkbox" name="pub_date" value="month"><span class="p2-r text-font"> Last Month </span></label>
-					<label style="display:block"><input type="checkbox" name="pub_date" value="year"><span class="p2-r text-font"> Last Year </span></label>
-			</div>
-			<button class="applyFiltersButton btn-swipe l1-r" onclick="applyFilters()">Apply</button>
-			</div>
+
+{% comment %} Search bar {% endcomment %}
+<section class="section flex-c P700-b pad-b-m sticty-marker">
+		<h1 class="h1 N100-c">Find Your Recipes</h1>
+		<div class="flex-r" >
+  			<input id="search" placeholder="Search..." class="p2-r lbl-r">
+ 		 	<button id="search-btn" class="p2-r btn-swipe-i">Search</button>
 		</div>
-		<div class="receitas section flex-c">
-				<div class="receitas_header">
-					<div class="receitas_header_frame section flex-r">
-						<div class="receitas_header_left_container section">
-							<div class="vector_left">
-									<img src="media/Icons/hide-filters-icon.png" alt="Hide Filters">
-							</div>
-							<span class="receitas_header_text_left">Hide Filters</span>
-						</div>
-						<div class="receitas_header_right_container">
-							<h4 class="receitas_header_text_right">Recipes by Page <span class="page-number">1</span></h4>
-							<div class="vector_right">
-								<button id="load-more-button" onclick="loadMoreRecipes()">
-									<img src="media/Icons/down-arrow.png" alt="Load More">
-								</button>
-	<						</div>
-						</div>
-					</div>
-				</div>
-				<div id="recipeContainer" class="receitas_content section flex-r">
-					<div class="receitas_content_frame section pad-l grid grid--2-cols N200-b pad-b-xl">
-					{% for recipe in page_obj %}
-      					{% include 'cooktopia/snippets/BasicrecipeCard.html' %}
-   					 {% endfor %}
-					<!--<h3>Spaghetti Bolognese</h3>
-					<p class="chef-name">by John Smith</p>
-					<div class="rating">
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-					</div>
-					<img src="/uploads/recipes/food.jpeg" alt="Spaghetti Bolognese">
-	&lt;!&ndash;				<div class="recipe_footer">&ndash;&gt;
-	&lt;!&ndash;					<a href="#"><img src="like-icon.jpg" alt="Like" class="thumbs_up_vector"> <span class="number_thumbs_up">256</span></a>&ndash;&gt;
-	&lt;!&ndash;					<a href="#"><img src="share-icon.png" alt="Share"> Share</a>&ndash;&gt;
-					</div>-->
-					</div>
-				</div>
-		</div>
+		<p class="p2-r N100-c pad-b-s"> Found <span id="counter" class="p2-r N100-c">0</span> Recipes</p>
 </section>
-<script src="{% static '/js/filters.js' %}" defer></script>
+
+<section class="section flex-r ">
+{% comment %} Search info header {% endcomment %}
+	<div id="filter-toggle" class="flex-r ">
+		<i class="fa-solid fa-filter icon-s N700-c"></i>
+		<span class="p2-r"> Hide Filters</span>
+	</div>
+
+	<div class="flex-r">
+		<div class="dropdown">
+			<label class="p2-r" for="select-items">Sort by</label>
+			<select class="p2-r" id="select-sort" name="items-per-page">
+				<option class="p2-r" value="rating">Rating</option>
+				<option class="p2-r" value="difficulty">Difficulty</option>
+				<option class="p2-r" value="time">Preparation Time</option>
+
+			</select>
+		</div>
+
+		<div class="dropdown">
+			<label class="p2-r" for="select-items">Items per page</label>
+			<select class="p2-r" id="select-page" name="items-per-page">
+				<option class="p2-r" value="6">6</option>
+				<option class="p2-r" value="12">12</option>
+				<option class="p2-r" value="24">24</option>
+			</select>
+		</div>
+	</div>
+</section>
+
+{% comment %} Recipes content {% endcomment %}
+<section class="recipes-container section flex-r N100-b pad-t-m">
+
+			{% comment %} Filters {% endcomment %}
+			<aside id="filters" class="frame flex-c">
+					<div class="filter">
+						<header id="filter-1" class="flex-r">
+							 <h3 class="p2-b pad-b-s pad-t-s">Difficulty</h3>
+							<i id="icon-1" class="fa-solid fa-caret-down icon-s N700-c"></i>
+						</header>
+						<div id="labels-1" class="filter-labels-m">
+							{% for difficulty in difficulties %}
+								<label style="display:block"><input type="checkbox" name="difficulty" value="{{ difficulty.id }}"><span class="p2-r text-font"> {{ difficulty.name }}</span></label>
+							{% endfor %}
+						</div>
+					</div>
+					<div id="filter-2" class="filter">
+						<header class="flex-r">
+							 <h3 class="p2-b pad-b-s pad-t-s">Preparation Time</h3>
+							<i id="icon-2" class="fa-solid fa-caret-down icon-s N700-c"></i>
+						</header>
+						<div id="labels-2" class="filter-labels-m">
+							<label style="display:block"><input type="checkbox" name="preparationTime" value="0"><span class="p2-r text-font"> 00 min - 30 min</span></label>
+							<label style="display:block"><input type="checkbox" name="preparationTime" value="1"><span class="p2-r text-font"> 30 min - 60 min</span></label>
+							<label style="display:block"><input type="checkbox" name="preparationTime" value="2"><span class="p2-r text-font"> 60 min - 120 min</span></label>
+						</div>
+					</div>
+					<div id="filter-3" class="filter">
+						<header class="flex-r">
+							<h3 class="p2-b pad-b-s pad-t-s">Meal Type</h3>
+						   <i id="icon-3" class="fa-solid fa-caret-down icon-s N700-c"></i>
+					   </header>
+					   <div id="labels-3" class="filter-labels-l">
+							{% for meal_type in meal_types %}
+								<label style="display:block"><input type="checkbox" name="mealType" value="{{ meal_type.id }}"><span class="p2-r text-font"> {{ meal_type.name}}</span></label>
+							{% endfor %}
+						</div>
+					</div>
+					<div id="filter-4" class="filter">
+						<header class="flex-r">
+							<h3 class="p2-b pad-b-s pad-t-s">Publication Date</h3>
+						   <i id="icon-4" class="fa-solid fa-caret-down icon-s N700-c"></i>
+					   </header>
+					   <div id="labels-4" class="filter-labels-m">
+							<label style="display:block"><input type="checkbox" name="pub_date" value="week"><span class="p2-r text-font"> Last week </span></label>
+							<label style="display:block"><input type="checkbox" name="pub_date" value="month"><span class="p2-r text-font"> Last Month </span></label>
+							<label style="display:block"><input type="checkbox" name="pub_date" value="year"><span class="p2-r text-font"> Last Year </span></label>
+						</div>
+					</div>
+				<button class="applyFiltersButton btn-swipe l1-r">Apply</button>
+			</aside>
+
+			<div id="recipes" class="grid pad-b-m grid--3-cols">
+			{% comment %} Recipes {% endcomment %}
+			</div>
+</section>
+
+<section class="section page-selector">
+
+</section>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static '/js/recipes.js' %}" defer></script>
+<script src="{% static '/js/filters.js' %}" defer></script>
 {% endblock %}

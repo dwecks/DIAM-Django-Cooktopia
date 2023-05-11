@@ -46,72 +46,13 @@ def homeView(request):
 
 def recipes(request):
     context = {}
-    new_recipes = Recipe.objects.all()
-    paginator = Paginator(new_recipes, 4)  # Limit to 6 recipes per page
-    page_number = request.GET.get('page')  # Get the current page number from the query parameters
-    context["page_obj"] = paginator.get_page(page_number)  # Get the page object for the current page
+    context['MEDIA_URL'] = settings.MEDIA_URL
     context['meal_types'] = MealType.objects.all()
     context["difficulties"] = Difficulty.objects.all()
-    mealtype_list(request)
-    return render(request, 'cooktopia/recipes.html', context )
+    return render(request, 'cooktopia/recipes.html', context)
 
-def filter_recipes(request):
-    # Retrieve the selected filter values from the request
-    difficulty_id = request.GET.get('difficulty')
-    meal_type_id = request.GET.get('mealType')
-    pub_date = request.GET.get('pub_date')
-    time_ranges = request.GET.getlist('preparationTime')
+# 1 Recipe Pgae
 
-    # Apply the filters to the Recipe model
-    filters = []
-
-    if difficulty_id:
-        filters.append(Q(difficulty_id=difficulty_id))
-
-    if meal_type_id:
-        filters.append(Q(meal_type_id=meal_type_id))
-
-    if pub_date:
-        today = timezone.now().date()
-        last_week = today - timedelta(days=7)
-        last_month = today - timedelta(days=30)
-        last_year = today - timedelta(days=365)
-
-        if pub_date == 'week':
-            filters.append(Q(published_date__gte=last_week))
-        elif pub_date == 'month':
-            filters.append(Q(published_date__gte=last_month))
-        elif pub_date == 'year':
-            filters.append(Q(published_date__gte=last_year))
-
-    for time_range in time_ranges:
-        if time_range == '0,30':
-            filters.append(Q(preparationTime__lte=30))
-        elif time_range == '30,60':
-            filters.append(Q(preparationTime__gt=30) & Q(preparationTime__lte=60))
-        elif time_range == '60,':
-            filters.append(Q(preparationTime__gt=60))
-
-    if filters:
-        recipes = Recipe.objects.filter(*filters)
-    else:
-        recipes = Recipe.objects.all()
-
-    # Render the filtered recipes as HTML
-    html_recipes = render_to_string('cooktopia/snippets/recipeCards.html', {'recipes': recipes})
-
-    # Return the HTML response
-    return HttpResponse(html_recipes)
-
-def mealtype_list(request):
-    meal_types = MealType.objects.all()
-    return render(request, 'cooktopia/recipes.html', {'meal_type': meal_types})
-def difficulty_list(request):
-    difficulties = Difficulty.objects.all()
-    return render(request, 'cooktopia/recipes.html', {'difficulties': difficulties})
-
-
-# 1 Recipe
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class RecipeView(View):
