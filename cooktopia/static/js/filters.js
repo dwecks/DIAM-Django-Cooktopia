@@ -10,19 +10,29 @@ const search = document.querySelector("#search");
 const searchBtn = document.querySelector("#search-btn");
 
 ///////////////////////////////////////////////////////////////
+// variables
+///////////////////////////////////////////////////////////////
+
+let page = 1;
+let pageSize = 6;
+let selectedRecipes; 
+
+///////////////////////////////////////////////////////////////
 // get recipe info from api
 ///////////////////////////////////////////////////////////////
+
 let recipes;    
 
 fetch('http://127.0.0.1:8000/api/recipes/')
   .then(response => response.json())
   .then(data => {;
     recipes = data;
+    selectedRecipes = data; 
+    counter.textContent = data.length;
     populateRecipes(data)
-    console.log(data)
+    console.log('Recieved recipes:',data)
   })
   .catch(error => console.error('Error:', error));
-
 
 ///////////////////////////////////////////////////////////////
 // Filter recipes
@@ -52,6 +62,7 @@ const searchFunc = function(){
   if(searchText.length != 0)
     filteredRecipes = filterText(filteredRecipes, searchText);
 
+  selectedRecipes = filteredRecipes
 
   populateRecipes(filteredRecipes) 
   counter.textContent = filteredRecipes.length;
@@ -59,6 +70,55 @@ const searchFunc = function(){
 
 applyBtn.addEventListener("click", searchFunc);
 searchBtn.addEventListener("click", searchFunc);
+
+///////////////////////////////////////////////////////////////
+// Pages
+///////////////////////////////////////////////////////////////
+
+// Page size
+$(document).ready(function() {
+  // Select the select dropdown element
+  const $selectPage = $('#select-page');
+
+  // Define an event handler for the change event
+  $selectPage.on('change', function() {
+    // Update the pageSize variable with the selected value
+    pageSize = parseInt($(this).val());
+    console.log('Selected page size:', pageSize);
+    
+    // Call the function to repopulate the recipes with the new pageSize
+    populateRecipes(selectedRecipes);
+  });
+});
+
+// Page selector
+function createPageSelector(n) {
+  const $pagesContainer = $('.page-selector');
+  const ul = $("<ul>");
+
+  for (let i = 1; i <= n; i++) {
+    const li = $("<li>")
+      .addClass("p2-r")
+      .text("Page " + i)
+      .data("page", i); // Add data attribute with the page value
+    ul.append(li);
+  }
+
+  $pagesContainer.append(ul);
+
+  // Attach click event handler to handle page selection
+  ul.on("click", "li", function() {
+    const nextPage = $(this).data("page");
+    console.log("Selected page:", page);
+
+    page = nextPage
+    populateRecipes(selectedRecipes);
+  });
+}
+
+$(document).ready(function() {
+  createPageSelector(5);
+});
 
 ///////////////////////////////////////////////////////////////
 // Help Functions
@@ -156,8 +216,14 @@ function populateRecipes(recipes) {
   // Clear the existing content
   $recipesContainer.empty();
 
+  // Calculate the start and end index of the selected recipes based on the page and page size
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  // Get the selected recipes as a sub-array
+  const pageRecipes = recipes.slice(startIndex, endIndex);
+
   // Create a recipe card for each recipe and append it to the container
-  recipes.forEach(function(recipe) {
+  pageRecipes.forEach(function(recipe) {
     const $recipeCard = createRecipeCard(recipe);
     $recipesContainer.append($recipeCard);
   });
@@ -198,4 +264,3 @@ function createRecipeCard(recipe) {
   card.appendChild(content);
   return card;
 }
-

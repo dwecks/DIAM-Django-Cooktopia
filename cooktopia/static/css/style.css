@@ -175,3 +175,36 @@ background: var(--P700);
     inline-size: 100%;
     padding-inline: 1rem;
  }
+
+ #recipes{
+    flex: 1;
+ }
+
+/**************************/
+/* Page selector */
+/**************************/
+
+ .page-selector {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .page-selector ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .page-selector li {
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    background-color: var(--P100);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .page-selector li.active {
+    background-color:  var(--P300);
+    color: white;
+  }
