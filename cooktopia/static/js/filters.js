@@ -16,6 +16,7 @@ const searchBtn = document.querySelector("#search-btn");
 let page = 1;
 let pageSize = 6;
 let selectedRecipes; 
+let sortIndex = "rating"
 
 ///////////////////////////////////////////////////////////////
 // get recipe info from api
@@ -82,6 +83,8 @@ $(document).ready(function() {
 
   // Define an event handler for the change event
   $selectPage.on('change', function() {
+    // go to page 1
+    page = 1
     // Update the pageSize variable with the selected value
     pageSize = parseInt($(this).val());
     console.log('Selected page size:', pageSize);
@@ -91,9 +94,26 @@ $(document).ready(function() {
   });
 });
 
+// Page sorting
+$(document).ready(function() {
+  // Select the select dropdown element
+  const $selectSort = $('#select-sort');
+
+  // Define an event handler for the change event
+  $selectSort.on('change', function() {
+    // Update the sort index
+    sortIndex = $(this).val()
+  
+    // Call the function to repopulate the recipes with the new pageSize
+    populateRecipes(selectedRecipes);
+  });
+});
+
 // Page selector
 function createPageSelector(n) {
   const $pagesContainer = $('.page-selector');
+  $pagesContainer.empty();
+
   const ul = $("<ul>");
 
   for (let i = 1; i <= n; i++) {
@@ -101,6 +121,8 @@ function createPageSelector(n) {
       .addClass("p2-r")
       .text("Page " + i)
       .data("page", i); // Add data attribute with the page value
+      if(i == page)
+        li.addClass("active")
     ul.append(li);
   }
 
@@ -115,10 +137,6 @@ function createPageSelector(n) {
     populateRecipes(selectedRecipes);
   });
 }
-
-$(document).ready(function() {
-  createPageSelector(5);
-});
 
 ///////////////////////////////////////////////////////////////
 // Help Functions
@@ -135,6 +153,22 @@ $(document).ready(function() {
     return values;
   }
 
+
+  function sortRecipes(recipes, sortBy) {
+    console.log(recipes);
+    switch (sortBy) {
+      case "rating": // Sort by Rating
+        console.log(recipes.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating)));
+        return recipes.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+      case "difficulty": // Sort by Difficulty
+        return recipes.sort((a, b) => a.difficulty - b.difficulty);
+      case "time": // Sort by Preparation Time
+        return recipes.sort((a, b) => parseInt(a.preparationTime) - parseInt(b.preparationTime));
+      default:
+        return recipes;
+    }
+  }
+    
 ///////////////////////////////////////////////////////////////
 // Help Filters
 ///////////////////////////////////////////////////////////////
@@ -215,13 +249,15 @@ function populateRecipes(recipes) {
   const $recipesContainer = $('#recipes');
   // Clear the existing content
   $recipesContainer.empty();
-
+  // Sort recipes
+  recipes = sortRecipes(recipes, sortIndex)
   // Calculate the start and end index of the selected recipes based on the page and page size
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   // Get the selected recipes as a sub-array
   const pageRecipes = recipes.slice(startIndex, endIndex);
-
+  //generate page selctor
+  createPageSelector(recipes.length/pageSize);
   // Create a recipe card for each recipe and append it to the container
   pageRecipes.forEach(function(recipe) {
     const $recipeCard = createRecipeCard(recipe);
