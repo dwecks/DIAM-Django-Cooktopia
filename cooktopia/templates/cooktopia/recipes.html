@@ -8,10 +8,11 @@
 {% comment %} Search bar {% endcomment %}
 <section class="section flex-c P700-b pad-b-m">
 		<h1 class="h1 N100-c">Find Your Recipes</h1>
-		<div class="flex-r pad-b-s" >
+		<div class="flex-r" >
   			<input id="search" placeholder="Search..." class="p2-r lbl-r">
- 		 	<button class="p2-r btn-swipe-i">Search</button>
+ 		 	<button id="search-btn" class="p2-r btn-swipe-i">Search</button>
 		</div>
+		<p class="p2-r N100-c pad-b-s"> Found <span id="counter" class="p2-r N100-c">0</span> Recipes</p>
 </section>
 
 <section class="section flex-r ">
@@ -101,5 +102,6 @@
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static '/js/recipes.js' %}" defer></script>
 <script src="{% static '/js/filters.js' %}" defer></script>
 {% endblock %}

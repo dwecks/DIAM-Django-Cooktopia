@@ -1,31 +1,70 @@
 'use stricks'
 
-let recipes;
+///////////////////////////////////////////////////////////////
+// Select elements
+///////////////////////////////////////////////////////////////
+
+const applyBtn = document.querySelector(".applyFiltersButton");
+const counter = document.querySelector("#counter");
+const search = document.querySelector("#search");
+const searchBtn = document.querySelector("#search-btn");
+
+///////////////////////////////////////////////////////////////
+// get recipe info from api
+///////////////////////////////////////////////////////////////
+let recipes;    
 
 fetch('http://127.0.0.1:8000/api/recipes/')
   .then(response => response.json())
   .then(data => {;
     recipes = data;
-    console.log(data);
-    console.log("GGGGGGGGGGGGGGGGF");
     populateRecipes(data)
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFF");
+    console.log(data)
   })
   .catch(error => console.error('Error:', error));
 
-  const btn = document.querySelector(".applyFiltersButton");
 
-  btn.addEventListener("click", () => {
-    console.log(recipes);
+///////////////////////////////////////////////////////////////
+// Filter recipes
+///////////////////////////////////////////////////////////////
 
-    const difficultyValues = getSelectedCheckboxValues('difficulty');
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFF");
-    console.log(filterRecipes(recipes, difficultyValues));
-    
-  });
+const searchFunc = function(){
+  let filteredRecipes = recipes;
+
+  const difficultyValues = getSelectedCheckboxValues('difficulty');
+  if(difficultyValues.length != 0)
+    filteredRecipes = filterDifficulty(filteredRecipes, difficultyValues);
+
+  const preparationTimeValues = getSelectedCheckboxValues('preparationTime');
+   if(preparationTimeValues.length != 0)
+     filteredRecipes = filterPrepTime(filteredRecipes, preparationTimeValues);
+
+  const mealTypeValues = getSelectedCheckboxValues('mealType');
+  if(mealTypeValues.length != 0)
+    filteredRecipes = filterMeal(filteredRecipes, mealTypeValues);
+
+  const pubDateValue = getSelectedCheckboxValues('pub_date');
+  if(pubDateValue.length != 0)
+    filteredRecipes = filterPubDate(filteredRecipes, pubDateValue);
+ 
+  const searchText = search.value;
+  console.log(searchText);
+  if(searchText.length != 0)
+    filteredRecipes = filterText(filteredRecipes, searchText);
 
 
+  populateRecipes(filteredRecipes) 
+  counter.textContent = filteredRecipes.length;
+}
 
+applyBtn.addEventListener("click", searchFunc);
+searchBtn.addEventListener("click", searchFunc);
+
+///////////////////////////////////////////////////////////////
+// Help Functions
+///////////////////////////////////////////////////////////////
+
+// Get checked checkboxes
   function getSelectedCheckboxValues(name) {
     const checkboxes = $('input[name="' + name + '"]:checked');
     const values = [];
@@ -36,8 +75,11 @@ fetch('http://127.0.0.1:8000/api/recipes/')
     return values;
   }
 
-  
-  function filterRecipes(recipes, filters) {
+///////////////////////////////////////////////////////////////
+// Help Filters
+///////////////////////////////////////////////////////////////
+
+  function filterDifficulty(recipes, filters) {
     //console.log(filters);
     return recipes.filter(recipe => {
       // Check if the chef matches the difficulty filter
@@ -47,73 +89,91 @@ fetch('http://127.0.0.1:8000/api/recipes/')
     });
   }
 
-
-  // expand filters
-  $(document).ready(function() {
-    // Select all elements whose ID starts with 'filter-'
-    const $filters = $("[id^='filter-']");
-    
-    // Loop through each filter element
-    $filters.each(function() {
-        // Get a reference to the filter element
-        const $filter = $(this);
-        // Extract the ID of the filter element
-        const id = $filter.attr("id").replace("filter-", "");
-        // Select the corresponding icon and labels elements using template literals
-        const $icon = $(`#icon-${id}`);
-        const $labels = $(`#labels-${id}`);
-        
-        // Log the filter element and icon element to the console
-        //console.log($filter);
-        //console.log($icon);
-        
-        // Define a function to toggle the classes on the icon and labels elements
-        const openFilter = function() {
-            $icon.toggleClass("rotate");
-            $labels.toggleClass("reduce");
-            console.log("click");
-        };
-        
-        // Remove any existing click event listeners on the filter element and bind a new one
-        $filter.off("click").on("click", openFilter);
+  function filterPrepTime(recipes, filters) {
+    const prepTimes = [[0, 30], [30, 60], [60, 120]];
+    return recipes.filter(recipe => {
+      // Check if the chef matches the difficulty filter
+      for (const value of filters)
+        if(parseInt(recipe.preparationTime) >= prepTimes[value][0] &&  parseInt(recipe.preparationTime) <= prepTimes[value][1])
+          return recipe;
     });
-});
+  }
 
-  // hide filters
-  $(document).ready(function() {
-    // Select the filter button element
-    const $filterBtn = $("#filter-toggle");
-    // Select the element that you want to hide
-    const $hideEl = $("#filters");
+
+  function filterMeal(recipes, filters) {
+    return recipes.filter(recipe => {
+      // Check if the chef matches the difficulty filter
+      for (const value of filters)
+        if(recipe.mealType == value)
+          return recipe;
+    });
+  }
+
   
-    // Define a function to handle the click event
-    const toggleFilters = function() {
-      // Toggle the 'hidden' class on the element to hide
-      $hideEl.toggleClass("hide");
-    };
-  
-    // Remove any existing click event listeners on the filter button and bind a new one
-    $filterBtn.off("click").on("click", toggleFilters);
+function filterPubDate(recipes, filters) {
+  return recipes.filter(recipe => {
+    for (const value of filters) {
+      const currentDate = new Date();
+      const pubDate = new Date(recipe.pub_date);
+
+      if (value === 'week') {
+        const oneWeekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+        if (pubDate >= oneWeekAgo && pubDate <= currentDate) {
+          return recipe;
+        }
+      } else if (value === 'month') {
+        const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
+        if (pubDate >= oneMonthAgo && pubDate <= currentDate) {
+          return recipe;
+        }
+      } else if (value === 'year') {
+        const oneYearAgo = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+        if (pubDate >= oneYearAgo && pubDate <= currentDate) {
+          return recipe;
+        }
+      }
+    }
   });
+}
 
+function filterText(recipes, searchText) {
+  const keywords = searchText.toLowerCase().split(" ").filter(word => word.length > 2);
+  return recipes.filter(recipe => {
+    // Check if the chef matches the difficulty filter
+    for (const keyword of keywords)
+      if(recipe.title.toLowerCase().includes(keyword))
+        return recipe;
+  });
+}
 
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+// Html generators
+///////////////////////////////////////////////////////////////
+
+// Populates recipes container
+function populateRecipes(recipes) {
+  const $recipesContainer = $('#recipes');
+  // Clear the existing content
+  $recipesContainer.empty();
+
+  // Create a recipe card for each recipe and append it to the container
+  recipes.forEach(function(recipe) {
+    const $recipeCard = createRecipeCard(recipe);
+    $recipesContainer.append($recipeCard);
+  });
+}
+
+// basic recipe card
 function createRecipeCard(recipe) {
-  console.log("Olsssssssssssssssssssss");
   const card = document.createElement("div");
   card.classList.add("basic-card", "N000-b");
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const imgBox = document.createElement("picture");
   imgBox.classList.add("basic-card-imgbox");
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const img = document.createElement("img");
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  img.setAttribute("src", recipe.image.url);
-  console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+  img.setAttribute("src", recipe.image);
   img.setAttribute("alt", "Recipe Image");
   imgBox.appendChild(img);
   card.appendChild(imgBox);
-  console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
   const content = document.createElement("div");
   content.classList.add("basic-card-content", "flex-c");
   const titleBox = document.createElement("div");
@@ -126,7 +186,6 @@ function createRecipeCard(recipe) {
   titleBox.appendChild(title);
   titleBox.appendChild(chef);
   content.appendChild(titleBox);
-  console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
   const desc = document.createElement("p");
   desc.classList.add("p1-r", "basic-card-hiden");
   desc.textContent = recipe.description;
@@ -134,65 +193,10 @@ function createRecipeCard(recipe) {
   exploreBtn.classList.add("btn-swipe", "l1-r", "basic-card-hiden");
   exploreBtn.textContent = "Explore Recipe";
   exploreBtn.addEventListener("click", function() {
-    // Handle click event for Explore Recipe button
-    // You can use recipe.id to get the ID of the selected recipe
   });
   content.appendChild(desc);
   content.appendChild(exploreBtn);
   card.appendChild(content);
-  console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
   return card;
 }
-
-function populateRecipes(recipes) {
-  const $recipesContainer = $('#recipes');
-console.log("Olaaaaaaaaaaaaaas");
-  // Clear the existing content
-  $recipesContainer.empty();
-
-  // Create a recipe card for each recipe and append it to the container
-  recipes.forEach(function(recipe) {
-    const $recipeCard = createRecipeCard(recipe);
-    console.log($recipeCard);
-    $recipesContainer.append($recipeCard);
-  });
-}
-
-function applyFilters() {
-    console.log("applyFilters() function called");
-  // Get the selected filter values
-  const difficultyValues = getSelectedCheckboxValues('difficulty');
-  const preparationTimeValues = getSelectedCheckboxValues('preparationTime');
-  const mealTypeValues = getSelectedCheckboxValues('mealType');
-  const pubDateValue = getSelectedCheckboxValues('pub_date');
-
-  // Build the query string for the filter values
-  const queryString = `difficulty=${difficultyValues.join(',')}&preparationTime=${preparationTimeValues.join(',')}&mealType=${mealTypeValues.join(',')}&pub_date=${pubDateValue}`;
-// Load the filtered recipes into the "receitas_content" <div>
-  //$('#recipeContainer').load('/filter_recipes' + queryString);
-
-  // Perform the filtering logic here
-
-  // Hide all recipe cards
-  $('.receitas_content .recipeCard').hide();
-
-  // Filter and display the recipe cards based on the selected filter values
-  $('.receitas_content .recipeCard').each(function() {
-    const difficulty = $(this).data('difficulty');
-    const preparationTime = $(this).data('preparationtime');
-    const mealType = $(this).data('mealtype');
-    const pubDate = $(this).data('pub_date');
-
-    if (
-      (difficultyValues.length === 0 || difficultyValues.includes(difficulty)) &&
-      (preparationTimeValues.length === 0 || preparationTimeValues.includes(preparationTime)) &&
-      (mealTypeValues.length === 0 || mealTypeValues.includes(mealType)) &&
-      (pubDateValue === undefined || pubDateValue === pubDate)
-    ) {
-      $(this).show(); // Display the recipe card
-    }
-  });
-}
-
-
 
