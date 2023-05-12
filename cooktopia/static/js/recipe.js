@@ -108,7 +108,7 @@ btnAdd.addEventListener('click', () => {
 
 btnSubtract.addEventListener('click', () => {
   updateIngredientQuantities(-1);
-  if(portions>=0){
+  if(portions>0){
     portions --;
     setCounter();
     }

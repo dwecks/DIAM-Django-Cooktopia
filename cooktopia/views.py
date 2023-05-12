@@ -54,7 +54,6 @@ def recipes(request):
 # 1 Recipe Pgae
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
 class RecipeView(View):
     template_name = "cooktopia/recipe.html"
 
@@ -172,14 +171,16 @@ def profileView(request, chef_id):
 @login_required(login_url='login')
 def followersView(request, chef_id):
     context = load_profile_variables(request, chef_id)
-    context['followers'] = ChefFollower.objects.filter(followed=chef_id)
+    context['followers'] = ChefFollower.objects.filter(
+        followed=chef_id).order_by('follower__name')
     return render(request, 'cooktopia/profile/followers.html', context)
 
 
 @login_required(login_url='login')
 def followingView(request, chef_id):
     context = load_profile_variables(request, chef_id)
-    context['following'] = ChefFollower.objects.filter(follower=chef_id)
+    context['following'] = ChefFollower.objects.filter(
+        follower=chef_id).order_by('followed__name')
     return render(request, 'cooktopia/profile/following.html', context)
 
 
